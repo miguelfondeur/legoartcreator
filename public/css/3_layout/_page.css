@@ -1,0 +1,104 @@
+/* =============================================== *\
+   Layout Styles
+\* =============================================== */
+
+.page-wrapper {
+  width: 100vw;
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  display: flex;
+  background-color: #fff;
+  margin-left: 250px;
+}
+main > .content-container {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  padding-bottom: 30px;
+}
+hr {
+  margin: 37px 0;
+}
+main > aside {
+  border-left: 1px solid #eee;
+  width: 320px;
+}
+main > aside > ul {
+  position: sticky;
+  top: 73px;
+}
+section {
+  padding: 45px 0;
+  border-bottom: 1px solid #eee;
+  position: relative;
+}
+section .section-target {
+  position: absolute;
+  left: 0;
+  top: -71px;
+}
+.container {
+  width: 100%;
+  padding: 0 60px 30px 30px;
+}
+section:target {
+  background-color: #f9f9fb;
+}
+
+.accordion-group{
+  margin-bottom: 60px;
+}
+
+.accordion-group details {
+  border: 1px solid #ccc;
+  background-color: #eee;
+}
+.accordion-group details + details {
+  border-top: none;
+}
+.accordion-group code pre {
+  padding: 0 20px;
+  overflow: scroll;
+}
+.accordion-group summary {
+  height: 30px;
+  background-color: #fff;
+  padding: 6px;
+  border-bottom: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+.code-example {
+  border: 1px solid #ccc;
+  border-bottom: 0;
+  padding: 20px;
+  background-color: #fff;
+}
+
+table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  margin-bottom: 20px;
+  text-align: left;
+  width: 100%;
+}
+table, th, td {
+  border: 1px solid #ccc;
+}
+th, td {
+  padding: 10px;
+}
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+.content-container .container-header {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #eee;
+  padding: 15px 30px;
+} 

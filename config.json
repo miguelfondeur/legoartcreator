@@ -1,6 +1,5 @@
 {
 	"title": "Lego Art Creator",
-	"siteURL": "legoartcreator.com",
     "baseURL": "/",
 	"defaultExtension": "html",
 	"uglyURLs": false,

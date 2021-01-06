@@ -1,0 +1,43 @@
+/* =============================================== *\ 
+		Social Link Styles
+\* =============================================== */
+
+ul.social-links {
+	list-style: none;
+	display: flex;
+	margin-bottom: 12px;
+
+	li {
+
+		a {
+			color: currentColor;
+			margin-right: 6px;
+		}
+	}
+
+	&.round-icons {
+		li {
+
+			a {
+				border-radius: 50%;
+				border: 1px solid;
+				color: inherit;
+				display: inline-flex;
+				margin: 0 12px 0 0;
+				padding: 8px;
+				transition: .15s ease background-color;
+				
+				i {
+					color: inherit;
+					display: inline-flex;
+				}
+
+				/* state */
+				&:hover {
+					background-color: $color-white;
+					color: $color-primary;
+				}
+			}
+		}
+	}	
+}

@@ -1,0 +1,21 @@
+/* =============================================== *\
+   Grid Styles
+\* =============================================== */
+
+.grid {
+	display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+}
+
+.grid > div {
+	border: 1px solid #ccc;
+	padding: 10px;
+	overflow: scroll;
+	display: flex;
+    flex-direction: column;
+}
+
+.grid > div > details {
+	margin-top: auto;
+}

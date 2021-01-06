@@ -16,7 +16,13 @@
     <meta property="og:url" content="https://legoartcreator.com">
     <meta property="og:image" content="https://legoartcreator.com/img/og-block-logo.png" />
     <!-- Style -->
-    <link rel="stylesheet" href="/css/style.css" />
-     
-     {{ partial "global/clickjack.html"  . }}
+    {{ if .Site.IsServer }}
+        {{ $style := resources.Get "css/styles.css" | postCSS (dict "config" "./assets/css/dev/postcss.config.js") | fingerprint }}
+        <link rel="stylesheet" href="{{ $style.Permalink }}" data> 
+    {{ else }}
+        {{ $style := resources.Get "css/styles.css" | postCSS (dict "config" "./assets/css/postcss.config.js")  | minify | fingerprint }}
+        <link rel="stylesheet" href="{{ $style.Permalink }}" integrity="{{ $style.Data.Integrity }}"> 
+    {{ end }}
+
+    {{ partial "global/clickjack.html"  . }}
 </head>
