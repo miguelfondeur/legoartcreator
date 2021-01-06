@@ -9,7 +9,7 @@ module.exports = {
     require('postcss-import')({
       path: ["assets/css"],
     }), 
-    require('tailwindcss')('./assets/css/tailwind.js'),    
+    require('tailwindcss')('./static/css/tailwind.js'),    
     require('autoprefixer')({
       grid: true,
       browsers: ['>1%']

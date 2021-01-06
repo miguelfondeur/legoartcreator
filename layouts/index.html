@@ -4,14 +4,13 @@
   <body class="preload">
 
 	<div class="page-wrapper">
-        <!-- Site Header -->
-        {{ partial "base/header.html" . }}
+      <!-- Site Header -->
+      {{ partial "base/nav.html"  . }}
 
-        <!-- Site Content -->
-        <main>
-          {{ .Content }}
-          <h1>Hello</h1>
-        </main>
+      <!-- Site Content -->
+      <main>
+        {{ .Content }}
+      </main>
       
 		  <!-- Site Footer -->
     	{{ partial "base/footer.html" . }}
