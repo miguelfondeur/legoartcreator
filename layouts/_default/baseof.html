@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  {{ partial "base/head.html" . }}
+  <body class="preload">
+
+	<div class="page-wrapper">
+        <!-- Site Header -->
+        {{ partial "base/header.html" . }}
+
+        <!-- Sidebar -->
+        {{ partial "base/sidebar.html" . }}
+            
+        <!-- Site Content -->
+        {{ block "main" . }}
+        <!-- The part of the page that begins to differ between templates -->
+        {{ end }}
+      
+		<!-- Site Footer -->
+    	{{ partial "base/footer.html" . }}
+    </div>
+    
+    <!-- Style -->
+    <script src="/js/scripts.js"></script>
+  </body>
+</html>

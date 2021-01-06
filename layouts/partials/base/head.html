@@ -1,0 +1,22 @@
+<head> 
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Page Metadata-->
+    <title>{{ .Site.Title }} | {{ .Params.meta.meta_title }}</title>
+    <meta name="description" content="{{ .Params.meta.description }}" />
+    <meta name="keywords" content="Lego, Art, Mosaic, Canvas, Creator">
+    <!-- Favicons -->
+    <link rel="shortcut icon" type="image/png" href="https://legoartcreator.com/img/favicon.ico"/>
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+    <!-- OG Metadata -->
+    <meta property="og:site_name" content="{{ .Site.Params.Title }} - {{ .Params.meta.og_name }}"/>
+    <meta property="og:description" content="{{ .Params.meta.og_description }}"/>
+    <meta property="og:url" content="https://legoartcreator.com">
+    <meta property="og:image" content="https://legoartcreator.com/img/og-block-logo.png" />
+    <!-- Style -->
+    <link rel="stylesheet" href="/css/style.css" />
+     
+     {{ partial "global/clickjack.html"  . }}
+</head>

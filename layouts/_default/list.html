@@ -1,0 +1,22 @@
+{{ define "main" }}
+
+<main role=”main”>
+    
+
+    <div class="content-container">
+        
+        <header class="container-header">
+            <h1>{{ .Title }}</h1>
+            <p>{{ .Description }}</p>
+        </header>
+
+        {{ partial "components/kiss_sections.html" . }}
+        {{ partial "components/fontsections.html" . }}
+
+        {{ .Content }}
+    </div>
+
+    {{ partial "base/subsections.html" . }} 
+</main>
+
+{{ end }}

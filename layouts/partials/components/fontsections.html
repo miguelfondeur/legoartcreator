@@ -1,0 +1,34 @@
+{{ $currentPage := . }}
+
+{{ with .Params.fontsections }}
+<h2>Web Safe Fonts</h2>
+<p>Web safe fonts are fonts that are pre-installed by many operating systems. 
+    While not all systems have the same fonts installed, you can use a web 
+    safe font stack to choose several fonts that look similar, and are installed 
+    on the various systems that you want to support. If you want to use fonts 
+    other than ones pre-installed, as of CSS3, you can use Web Fonts.
+</p>
+    {{ range . }}
+        <section id="{{ .id }}">
+            <h3>{{ .section }}</h3>
+            <div class="grid">
+                {{ range .fonts }}
+                    <!-- grid item -->
+                    <div>
+                        <p>Font: <b class="{{ .code }}">{{ .name }}</b></p>
+                        <div class="font-example {{ .code }}">A quick brown fox jumps over the lazy dog <br><br>0123456789</div>
+                        <details>
+                            <summary>Usage</summary>
+<code><pre>
+/* CSS */
+body {
+    font-family: var(--{{ .code }});
+}
+</pre></code>
+                        </details>
+                    </div>
+                {{ end }}
+            </div>
+        </section>
+    {{ end }}
+{{ end }}
