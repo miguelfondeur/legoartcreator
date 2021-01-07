@@ -10,13 +10,9 @@
             <p>{{ .Description }}</p>
         </header>
 
-        {{ partial "components/kiss_sections.html" . }}
-        {{ partial "components/fontsections.html" . }}
-
         {{ .Content }}
     </div>
 
-    {{ partial "base/subsections.html" . }} 
 </main>
 
 {{ end }}
