@@ -1,6 +1,12 @@
 {{ $currentPage := . }}
 
 <!-- Global Footer -->
-<footer class="site-footer">
-    
+<footer class="site-footer flex w-screen bg-black text-white p-4">
+    <div class="w-screen flex items-center max-w-screen-lg mx-auto justify-between">
+        <div class="nav-logo">
+            <a href="/">
+                {{ .Site.Title }}
+            </a>
+        </div>
+    </div>
 </footer>

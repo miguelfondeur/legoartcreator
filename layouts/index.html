@@ -9,7 +9,9 @@
 
       <!-- Site Content -->
       <main>
-        {{ .Content }}
+        <div class="w-full flex items-center max-w-screen-lg py-12 mx-auto justify-between">
+          {{ partial "app/app.html"  . }}
+        </div>
       </main>
       
 		  <!-- Site Footer -->
@@ -17,6 +19,7 @@
     </div>
     
     <!-- Style -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/js/scripts.js"></script>
   </body>
 </html>

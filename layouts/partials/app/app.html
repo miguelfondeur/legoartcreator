@@ -1,0 +1,82 @@
+<div id="app" class="mx-auto">
+    <div class="canvas-container">
+        {{ partial "app/artBoard.html"  . }}
+        <!-- 960 1440 -->
+        <canvas id="artBoard" class="" height="480px" width="480px"></canvas>
+    </div>
+    <div class="dashboard">
+        <ul class="controls">
+            <li class="active">1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+        <div class="steps">
+            <!-- Choose Canvas -->
+            <div class="step" id="step-1">
+                <h3>Choose Canvas Size</h3>
+                <label class="selectBox" for="boardSize">
+                    <select name="boardSize" id="boardSize" >
+                        <option value="standard">48 X 48 Standard</option>
+                        <option value="wide">48 X 96 Wide</option>
+                        <option value="ultra">48 X 144 Ultra Wide</option>
+                    </select>
+                </label>
+                <div class="step-buttons">
+                    <a class="button right" href="#step-2">Upload Art</a>
+                </div>
+            </div>
+            <!-- Choose Image -->
+            <div class="step" id="step-2">
+                <h3>Add Your Image</h3>
+                
+                <form>
+                    <lable>
+                        <input id="imgUrl" type='file'>
+                    </lable>
+                    <br>
+                    <p>Edit Image:</p>
+                    <button>Resize Image</button>
+                    <button>Move Image</button>
+                    <label>
+                        Update Canvas Background
+                        <input id="imgColor" type="color">
+                    </label>
+                </form>
+                <p class="img-msg"></p>
+                <div class="step-buttons">
+                    <a class="button" href="#step-1">Choose Canvas</a>
+                    <a class="button right" href="#step-3">Convert to Pixels</a>
+                </div>
+            </div>
+            <!-- Get Pixels  -->
+            <div class="step" id="step-3">
+                <h3>Your Brick Art</h3>
+                <button id="convert">Convert to Dots</button>
+                <br>
+                <button id="convertToLego" disabled>Convert to Legos</button>
+                <div class="results"></div>
+                <br>
+                <div class="step-buttons">
+                    <a class="button" href="#step-2">Upload Art</a>
+                    <a class="button right" href="#step-4">Edit Your Art</a>
+                </div>
+            </div>
+            <!-- Save Image  -->
+            <div class="step" id="step-4">
+                <h3>Edit Your Art</h3>
+                <h3>Edit colors as group</h3>
+                <div class="uniqueColors"></div>
+                <h3>Edit individual color</h3>
+                <div class="step-buttons">
+                    <a class="button" href="#step-3">Convert Art</a>
+                    <a class="button right" href="#step-5">Save Art</a>
+                </div>
+            </div>
+            <div class="step" id="step-5">
+                <h3>Save Your Art</h3>
+            </div>
+        </div>
+    </div>  
+</div>
