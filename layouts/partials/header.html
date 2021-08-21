@@ -1,0 +1,19 @@
+{{ $currentPage := . }}
+
+<header>
+    <div class="container">
+        <nav>
+            <a href="/">Brick Art</a>
+
+            <ul id="nav">
+                {{ range .Site.Menus.main }}
+                    <li>
+                        <a href="{{ .URL }}" class="{{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active {{end}}">
+                            <span>{{ .Name }}</span>
+                        </a>
+                    </li>
+                {{ end }}
+            </ul>
+        </nav>
+    </div>
+</header>

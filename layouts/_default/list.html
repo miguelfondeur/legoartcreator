@@ -1,18 +1,5 @@
 {{ define "main" }}
 
-<main role=”main”>
+    {{ .Content }}
     
-
-    <div class="content-container">
-        
-        <header class="container-header">
-            <h1>{{ .Title }}</h1>
-            <p>{{ .Description }}</p>
-        </header>
-
-        {{ .Content }}
-    </div>
-
-</main>
-
 {{ end }}

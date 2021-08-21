@@ -1,25 +1,3 @@
-<!DOCTYPE html>
-<html>
-  {{ partial "base/head.html" . }}
-  <body class="preload">
-
-	<div class="page-wrapper">
-      <!-- Site Header -->
-      {{ partial "base/nav.html"  . }}
-
-      <!-- Site Content -->
-      <main>
-        <div class="w-full flex items-center max-w-screen-lg py-12 mx-auto justify-between">
-          {{ partial "app/app.html"  . }}
-        </div>
-      </main>
-      
-		  <!-- Site Footer -->
-    	{{ partial "base/footer.html" . }}
-    </div>
-    
-    <!-- Style -->
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="/js/scripts.js"></script>
-  </body>
-</html>
+{{ define "main" }}
+    <mosaic-editor step="1" size="standard" color="#000000"></mosaic-editor>
+{{ end }}
