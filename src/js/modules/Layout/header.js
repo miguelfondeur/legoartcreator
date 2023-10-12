@@ -10,7 +10,7 @@ export default class GlobalHeader extends HTMLElement {
                             <img class="w-20" src="/src/img/logo.svg" alt="Lego Art Logo">
                             <span class="text-black font-bold text-sm">Creator</span>
                         </a>
-                        <ul id="nav-links" class="flex gap-10 mr-10">
+                        <ul id="nav-links" class="flex gap-10">
                             <!-- <li><a href="index.html" page-id="home" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Home</a></li> -->
                             <li><a href="index.html" page-id="create" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Create</a></li>
                             <!--
@@ -20,7 +20,7 @@ export default class GlobalHeader extends HTMLElement {
                             -->
                         </ul>
                         <!--
-                            <div id="dropdown-container" class="relative">
+                            <div id="dropdown-container" class="ml-10 relative">
                                 <button class="cursor-pointer h-10 w-10 inline-flex items-center justify-center bg-[#006DB7] rounded-full" id="menu-button" aria-expanded="true" aria-haspopup="true">
                                     <img src="/src/img/lego-head.svg" alt="picture of minifigure">
                                 </button>
