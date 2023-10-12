@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="h-full" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lego Art Creator | Dashboard</title>
+        <script src="https://cdn.tailwindcss.com" defer></script>
+        <link rel="stylesheet" href="../src/css/layout.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+        
+        <!-- Scripts -->
+        <script type="module" src="../src/js/modules/Layout/page.js" defer></script>
+    </head>
+    <body class="flex min-h-screen h-full flex-col">
+        
+        <page-container>
+            <header slot="header">
+                <global-header
+                    active-page="home"
+                ></global-header>
+            </header>
+            
+            <main slot="content" class="flex flex-col flex-grow bg-zinc-100">
+                  
+            </main>
+            
+            <footer slot="footer">
+                <global-footer></global-footer>
+            </footer>
+        </page-container>
+
+    </body>
+</html>
