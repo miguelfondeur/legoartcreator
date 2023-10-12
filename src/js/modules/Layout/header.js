@@ -13,18 +13,20 @@ export default class GlobalHeader extends HTMLElement {
                         <ul id="nav-links" class="flex gap-10 mr-10">
                             <!-- <li><a href="index.html" page-id="home" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Home</a></li> -->
                             <li><a href="index.html" page-id="create" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Create</a></li>
-                            <li><a href="discover.html" page-id="discover" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Discover</a></li>
                             <!--
+                                <li><a href="discover.html" page-id="discover" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Discover</a></li>
                                 <li><a href="bricks.html" page-id="bricks" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Bricks</a></li>
                                 <li><a href="about.html" page-id="about" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">About</a></li>
                             -->
                         </ul>
-                        <div id="dropdown-container" class="relative">
-                            <button class="cursor-pointer h-10 w-10 inline-flex items-center justify-center bg-[#006DB7] rounded-full" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                <img src="/src/img/lego-head.svg" alt="picture of minifigure">
-                            </button>
-                            <div id="dropdown" class="hidden normal-case absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1"></div>
-                        </div>
+                        <!--
+                            <div id="dropdown-container" class="relative">
+                                <button class="cursor-pointer h-10 w-10 inline-flex items-center justify-center bg-[#006DB7] rounded-full" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                                    <img src="/src/img/lego-head.svg" alt="picture of minifigure">
+                                </button>
+                                <div id="dropdown" class="hidden normal-case absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1"></div>
+                            </div>
+                        -->
                         <!-- Dropdown -->
                     </div>
                 </nav>
