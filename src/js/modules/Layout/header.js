@@ -94,14 +94,18 @@ export default class GlobalHeader extends HTMLElement {
         }
 
         //Handle Dropdown
-        this.querySelector('#menu-button').addEventListener('click', e => {
-            this.querySelector('#dropdown').classList.toggle('hidden');
-        })
-        document.body.addEventListener('click', function( event ){
-            if( !this.querySelector('#dropdown-container').contains( event.target ) ){
-                this.querySelector('#dropdown').classList.add('hidden')// do nothing, click was inside container
-            } 
-        });
+        if(this.querySelector('#menu-button')) {
+            this.querySelector('#menu-button').addEventListener('click', e => {
+                this.querySelector('#dropdown').classList.toggle('hidden');
+            })
+        }
+        if( this.querySelector('#dropdown-container') ) {
+            document.body.addEventListener('click', function( event ){
+                if( !this.querySelector('#dropdown-container').contains( event.target ) ){
+                    this.querySelector('#dropdown').classList.add('hidden')// do nothing, click was inside container
+                } 
+            });
+        }
     }
 
     disconnectedCallback() {
@@ -134,28 +138,30 @@ export default class GlobalHeader extends HTMLElement {
     //Dropdown
     updateDropdown() {
         const dropdown = this.querySelector('#dropdown'); // Adjust this selector based on your actual dropdown's class or ID
-        if (this._user) {
-            // User is logged in
-            dropdown.innerHTML = `
-                <div class="px-4 py-3" role="none">
-                    <p class="text-sm" role="none">Signed in as</p>
-                    <p class="truncate text-sm font-medium text-gray-900" role="none">${ this._user.email}</p>
-                </div>
-                <div class="py-1" role="none">
-                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                    <a href="account.html" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Account</a>
-                    <a href="dashboard.html" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Projects</a>
-                </div>
-                <div class="py-1" role="none">
-                    <button class="text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-gray-100" role="menuitem" tabindex="-1" id="signOutBtn">Sign out</button>
-                </div>`;
-        } else {
-            // User is not logged in
-            dropdown.innerHTML = `
-                <div class="py-1" role="none">
-                    <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                    <a href="login.html" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-0">Sign in</a>
-                </div>`;
+        if(dropdown) {
+            if (this._user) {
+                // User is logged in
+                dropdown.innerHTML = `
+                    <div class="px-4 py-3" role="none">
+                        <p class="text-sm" role="none">Signed in as</p>
+                        <p class="truncate text-sm font-medium text-gray-900" role="none">${ this._user.email}</p>
+                    </div>
+                    <div class="py-1" role="none">
+                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <a href="account.html" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Account</a>
+                        <a href="dashboard.html" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Projects</a>
+                    </div>
+                    <div class="py-1" role="none">
+                        <button class="text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-gray-100" role="menuitem" tabindex="-1" id="signOutBtn">Sign out</button>
+                    </div>`;
+            } else {
+                // User is not logged in
+                dropdown.innerHTML = `
+                    <div class="py-1" role="none">
+                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <a href="login.html" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1" id="menu-item-0">Sign in</a>
+                    </div>`;
+            }
         }
     }
 }
