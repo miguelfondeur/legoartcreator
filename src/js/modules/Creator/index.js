@@ -177,7 +177,7 @@ export default class Editor extends HTMLElement {
 
         //Initial Data
         this.step = 1;
-        this.size = 160;
+        this.size = 480;
         this.color = [0,0,0];
 
         //Get from local storage?
