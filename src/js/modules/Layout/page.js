@@ -61,7 +61,6 @@ class PageContainer extends HTMLElement {
         //     console.log('user exists')
         //     document.querySelector('global-header').user = user;
         // }
-
     }
 
     //USER Sign up
@@ -84,7 +83,6 @@ class PageContainer extends HTMLElement {
             } else {
                 window.location.replace('index.html')
             }
-
         } catch(error) {
             console.log(error)
         }

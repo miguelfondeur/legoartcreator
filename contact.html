@@ -16,7 +16,7 @@
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
         
-        <title>Lego Art Creator | Create Your Brick Art</title>
+        <title>Lego Art Creator | Contact Us</title>
         <meta name="description" content="An online tool for creating Lego brick art for your home.">
         <meta name="keywords" content="Lego, Art, Dots, Creator">
 
@@ -27,9 +27,6 @@
         <link rel="stylesheet" href="src/css/layout.css">
         <!-- Modules -->
         <script type="module" src="src/js/modules/Layout/page.js" defer></script>
-        <script async type="module" src="src/js/modules/Project/index.js" defer></script>
-        <script async type="module" src="src/js/modules/Project/header.js" defer></script>
-        <script async type="module" src="src/js/modules/Creator/index.js" defer></script>
     </head>
     <body class="flex min-h-screen h-full flex-col">
         
@@ -42,11 +39,28 @@
                 ></global-header>
             </header>
             
-            <main slot="content" class="flex-grow bg-zinc-100">
-                <mosaic-project class="w-full"> 
-                    <!-- <project-header slot="header" /> -->
-                    <mosaic-editor slot="project" class="w-full"/>
-                </mosaic-project>
+            <main slot="content" class="flex-grow flex-col bg-zinc-100">
+                <div class="w-full container mx-auto py-8 px-4">
+                    <h1 class="text-3xl">Contact Us</h1>
+                    <br>
+                    <form action="#" method="POST">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-600 font-semibold">Name</label>
+                            <input type="text" id="name" name="name" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-600 font-semibold">Email</label>
+                            <input type="email" id="email" name="email" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-600 font-semibold">Message</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300" required></textarea>
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </main>
             
         </page-container>
