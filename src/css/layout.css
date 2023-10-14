@@ -46,17 +46,13 @@ page-container:defined > main[slot="content"] {
     display: flex;
 }
 
-
-
-
-
 html, body {
     height: 100%;
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
+/* Style the dialog backdrop */
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.3); /* Change the background color and opacity as needed */
 }
 
 .gap-2 {	gap: 0.5rem; }/* 8px */

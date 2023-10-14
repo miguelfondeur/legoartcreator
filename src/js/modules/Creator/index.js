@@ -164,7 +164,6 @@ export default class Editor extends HTMLElement {
                         </a>
                     </div>
                 </footer>
-
             </div>
         </div>`
     }

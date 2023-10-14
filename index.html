@@ -32,7 +32,6 @@
         <script async type="module" src="src/js/modules/Creator/index.js" defer></script>
     </head>
     <body class="flex min-h-screen h-full flex-col">
-        
         <page-container>
             
             <header slot="header">
@@ -47,8 +46,19 @@
                     <!-- <project-header slot="header" /> -->
                     <mosaic-editor slot="project" class="w-full"/>
                 </mosaic-project>
+
+                <!-- Modal Dialog -->
+                <dialog id="beta-modal" class="flex flex-col modal-container bg-white w-96 mx-auto rounded-lg z-[100] p-6 !hidden">
+                    <h2 class="text-2xl font-semibold mb-4">Welcome to Lego Art Creator (Beta)!</h2>
+                    <p class="mb-4">
+                        Your feedback is crucial as we improve our platform. Feel free to share your thoughts, 
+                        suggestions, or report issues using the button below or by visiting our <a href="/contact.html" class="outline-0 text-blue-500 underline">contact&nbsp;page</a>. 
+                        Please keep in mind that our site is a work in progress. Thank you for joining us on this journey!
+                    </p>
+                    <button id="close-modal" class="ml-auto bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300">Got it</button>
+                </dialog>
             </main>
-            
+        
         </page-container>
 
     </body>

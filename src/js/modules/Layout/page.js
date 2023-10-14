@@ -61,6 +61,22 @@ class PageContainer extends HTMLElement {
         //     console.log('user exists')
         //     document.querySelector('global-header').user = user;
         // }
+
+        // Check if the user has already closed the modal
+        if (!localStorage.getItem("betaModalClosed")) {
+            // If not closed, open the modal automatically
+            const betaModal = document.getElementById("beta-modal");
+            betaModal.classList.remove('!hidden');
+            betaModal.showModal();
+        }
+
+        document.getElementById("close-modal").addEventListener("click", function () {
+            // Close the modal and store a value in localStorage
+            const betaModal = document.getElementById("beta-modal");
+            betaModal.classList.add('!hidden');
+            betaModal.close();
+            localStorage.setItem("betaModalClosed", "true");
+        });
     }
 
     //USER Sign up
@@ -93,7 +109,6 @@ class PageContainer extends HTMLElement {
         if(document.querySelector('global-header')) {
             document.querySelector('global-header').user = data.session?.user;
         }
-
     }
 
 }
