@@ -29,7 +29,7 @@ class Signup extends HTMLElement {
                 </form>
                 <p class="mt-10 text-center text-sm text-gray-500">
                     Already have an account? 
-                    <a href="/login.html" class="font-semibold leading-6 text-blue-500 hover:text-indigo-500">Login</a>
+                    <a href="/login.html" class="font-semibold leading-6 text-blue-600 hover:text-indigo-500">Login</a>
                 </p>
             </div>`;
     }
