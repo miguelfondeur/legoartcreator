@@ -159,9 +159,9 @@ export default class Editor extends HTMLElement {
                     </div>
                     <!-- Support -->
                     <div class="inline-flex items-center text-sm">
-                        <button class="p-2 bg-white rounded-lg text-xs border border-gray-300">
-                            Support
-                        </button>
+                        <a href="/contact.html" class="p-2 bg-white rounded-lg text-xs border border-gray-300">
+                            Contact
+                        </a>
                     </div>
                 </footer>
 
