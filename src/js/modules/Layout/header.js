@@ -4,7 +4,7 @@ export default class GlobalHeader extends HTMLElement {
         this.innerHTML = /*html*/ `
             <div class="relative z-[90] border-b text-zinc-200">
                 <nav class="bg-white max-w-[1600px] w-full mx-auto h-[90px] flex items-center transition-all">
-                    <div class="flex px-4 w-full text-black uppercase font-medium h-full items-center flex">
+                    <div class="flex px-4 w-full text-black font-medium h-full items-center flex">
                         <a class="text-black mr-auto inline-flex flex-col items-center justify-center" href="/">
                             <!-- <img class="w-20" src="/src/img/logo.svg" alt="Lego Art Logo"> -->
                             <img class="w-20" src="/src/img/logo.svg" alt="Lego Art Logo">
