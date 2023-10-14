@@ -5,7 +5,7 @@ export default class GlobalFooter extends HTMLElement {
             <div class="border-t border-gray-200 mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-20 lg:px-8">
                 <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
                     <div class="pb-6">
-                        <a href="create.html" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Create</a>
+                        <a href="index.html" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Create</a>
                     </div>
                     <div class="pb-6">
                         <a href="contact.html" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Contact</a>
