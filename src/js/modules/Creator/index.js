@@ -66,7 +66,7 @@ export default class Editor extends HTMLElement {
                 <!-- Sidebar -->
                 <aside class="backdrop-blur-sm min-w-[72px] flex-col flex px-4 text-sm flex-shrink-0 pt-20 bg-zinc-100/90 z-40 top-0 left-0 h-[calc(100%-50px)] relative absolute" id="dashboard-steps" step="${this.step}">
                     <button 
-                        class="cursor-pointer flex flex-col items-center justify-center py-3 text-blue-600" 
+                        class="cursor-pointer flex flex-col items-center justify-center py-3 text-sky-700" 
                         data-step="1"
                         onclick="updateStep(1)"
                     >
@@ -337,9 +337,9 @@ export default class Editor extends HTMLElement {
         this.step = step;
         this.dialog.setAttribute("step", step);
         this.stepButtons.forEach(step => {
-            step.classList.remove('text-blue-600');
+            step.classList.remove('text-sky-700');
         })
-        this.querySelector(`[data-step="${step}"]`).classList.add('text-blue-600')
+        this.querySelector(`[data-step="${step}"]`).classList.add('text-sky-700')
         if(step == 3) {
             this.mosaic.drawMode = true;
             this.showImage.checked = false;
