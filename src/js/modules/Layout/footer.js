@@ -13,6 +13,9 @@ export default class GlobalFooter extends HTMLElement {
                     <div class="pb-6">
                         <a href="privacy.html" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Privacy</a>
                     </div>
+                    <div class="pb-6">
+                        <a href="cookies.html" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Cookies</a>
+                    </div>
                     <!--
                         <div class="pb-6">
                             <a href="#" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Discover</a>
