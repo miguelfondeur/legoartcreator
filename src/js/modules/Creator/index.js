@@ -80,7 +80,12 @@ export default class Editor extends HTMLElement {
                 <!-- Results View -->
                 <section id="results-view" class="w-full flex flex-col items-center justify-center pl-[80px] !hidden">
                     <img id="previewImage" src="" alt="Project Preview" class="mb-4 min-h-[240px] min-w-[240px]">
-                    <button class="text-lg max-w-[240px] cursor-pointer flex mb-1 w-full justify-center items-center py-3 shadow-sm rounded-full bg-orange-500 text-black">Finish</button>
+                    <button class="text-lg max-w-[240px] cursor-pointer flex mb-1 w-full justify-center items-center py-3 shadow-sm rounded-full bg-orange-500 text-black">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
+                    </svg>
+                    Finish
+                    </button>
                 </section> 
 
                 <!-- Footer Controls -->
