@@ -70,13 +70,15 @@ class PageContainer extends HTMLElement {
             betaModal.showModal();
         }
 
-        document.getElementById("close-modal").addEventListener("click", function () {
-            // Close the modal and store a value in localStorage
-            const betaModal = document.getElementById("beta-modal");
-            betaModal.classList.add('!hidden');
-            betaModal.close();
-            localStorage.setItem("betaModalClosed", "true");
-        });
+        if(document.getElementById("close-modal")) {
+            document.getElementById("close-modal").addEventListener("click", function () {
+                // Close the modal and store a value in localStorage
+                const betaModal = document.getElementById("beta-modal");
+                betaModal.classList.add('!hidden');
+                betaModal.close();
+                localStorage.setItem("betaModalClosed", "true");
+            });            
+        }
     }
 
     //USER Sign up

@@ -12,8 +12,14 @@
         <!-- Meta Tags -->
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Lego Art Creator | Instructions</title>
+        <meta name="referrer" content="origin">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
+        
+        <title>Lego Art Creator | Project Instructions</title>
+        <meta name="description" content="An online tool for creating Lego brick art for your home.">
+        <meta name="keywords" content="Lego, Art, Dots, Creator">
+
         <!-- Libraries -->
         <script src="https://cdn.tailwindcss.com" defer></script>
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
@@ -21,10 +27,11 @@
         <link rel="stylesheet" href="src/css/layout.css">
         <!-- Modules -->
         <script type="module" src="src/js/modules/Layout/page.js" defer></script>
+        <script async type="module" src="src/js/modules/Project/index.js" defer></script>
+        <script async type="module" src="src/js/modules/Project/header.js" defer></script>
         <script async type="module" src="src/js/modules/Creator/index.js" defer></script>
     </head>
     <body class="flex min-h-screen h-full flex-col">
-        
         <page-container>
             
             <header slot="header">
@@ -35,9 +42,14 @@
             </header>
             
             <main slot="content" class="flex-grow bg-zinc-100">
-                <mosaic-editor class="w-full"/>
+                
+                <mosaic-project class="w-full"> 
+                    <project-header slot="header"></project-header>
+                    
+                </mosaic-project>
+                
             </main>
-            
+        
         </page-container>
 
     </body>

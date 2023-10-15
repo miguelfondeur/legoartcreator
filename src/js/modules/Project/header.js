@@ -33,22 +33,27 @@ export default class ProjectHeader extends HTMLElement {
                     -->
                     <span class="mr-2 h-[56px] border-r border-zinc-200"></span>
 
-                    <a  href="index.html" class="px-4 py-2 rounded-full inline-flex items-center bg-black text-white transition-all shadow hover:shadow-md">
-                        <svg class="w-5 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
-                        </svg>
-                        Creator
-                    </a>
-                    <a  href="instructions.html" class="px-4 py-2 rounded-full inline-flex items-center bg-[#abd9ff] text-black transition-all shadow hover:shadow-md">
+                    <button onclick="location.href='index.html';" 
+                            class="px-4 py-1.5 rounded-full inline-flex items-center border-2 bg-sky-600 border-sky-600 text-white transition-all shadow hover:shadow-md">
+                        <svg class="w-5 mr-1.5" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.3805 14H2.61948C2.26978 14 2 13.7302 2 13.3905V2.61948C2 2.27977 2.27977 2 2.61948 2H13.3805C13.7202 2 14 2.27977 14 2.61948V13.3805C14 13.7302 13.7202 14 13.3805 14Z" stroke="currentColor" stroke-miterlimit="10"></path><path d="M8 2V14" stroke="currentColor" stroke-miterlimit="10"></path><path d="M14 8H8" stroke="currentColor" stroke-miterlimit="10"></path></svg>
+                        Project
+                    </button>
+                    <button disabled
+                            onclick="location.href='instructions.html';" 
+                            class="px-4 py-1.5 rounded-full inline-flex items-center border-2 border-black disabled:pointer-events-none disabled:border-gray-200 disabled:text-gray-300 transition-all hover:shadow-md"
+                    >
                         <svg class="w-5 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
                         </svg>
                         Instuctions
-                    </a>
-                    <a  href="parts.html" class="px-4 py-2 rounded-full inline-flex items-center bg-[#fd8024] text-black transition-all shadow hover:shadow-md">
-                        <svg class="w-4 mr-2" viewBox="0 0 16 20" aria-hidden="true" data-di-rand="1694014409312" data-di-res-id="e815f25f-3607c9a7"><g fill="currentColor" fill-rule="evenodd"><path d="M4 3.512v5.804c0 .377.349.684.779.684.43 0 .779-.307.779-.684V3.512C5.558 2.33 6.653 1.368 8 1.368c1.347 0 2.442.962 2.442 2.144v5.804c0 .377.35.684.78.684.43 0 .778-.307.778-.684V3.512C12 1.575 10.206 0 8 0S4 1.575 4 3.512z"></path><path d="M2.46 6.33c-.269 0-.489.194-.5.441L1.435 18.19a.436.436 0 00.131.332.52.52 0 00.348.149h12.151c.276 0 .501-.207.501-.462l-.525-11.436c-.011-.248-.23-.442-.5-.442H2.46zM14.448 20l-12.974-.001a1.591 1.591 0 01-1.064-.462 1.357 1.357 0 01-.408-1.03L.56 6.372C.595 5.602 1.277 5 2.11 5h11.78c.835 0 1.516.602 1.551 1.372l.56 12.197c0 .789-.697 1.431-1.553 1.431z"></path></g></svg>
+                    </button>
+                    <button disabled 
+                            onclick="location.href='parts.html';" 
+                            class="px-4 py-1.5 rounded-full inline-flex items-center border-2 border-black disabled:pointer-events-none disabled:border-gray-200 disabled:text-gray-300 transition-all hover:shadow-md"
+                    >
+                        <svg class="w-4 mr-1.5" viewBox="0 0 16 20" aria-hidden="true" data-di-rand="1694014409312" data-di-res-id="e815f25f-3607c9a7"><g fill="currentColor" fill-rule="evenodd"><path d="M4 3.512v5.804c0 .377.349.684.779.684.43 0 .779-.307.779-.684V3.512C5.558 2.33 6.653 1.368 8 1.368c1.347 0 2.442.962 2.442 2.144v5.804c0 .377.35.684.78.684.43 0 .778-.307.778-.684V3.512C12 1.575 10.206 0 8 0S4 1.575 4 3.512z"></path><path d="M2.46 6.33c-.269 0-.489.194-.5.441L1.435 18.19a.436.436 0 00.131.332.52.52 0 00.348.149h12.151c.276 0 .501-.207.501-.462l-.525-11.436c-.011-.248-.23-.442-.5-.442H2.46zM14.448 20l-12.974-.001a1.591 1.591 0 01-1.064-.462 1.357 1.357 0 01-.408-1.03L.56 6.372C.595 5.602 1.277 5 2.11 5h11.78c.835 0 1.516.602 1.551 1.372l.56 12.197c0 .789-.697 1.431-1.553 1.431z"></path></g></svg>
                         Buy Parts
-                    </a>
+                    </button>
                 </div>
             </header>`
     }

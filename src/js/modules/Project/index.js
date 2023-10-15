@@ -20,7 +20,6 @@ export default class Project extends HTMLElement {
             </style>
             <section class="flex min-h-full relative">
                 <slot name="header"></slot>
-                
                 <slot name="project"></slot>
             </section>`
     }
@@ -32,7 +31,6 @@ export default class Project extends HTMLElement {
 
     // Stage: 'Component now connected to DOM'
     connectedCallback() {
-
         //listen to events  
         
         //this.initialize();

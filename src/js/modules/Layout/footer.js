@@ -8,6 +8,9 @@ export default class GlobalFooter extends HTMLElement {
                         <a href="index.html" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Create</a>
                     </div>
                     <div class="pb-6">
+                        <a href="about.html" class="text-sm leading-6 text-gray-600 hover:text-gray-900">About</a>
+                    </div>
+                    <div class="pb-6">
                         <a href="contact.html" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Contact</a>
                     </div>
                     <div class="pb-6">
