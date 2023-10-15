@@ -40,7 +40,7 @@ export const brickColors = [
     {
         "name": "Black",
         "family": "black",
-        "rgb": [30,30,30],
+        "rgb": [40,40,40],
         "alpha": "1",
         "stroke": [255,255,255],
         "id" : {
