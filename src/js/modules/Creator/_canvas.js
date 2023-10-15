@@ -260,24 +260,24 @@ export default class MosaicCanvas extends HTMLElement {
         this.setGridSize(config.gridSize);
         this.setCanvasDimensions(config.dimensions);
 
-        this.circleRadius = Math.min(this.cellWidth, this.cellHeight) / 2 - (this.gridSize.cols === 16 ? 1 : 0.5);
+        this.circleRadius = Math.min(this.cellWidth, this.cellHeight) / 2;
         this.context.globalCompositeOperation = "destination-over";
 
         //Empty Circles
         this.circles = [];
         //Circle Styles for new draw (some timing issues)
         this.context.fillStyle = `rgb( ${this.initialColor} )`;
-        this.context.lineWidth = this.gridSize.cols === 16 ? 2 : 1;
-        this.context.strokeStyle =  `rgb( ${this.initialStrokeColor} )`;
+        //this.context.lineWidth = this.gridSize.cols === 16 ? 2 : 1;
+        //this.context.strokeStyle =  `rgb( ${this.initialStrokeColor} )`;
 
         for (let row = 0; row < this.gridSize.rows; row++) {
             for (let col = 0; col < this.gridSize.cols; col++) {
                 this.context.beginPath();
-                const x = (col * this.cellWidth + this.circleRadius) + (this.gridSize.cols === 16 ? 1 : 0.5);
-                const y = (row * this.cellHeight + this.circleRadius) + (this.gridSize.cols === 16 ? 1 : 0.5);
+                const x = (col * this.cellWidth + this.circleRadius);
+                const y = (row * this.cellHeight + this.circleRadius);
                 this.context.arc(x, y, this.circleRadius, 0, Math.PI * 2);
                 this.context.fill();
-                this.context.stroke();
+                //this.context.stroke();
                 this.circles.push({ x: x, y: y, fill: this.initialColor, stroke: this.initialStrokeColor });
             }
         }
@@ -563,12 +563,12 @@ export default class MosaicCanvas extends HTMLElement {
         for(let i = 0; i < this.circles.length; i++){
             //Draw Circle
             this.context.fillStyle = `rgb( ${ this.circles[i].fill } )`;
-            this.context.lineWidth = this.gridSize.cols === 16 ? 2 : 1;
-            this.context.strokeStyle = `rgb( ${ this.circles[i].stroke } )`;
+            //this.context.lineWidth = this.gridSize.cols === 16 ? 2 : 1;
+            //this.context.strokeStyle =  `rgb( ${ this.circles[i].fill } )`;
             this.context.save();
             this.context.beginPath();
             this.context.arc(this.circles[i].x, this.circles[i].y, this.circleRadius, 0, Math.PI * 2);
-            this.context.stroke();
+            //this.context.stroke();
             this.context.fill();
             this.context.restore();
         }
@@ -584,8 +584,8 @@ export default class MosaicCanvas extends HTMLElement {
         //get colors for image canvas
         for (let row = 0; row < this.gridSize.rows; row++) {
             for (let col = 0; col < this.gridSize.cols; col++) {
-                const x = (col * this.cellWidth + this.circleRadius) + (this.gridSize.cols === 16 ? 1 : 0.5);
-                const y = (row * this.cellHeight + this.circleRadius) + (this.gridSize.cols === 16 ? 1 : 0.5);
+                const x = (col * this.cellWidth + this.circleRadius);
+                const y = (row * this.cellHeight + this.circleRadius);
                 
                 // Do something with rgbCode if needed
                 this.raw.push(this.calculateResult(x, y));
@@ -600,7 +600,7 @@ export default class MosaicCanvas extends HTMLElement {
             let newStrokeColor = brickColors[closestColor.index].stroke;
             
             this.circles[i].fill = newColor;
-            this.circles[i].stroke = newStrokeColor;
+            this.circles[i].stroke = newColor;
 
             // this.circles[i].fill = results[i];
         }
