@@ -184,6 +184,11 @@ export default class MosaicCanvas extends HTMLElement {
 
         //Draw Grid initially
         this.drawGrid(this.size)
+
+        //listen to events
+        eventDispatcher.addEventListener('finishProject', e => {
+            this.saveProject();
+        });
     }
 
     toggleTraceMode(traceMode) {
@@ -281,8 +286,6 @@ export default class MosaicCanvas extends HTMLElement {
                 this.circles.push({ x: x, y: y, fill: this.initialColor, stroke: this.initialStrokeColor });
             }
         }
-        //Save to Local Storage
-        localStorage.setItem("brickData", JSON.stringify(this.circles));
     }
 
     setGridSize(gridSize) {
@@ -335,6 +338,9 @@ export default class MosaicCanvas extends HTMLElement {
         this.applyAdjustments();
 
         this.imgContext.restore();  // Ensure transformations and filters are reverted for future draws
+
+        localStorage.setItem("imgURL", this.image.src);
+        
         //Update Pointer Events
         this.grid.classList.remove('pointer-events-none');
         this.grid.classList.add('cursor-move');
@@ -611,8 +617,6 @@ export default class MosaicCanvas extends HTMLElement {
         //draw circles
         this.drawCircles();
         
-        //Save to local storage
-        window.localStorage.setItem("unique", JSON.stringify(this.uniqueColors) );
         //Update Group Colors
         this.handleUpdateColors(event);
         //Bring Drawing Canvas Forward
@@ -756,7 +760,7 @@ export default class MosaicCanvas extends HTMLElement {
         document.body.removeChild(link);
     }
 
-    createImage(borderWidth = 10) {
+    createImage(borderWidth = 0) {
         // Create a temporary canvas
         const tempCanvas = document.createElement('canvas');
         const tempCtx = tempCanvas.getContext('2d');
@@ -772,6 +776,12 @@ export default class MosaicCanvas extends HTMLElement {
         const dataURL = tempCanvas.toDataURL('image/png');
         // Dispatch Event
         eventDispatcher.dispatchEvent('handleCreateImage', { dataURL: dataURL });
+        localStorage.setItem("projectURL", dataURL);
+    }
+
+    saveProject() {
+        //Save to Local Storage
+        localStorage.setItem("brickData", JSON.stringify(this.circles));
     }
     
 }
