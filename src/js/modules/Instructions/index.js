@@ -188,7 +188,7 @@ export default class MosaicInstructions extends HTMLElement {
         ctx.lineWidth = 1;
         // Set a larger font size for the numbers
         const fontSize = 18; // Adjust the size as needed
-        ctx.font = `${fontSize}px Arial` ;
+        ctx.font = fontSize+'px';
 
         // Set the font color for the numbers
         ctx.fillStyle = 'blue'; // Change this to the desired color

@@ -95,8 +95,10 @@ export default class ProjectHeader extends HTMLElement {
         //Get Local Storage Values
         if(localStorage.getItem('brickData')) { 
             this.querySelector('#instructionBtn').removeAttribute("disabled");
+            this.querySelector('#partsBtn').removeAttribute("disabled");
         } else {
             this.querySelector('#instructionBtn').disabled = true;
+            this.querySelector('#partsBtn').disabled = true;
         }
         
         //this.initialize();
@@ -104,6 +106,7 @@ export default class ProjectHeader extends HTMLElement {
         //listen to events
         eventDispatcher.addEventListener('finishProject', e => {
             this.querySelector('#instructionBtn').removeAttribute("disabled");
+            this.querySelector('#partsBtn').removeAttribute("disabled");
         });
     }
 

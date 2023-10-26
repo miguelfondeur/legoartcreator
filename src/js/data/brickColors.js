@@ -5,6 +5,8 @@ export const brickColors = [
         "rgb": [255,255,255],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284572",
             "design": "35381",
@@ -18,6 +20,8 @@ export const brickColors = [
         "rgb": [175,181,199],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/dark-stone-grey.jpeg",
         "id" : {
             "element": "6284071",
             "design": "35381",
@@ -31,6 +35,8 @@ export const brickColors = [
         "rgb": [89,93,96],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/dark-stone-grey.jpeg",
         "id" : {
             "element": "6284596",
             "design": "35381",
@@ -43,6 +49,8 @@ export const brickColors = [
         "rgb": [40,40,40],
         "alpha": "1",
         "stroke": [255,255,255],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284070",
             "design": "35381",
@@ -55,6 +63,8 @@ export const brickColors = [
         "rgb": [106,14,21],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284585",
             "design": "35381",
@@ -68,6 +78,8 @@ export const brickColors = [
         "rgb": [201,26,9],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284574",
             "design": "35381",
@@ -81,6 +93,8 @@ export const brickColors = [
         "rgb": [255,129,114],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element":  "6311436",
             "design": "35381",
@@ -93,6 +107,8 @@ export const brickColors = [
         "rgb": [80,55,47],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element":  "6322813",
             "design": "35381",
@@ -105,6 +121,8 @@ export const brickColors = [
         "rgb": [130, 66, 42],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element":  "6284586",
             "design": "35381",
@@ -118,6 +136,8 @@ export const brickColors = [
         "rgb": [184,152,105],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element":  "6322841",
             "design": "35381",
@@ -131,6 +151,8 @@ export const brickColors = [
         "rgb": [238,217,164],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284573",
             "design": "35381",
@@ -143,6 +165,8 @@ export const brickColors = [
         "rgb": [254,204,176],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6315196",
             "design": "35381",
@@ -155,6 +179,8 @@ export const brickColors = [
         "rgb": [255, 175, 125],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6343472",
             "design": "35381",
@@ -167,6 +193,8 @@ export const brickColors = [
         "rgb": [227, 160, 91],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/medium-nougat.jpeg",
         "id" : {
             "element": "6284589",
             "design": "35381",
@@ -179,6 +207,8 @@ export const brickColors = [
         "rgb": [179,84,8],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322840",
             "design": "35381",
@@ -192,6 +222,8 @@ export const brickColors = [
         "rgb": [255, 126, 20],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284582",
             "design": "35381",
@@ -205,6 +237,8 @@ export const brickColors = [
         "rgb": [255,199,0],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322822",
             "design": "35381",
@@ -218,6 +252,8 @@ export const brickColors = [
         "rgb": [255,224,1],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284577",
             "design": "35381",
@@ -231,6 +267,8 @@ export const brickColors = [
         "rgb": [254,237,131],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6343806",
             "design": "35381",
@@ -244,6 +282,8 @@ export const brickColors = [
         "rgb": [255,252,0],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6376825",
             "design": "35381",
@@ -257,6 +297,8 @@ export const brickColors = [
         "rgb": [231,242,167],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284598",
             "design": "35381",
@@ -269,6 +311,8 @@ export const brickColors = [
         "rgb": [196,224,0],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284583",
             "design": "35381",
@@ -281,6 +325,8 @@ export const brickColors = [
         "rgb": [171,169,83],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284595",
             "design": "35381",
@@ -293,6 +339,8 @@ export const brickColors = [
         "rgb": [46, 85, 67],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "98138",
             "design": "35381",
@@ -305,6 +353,8 @@ export const brickColors = [
         "rgb": [0,146,61],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6396247",
             "design": "35381",
@@ -317,6 +367,8 @@ export const brickColors = [
         "rgb": [16,203,49],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6353793",
             "design": "35381",
@@ -329,6 +381,8 @@ export const brickColors = [
         "rgb": [0,162,159],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6311437",
             "design": "35381",
@@ -342,6 +396,8 @@ export const brickColors = [
         "rgb": [207,239,234],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322818",
             "design": "35381",
@@ -355,6 +411,8 @@ export const brickColors = [
         "rgb": [1,53,91],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284584",
             "design": "35381",
@@ -368,6 +426,8 @@ export const brickColors = [
         "rgb": [0,87,166],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284575",
             "design": "35381",
@@ -380,6 +440,8 @@ export const brickColors = [
         "rgb": [0,159,224],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322824",
             "design": "35381",
@@ -392,6 +454,8 @@ export const brickColors = [
         "rgb": [106,206,224],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322819",
             "design": "35381",
@@ -404,6 +468,8 @@ export const brickColors = [
         "rgb": [130,173,216],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284602",
             "design": "35381",
@@ -417,6 +483,8 @@ export const brickColors = [
         "rgb": [188,209,237],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322823",
             "design": "35381",
@@ -429,6 +497,8 @@ export const brickColors = [
         "rgb": [136,153,171],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322842",
             "design": "35381",
@@ -441,6 +511,8 @@ export const brickColors = [
         "rgb": [198, 137, 217],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6346374",
             "design": "35381",
@@ -453,6 +525,8 @@ export const brickColors = [
         "rgb": [211,189,227],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322820",
             "design": "35381",
@@ -465,6 +539,8 @@ export const brickColors = [
         "rgb": [183,34,118],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322816",
             "design": "35381",
@@ -477,6 +553,8 @@ export const brickColors = [
         "rgb": [239,91,179],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6322821",
             "design": "35381",
@@ -489,30 +567,36 @@ export const brickColors = [
         "rgb": [247,188,218],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284587",
             "design": "35381",
             "bricklink": "98138",
         }
     },
-    {
-        "name": "Flat Silver",
-        "family": "gray",
-        "rgb": [141,148,156],
-        "alpha": "1",
-        "stroke": [0,0,0],
-        "id" : {
-            "element": "4655241",
-            "design": "35381",
-            "bricklink": "98138",
-        }
-    },
+    // {
+    //     "name": "Flat Silver",
+    //     "family": "gray",
+    //     "rgb": [141,148,156],
+    //     "alpha": "1",
+    //     "stroke": [0,0,0],
+    //     "price": "0.03",
+    //     "img": "/src/img/bricks/white.jpeg",
+    //     "id" : {
+    //         "element": "4655241",
+    //         "design": "35381",
+    //         "bricklink": "98138",
+    //     }
+    // },
     {
         "name": "Pearl Gold",
         "family": "yellow",
         "rgb": [168,129,33],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6238891",
             "design": "35381",
@@ -525,6 +609,8 @@ export const brickColors = [
         "rgb": [244,255,249],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6284592",
             "design": "35381",
@@ -537,6 +623,8 @@ export const brickColors = [
         "rgb": [192,192,192],
         "alpha": "1",
         "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/src/img/bricks/white.jpeg",
         "id" : {
             "element": "6238890",
             "design": "35381",
