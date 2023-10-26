@@ -5,7 +5,7 @@ export default class MosaicParts extends HTMLElement {
     render() {
         this.innerHTML = /*html*/ `
             <div class="flex flex-col flex-grow w-full min-h-full pt-[56px] items-center" >
-                <div id="partsWrapper" class="my-12 w-full max-w-5xl grid grid-cols-4"></div>    
+                <div id="partsWrapper" class="px-4 my-12 w-full max-w-5xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>    
             </div>`
     }
 
@@ -97,12 +97,12 @@ export default class MosaicParts extends HTMLElement {
         if(this.partsWrapper) {
             this.partsWrapper.innerHTML = `${ this.uniqueCircles.map((part, i) => ` 
                 <section class="p-4 bg-white border border-gray-200 w-full flex flex-col">
-                    <img src=${part.img} >
+                    <img class="w-1/2 mx-auto" src=${part.img} >
                     <p class="uppercase">${part.name}</p>
                     <p class="uppercase text-gray-500 text-xs mb-2">${part.id.element}/${part.id.design}</p>
-                    <p class="text-sm">$${ Math.round( (parseFloat(part.price) * parseFloat(part.quantity)) * 100) / 100 }</p>
-                    <p class="text-gray-500 uppercase text-xs">$${part.price} x ${part.quantity}</p>
-                    <a href="#" class="bg-sky-600 text-white mt-4 text-sm uppercase text-center rounded w-full p-3 cursor-pointer">Buy on LEGO</a>
+                    <p class="">$${ Math.round( (parseFloat(part.price) * parseFloat(part.quantity)) * 100) / 100 }</p>
+                    <p class="text-gray-500 uppercase text-xs mb-4">$${part.price} x ${part.quantity}</p>
+                    <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" target="blank" class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded w-full p-3 cursor-pointer">Buy on LEGO</a>
                 </section>`
             ).join('')}`
         }
