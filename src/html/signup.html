@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html class="h-full" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Lego Art Creator | Sign Up</title>
+        <meta name="robots" content="noindex,nofollow">
+        
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+        <link rel="stylesheet" href="../css/layout.css">
+
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+        
+        <!-- Scripts -->
+        <script type="module" src="../js/modules/Layout/page.js" defer></script>
+        <script type="module" src="../js/modules/Login/index.js" defer></script>
+    </head>
+    <body class="flex min-h-screen h-full flex-col">
+        <page-container>
+            <main slot="content" class="flex-grow justify-center items-center bg-zinc-100 px-4">
+                <login-page type="signup" class="w-full max-w-[480px]"></login-page>
+            </main>
+        </page-container>
+
+    </body>
+</html>
