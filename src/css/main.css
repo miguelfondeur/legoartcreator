@@ -1,3 +1,8 @@
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Layout Utility Classes */
 * { 
     box-sizing: border-box; 
@@ -7,29 +12,29 @@
 /* Font Declaration */
 @font-face {
     font-family: 'Cera Pro';
-    src: url(../fonts/cera/Cera\ Pro\ Light.ttf) format('truetype'),
-        url(../fonts/cera/Cera\ Pro\ Light.otf) format('opentype');
+    src: url(./fonts/cera/Cera\ Pro\ Light.ttf) format('truetype'),
+        url(./fonts/cera/Cera\ Pro\ Light.otf) format('opentype');
     font-weight: 300;
     font-style: normal;
 }
 @font-face {
     font-family: 'Cera Pro';
-    src: url(../fonts/cera/Cera\ Pro\ Medium.ttf) format('truetype'),
-        url(../fonts/cera/Cera\ Pro\ Medium.otf) format('opentype');
+    src: url(./fonts/cera/Cera\ Pro\ Medium.ttf) format('truetype'),
+        url(./fonts/cera/Cera\ Pro\ Medium.otf) format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 @font-face {
     font-family: 'Cera Pro';
-    src: url(../fonts/cera/Cera\ Pro\ Bold.ttf) format('truetype'),
-        url(../fonts/cera/Cera\ Pro\ Bold.otf) format('opentype');
+    src: url(./fonts/cera/Cera\ Pro\ Bold.ttf) format('truetype'),
+        url(./fonts/cera/Cera\ Pro\ Bold.otf) format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 @font-face {
     font-family: 'Cera Pro';
-    src: url(../fonts/cera/Cera\ Pro\ Black.ttf) format('truetype'),
-        url(../fonts/cera/Cera\ Pro\ Black.otf) format('opentype');
+    src: url(./fonts/cera/Cera\ Pro\ Black.ttf) format('truetype'),
+        url(./fonts/cera/Cera\ Pro\ Black.otf) format('opentype');
     font-weight: 900;
     font-style: normal;
 }

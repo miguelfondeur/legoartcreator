@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "tailwind:watch": "tailwindcss -i ./src/css/main.css -o ./dist/main.css --watch",
+    "tailwind": "tailwindcss -i ./src/css/main.css -o ./dist/main.css",
+    "build": "pnpm tailwind",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.5"
+  }
 }
