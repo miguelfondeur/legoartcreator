@@ -7,7 +7,7 @@ export default class GlobalHeader extends HTMLElement {
                     <div class="flex px-4 w-full text-black uppercase font-medium h-full items-center flex">
                         <a class="text-black mr-auto inline-flex flex-col items-center justify-center" href="/">
                             <!-- <img class="w-20" src="/src/img/logo.svg" alt="Lego Art Logo"> -->
-                            <img class="w-20" src="/src/img/logo.svg" alt="Lego Art Logo">
+                            <img class="w-20 h-[32px]" src="/src/img/logo.svg" alt="Lego Art Logo">
                             <span class="text-black font-bold text-sm">Creator</span>
                         </a>
                         <ul id="nav-links" class="flex gap-10">
