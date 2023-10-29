@@ -7,7 +7,8 @@ export default class ProjectHeader extends HTMLElement {
             <header class="flex items-center justify-between bg-white w-full h-[56px] absolute left-0 z-50 border-b text-zinc-200">
                 <!-- Name -->
                 <div class="flex items-center h-full min-w-[110px] px-4 border-r border-zinc-200 text-black text-sm flex-shrink-0">
-                    <input type="text" readonly value="My Project" class="inline-flex outline-none">
+                    <label for="projectTitle" class="sr-only">Project Title</label>
+                    <input id="projectTitle" type="text" readonly value="My Project" class="inline-flex outline-none">
                 </div>
                 <div class="flex items-center text-sm gap-2 px-4 text-black">
                     <!-- 
