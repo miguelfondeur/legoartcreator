@@ -9,7 +9,7 @@ export default class MosaicCanvas extends HTMLElement {
     render() {
         this.innerHTML = /*html*/ `
             <style>
-                @import url("/dist/main.css");
+                @import url("/dist/css/main.css");
                 #wrapper[size="320"] canvas { width: 320px; }
                 #wrapper[size="480"] canvas, #wrapper[size="160"] canvas { width: 480px; }
                 #wrapper[size="960"] canvas { width: 960px; }

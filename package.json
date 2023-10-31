@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "tailwind:watch": "tailwindcss -i ./src/css/main.css -o ./dist/main.css --watch",
-    "tailwind": "tailwindcss -i ./src/css/main.css -o ./dist/main.css",
-    "build": "pnpm tailwind",
+    "tailwind": "tailwindcss -i ./src/css/main.css -o ./dist/css/main.css",
+    "build": "pnpm tailwind && node build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
