@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="h-full" lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       
+        <title>Lego Art Creator | Log In</title>
+        <meta name="robots" content="noindex,nofollow">
+        
+        <!-- Favicons -->
+        <link rel="icon" type="image/x-icon" href="./img/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+        <link rel="mask-icon" href="./img/safari-pinned-tab.svg" color="#5bbad5">
+        <!-- Web App -->
+        <link rel="manifest" hrefsite.webmanifest">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+        <link rel="stylesheet" href=".././css/main.css">
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+        
+        <!-- Scripts -->
+        <script type="module" src=".././js/modules/Layout/page.js" defer></script>
+        <script type="module" src=".././js/modules/Login/index.js" defer></script>
+    </head>
+    <body class="flex min-h-screen h-full flex-col">
+        <page-container>
+            <main slot="content" class="flex-grow justify-center items-center bg-zinc-100 px-4">
+                <login-page type="login" class="w-full max-w-[480px]"></login-page>
+            </main>
+        </page-container>
+
+    </body>
+</html>
