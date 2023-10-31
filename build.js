@@ -67,6 +67,7 @@ const assetMapping = {
   '../js/': './js/',
   '../../dist/css': './css',
   '../img/': './img/',
+  '/src/img/': '/img/',
   '../site.webmanifest':'site.webmanifest',
   // Add more mappings as needed
 };
