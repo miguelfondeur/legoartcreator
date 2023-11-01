@@ -5,7 +5,7 @@ export default class ColorPicker extends HTMLElement {
     render() {
         this.shadow.innerHTML = /*html*/ `
             <style>
-                @import url("/dist/css/main.css");
+                @import url("/dist/main.css");
                 [data-open="false"] { display: none; }
                 [data-open="true"] { display: block; }
                 [data-icon-dark="true"] { color: white; }

@@ -2,7 +2,7 @@ class LoginForm extends HTMLElement {
     render() {
         this.innerHTML = html`
                 <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img class="w-32 mx-auto" src="/src/img/logo.svg" alt="Lego Art Logo">
+                    <img class="w-32 mx-auto" src="./img/logo.svg" alt="Lego Art Logo">
                     <h2 class="mt-6 text-center text-lg leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
                 </div>
                 <div class="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">

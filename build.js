@@ -67,7 +67,7 @@ const assetMapping = {
   '../js/': './js/',
   '../../dist/css': './css',
   '../img/': './img/',
-  '/src/img/': './img/',
+  './img/': './img/',
   '../site.webmanifest':'site.webmanifest',
   // Add more mappings as needed
 };
@@ -101,7 +101,7 @@ const jsDirectory = path.join(__dirname, 'dist', 'js');
 const jsAssetMapping = {
   // You'll want to map your old source asset paths to your new distribution asset paths.
   // For example:
-  '/src/img/': './img/',  // Adjust this line to match your actual paths
+  './img/': './img/',  // Adjust this line to match your actual paths
   // ... add any other mappings you need here
 };
 

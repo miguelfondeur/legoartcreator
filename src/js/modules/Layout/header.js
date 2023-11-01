@@ -6,8 +6,8 @@ export default class GlobalHeader extends HTMLElement {
                 <nav class="bg-white max-w-[1600px] w-full mx-auto h-[90px] flex items-center transition-all">
                     <div class="flex px-4 w-full text-black uppercase font-medium h-full items-center flex">
                         <a class="text-black mr-auto inline-flex flex-col items-center justify-center" href="/">
-                            <!-- <img class="w-20" src="/src/img/logo.svg" alt="Lego Art Logo"> -->
-                            <img class="w-20 h-[32px]" src="/src/img/logo.svg" alt="Lego Art Logo">
+                            <!-- <img class="w-20" src="./img/logo.svg" alt="Lego Art Logo"> -->
+                            <img class="w-20 h-[32px]" src="./img/logo.svg" alt="Lego Art Logo">
                             <span class="text-black font-bold text-sm">Creator</span>
                         </a>
                         <ul id="nav-links" class="flex gap-10">
@@ -22,7 +22,7 @@ export default class GlobalHeader extends HTMLElement {
                         <!--
                             <div id="dropdown-container" class="ml-10 relative">
                                 <button class="cursor-pointer h-10 w-10 inline-flex items-center justify-center bg-[#006DB7] rounded-full" id="menu-button" aria-expanded="true" aria-haspopup="true">
-                                    <img src="/src/img/lego-head.svg" alt="picture of minifigure">
+                                    <img src="./img/lego-head.svg" alt="picture of minifigure">
                                 </button>
                                 <div id="dropdown" class="hidden normal-case absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1"></div>
                             </div>
