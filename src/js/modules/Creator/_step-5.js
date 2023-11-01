@@ -22,7 +22,7 @@ export default class StepFive extends HTMLElement {
     render() {
         this.shadow.innerHTML = /*html*/ `
             <style>
-                @import url("/dist/main.css");
+                @import url("./css/main.css");
                 .step-body, .step-footer {
                     padding: 20px;
                 }
