@@ -61,27 +61,29 @@ export default class StepThree extends HTMLElement {
                 <!-- Upload Image -->
                 <div class="flex flex-col w-full text-sm font-bold rounded-md text-black mb-4">
                     <p class="m-0">Select Brick Color</p>
-                    <div class="grid grid-cols-10 mt-2">
-                        ${ allBrickColors.map(color => `
-                            
-                            <div class="w-6 h-6 rounded-full border-box text-white border m-0.5 relative ${ color.id.element === this.activeColor ? 'active-color' : ''}"
-                                    alt="${color.name}"
-                                    title="${color.name}"
-                                    data-element="${color.id.element}"
-                                    id="${color.id.element}"
-                                    data-rgb="${color.rgb}"
-                                    data-alpha="${color.alpha}"
-                                    tabindex="0" 
-                            >
-                                <div class="w-full h-full absolute z-0 rounded-full overflow-hidden">
-                                    <span class="absolute bg-black right-1 top-0 half-square rounded-tr-full"></span>
-                                    <span class="absolute bg-black left-1 bottom-0 half-square rounded-bl-full"></span>
-                                </div>
-                                <div class="relative text-gray-300 border z-10 cursor-pointer top-0 left-0 w-full h-full rounded-full"
-                                    style="background-color: rgba(${color.rgb},${color.alpha})"
-                                ></div>
-                            </div>`
-
+                    <div class="flex flex-wrap mt-2">
+                        ${ allBrickColors.map(group => `
+                            <div class="flex flex-col">
+                                ${ group.map(color => `
+                                    <div class="w-6 h-6 rounded-full border-box text-white border m-0.5 relative ${ color.id.element === this.activeColor ? 'active-color' : ''}"
+                                            alt="${color.name}"
+                                            title="${color.name}"
+                                            data-element="${color.id.element}"
+                                            id="${color.id.element}"
+                                            data-rgb="${color.rgb}"
+                                            data-alpha="${color.alpha}"
+                                            tabindex="0" 
+                                    >
+                                        <div class="w-full h-full absolute z-0 rounded-full overflow-hidden">
+                                            <span class="absolute bg-black right-1 top-0 half-square rounded-tr-full"></span>
+                                            <span class="absolute bg-black left-1 bottom-0 half-square rounded-bl-full"></span>
+                                        </div>
+                                        <div class="relative text-gray-300 border z-10 cursor-pointer top-0 left-0 w-full h-full rounded-full"
+                                            style="background-color: rgba(${color.rgb},${color.alpha})"
+                                        ></div>
+                                    </div>`
+                                ).join('')}
+                            </div>` 
                         ).join('')}
                     </div>
                 </div>

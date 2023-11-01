@@ -82,8 +82,9 @@ async function updateJsAssetPaths(jsDir, assetMapping) {
 
         // Replace each asset path in the JavaScript content
         for (const [oldPath, newPath] of Object.entries(assetMapping)) {
-          const regex = new RegExp(oldPath, 'g');
-          jsContent = jsContent.replace(regex, newPath);
+          // This regex now includes quotation marks to match strings
+          const regex = new RegExp(`"${oldPath}`, 'g');
+          jsContent = jsContent.replace(regex, `"${newPath}`);
         }
 
         await fs.writeFile(path.join(jsDir, file), jsContent);
@@ -94,6 +95,7 @@ async function updateJsAssetPaths(jsDir, assetMapping) {
     console.error('Error updating asset paths in JavaScript files:', error);
   }
 }
+
 
 const jsDirectory = path.join(__dirname, 'dist', 'js');
 const jsAssetMapping = {
