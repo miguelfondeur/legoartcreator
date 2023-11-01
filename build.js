@@ -67,10 +67,44 @@ const assetMapping = {
   '../js/': './js/',
   '../../dist/css': './css',
   '../img/': './img/',
-  '/src/img/': '/img/',
+  '/src/img/': './img/',
   '../site.webmanifest':'site.webmanifest',
   // Add more mappings as needed
 };
+
+async function updateJsAssetPaths(jsDir, assetMapping) {
+  try {
+    const files = await fs.readdir(jsDir);
+
+    for (const file of files) {
+      if (path.extname(file) === '.js') {
+        let jsContent = await fs.readFile(path.join(jsDir, file), 'utf8');
+
+        // Replace each asset path in the JavaScript content
+        for (const [oldPath, newPath] of Object.entries(assetMapping)) {
+          const regex = new RegExp(oldPath, 'g');
+          jsContent = jsContent.replace(regex, newPath);
+        }
+
+        await fs.writeFile(path.join(jsDir, file), jsContent);
+      }
+    }
+    console.log('Asset paths updated in JavaScript files.');
+  } catch (error) {
+    console.error('Error updating asset paths in JavaScript files:', error);
+  }
+}
+
+const jsDirectory = path.join(__dirname, 'dist', 'js');
+const jsAssetMapping = {
+  // You'll want to map your old source asset paths to your new distribution asset paths.
+  // For example:
+  '/src/img/': './img/',  // Adjust this line to match your actual paths
+  // ... add any other mappings you need here
+};
+
+// Make sure to await this function in an async context
+updateJsAssetPaths(jsDirectory, jsAssetMapping);
 
 // Then, update asset paths in the HTML files now present in `dist` directory
 updateAssetPaths(destinationDirectory, assetMapping);
