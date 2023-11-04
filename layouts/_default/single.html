@@ -1,0 +1,34 @@
+{{ define "head" }}
+    {{ if eq .Params.title "Instructions" }}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+        {{ $project := resources.Get "js/modules/Project/index.js" | js.Build }}
+        {{ $header := resources.Get "js/modules/Project/header.js" | js.Build }} 
+        {{ $instructions := resources.Get "js/modules/Instructions/index.js" | js.Build  }}         
+        <script async type="module" src="{{ $project.RelPermalink }}" defer></script>
+        <script async type="module" src="{{ $header.RelPermalink }}" defer></script>
+        <script async type="module" src="{{ $instructions.RelPermalink }}" defer></script>
+    {{ end }}
+
+    {{ if eq .Params.title "Parts" }}
+        {{ $project := resources.Get "js/modules/Project/index.js" | js.Build }}
+        {{ $header := resources.Get "js/modules/Project/header.js" | js.Build }} 
+        {{ $parts := resources.Get "js/modules/Parts/index.js" | js.Build }}         
+        <script async type="module" src="{{ $project.RelPermalink }}" defer></script>
+        <script async type="module" src="{{ $header.RelPermalink }}" defer></script>
+        <script async type="module" src="{{ $parts.RelPermalink }}" defer></script>
+    {{ end }}
+{{ end }}
+
+{{ define "main" }}
+        
+    {{ partial "header" . }}
+
+    <main class="flex-grow flex-col bg-zinc-100">
+        {{ .Content }}
+    </main>
+
+    {{ partial "footer" . }}
+
+{{ end }}

@@ -1,0 +1,10 @@
+baseURL = "https://legoartcreator.com/"
+languageCode = "en-us"
+title = "Lego Art Creator"
+[params]
+  author = "Miguel Fondeur"
+  description = "An online tool for creating Lego brick art for your home."
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

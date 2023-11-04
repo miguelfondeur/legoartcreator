@@ -1,17 +1,20 @@
 {
-  "name": "legoapp",
+  "name": "legoartcreator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tailwind:watch": "tailwindcss -i ./src/css/main.css -o ./dist/main.css --watch",
-    "tailwind": "tailwindcss -i ./src/css/main.css -o ./dist/css/main.css",
-    "build": "pnpm tailwind && node build",
+    "tw_build": "npx tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/style.css",
+    "tw_watch": "npx tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/style.css --watch",
+    "hugo": "hugo",
+    "build": "npm-run-all --sequential tw_build hugo",
+    "serve": "npm-run-all --parallel tw_watch hugo server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Miguel Fondeur",
   "license": "ISC",
   "devDependencies": {
+    "npm-run-all": "^4.1.5",
     "tailwindcss": "^3.3.5"
   }
 }
