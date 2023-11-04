@@ -36,7 +36,7 @@ export default class ProjectHeader extends HTMLElement {
 
                     <button project-page-id="creator"
                             tabindex="0" 
-                            onclick="location.href='index.html';" 
+                            onclick="location.href='/';" 
                             class="px-4 py-2 rounded-full inline-flex items-center text-sky-700 transition-all shadow hover:shadow-md">
                         <svg class="w-5 mr-1.5" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.3805 14H2.61948C2.26978 14 2 13.7302 2 13.3905V2.61948C2 2.27977 2.27977 2 2.61948 2H13.3805C13.7202 2 14 2.27977 14 2.61948V13.3805C14 13.7302 13.7202 14 13.3805 14Z" stroke="currentColor" stroke-miterlimit="10"></path><path d="M8 2V14" stroke="currentColor" stroke-miterlimit="10"></path><path d="M14 8H8" stroke="currentColor" stroke-miterlimit="10"></path></svg>
                         Project

@@ -7,8 +7,9 @@
     "tw_build": "npx tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/style.css",
     "tw_watch": "npx tailwindcss -i ./assets/css/tailwind.css -o ./assets/css/style.css --watch",
     "hugo": "hugo",
+    "hugo_server": "hugo server",
     "build": "npm-run-all --sequential tw_build hugo",
-    "serve": "npm-run-all --parallel tw_watch hugo server",
+    "serve": "npm-run-all --parallel tw_watch hugo_server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Miguel Fondeur",
