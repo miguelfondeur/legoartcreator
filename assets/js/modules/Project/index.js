@@ -52,7 +52,6 @@ export default class Project extends HTMLElement {
     }
 
     changeProjectView(view) {
-        console.log('hello?', view)
         // Hide all views
         const views = this.querySelectorAll('[project-view]');
         views.forEach(view => view.style.display = 'none');

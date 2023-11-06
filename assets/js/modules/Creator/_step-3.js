@@ -94,7 +94,6 @@ export default class StepThree extends HTMLElement {
 
     //methods
     updateGroupColors(data) {
-        console.log('hooooo');
         this.unique = data;  // Store the data for potential later use
         //Must rerender for now
         let list = this.querySelector('#unique-wrapper');

@@ -52,10 +52,6 @@ class LoginForm extends HTMLElement {
             if (username.value == "" || pw.value == "") {
               alert("Ensure you input a value in both fields!");
             } else {
-                console.log(
-                    `This form has a username of ${username.value} and password of ${pw.value}`
-                );
-
                 const event = new CustomEvent('handleLogin', {
                         detail: {
                             form: {

@@ -5,7 +5,6 @@
       this.listeners = {};
     }
     addEventListener(eventType, callback) {
-      console.log("receive", eventType);
       if (!this.listeners[eventType]) {
         this.listeners[eventType] = [];
       }
@@ -20,7 +19,6 @@
       }
     }
     dispatchEvent(eventType, eventData) {
-      console.log("dispatch", eventType);
       if (this.listeners[eventType]) {
         this.listeners[eventType].forEach((callback) => {
           callback(eventData);
@@ -3047,7 +3045,6 @@
             colorElements[i].classList.add("active-color");
           }
           this.setAttribute("color", event2.target.dataset.rgb);
-          console.log("this ran");
           this.updateColor(event2);
         });
       });
@@ -4305,7 +4302,6 @@
     }
     //methods
     updateGroupColors(data) {
-      console.log("hooooo");
       this.unique = data;
       let list = this.querySelector("#unique-wrapper");
       if (list) {
@@ -4592,7 +4588,6 @@
         this.querySelector("step-two").toggleImageSettings(e.target.checked);
       });
       this.finishButton.addEventListener("click", (e) => {
-        console.log("event dispatcher ", sharedEventDispatcher_default);
         sharedEventDispatcher_default.dispatchEvent("finishProject");
       });
       sharedEventDispatcher_default.addEventListener("handleCreateImage", (e) => {

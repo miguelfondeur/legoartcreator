@@ -188,7 +188,6 @@ export default class Editor extends HTMLElement {
         })
 
         this.finishButton.addEventListener('click', (e) => {
-            console.log('event dispatcher ', eventDispatcher);
             eventDispatcher.dispatchEvent('finishProject');
         })
 

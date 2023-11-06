@@ -5,7 +5,6 @@
       this.listeners = {};
     }
     addEventListener(eventType, callback) {
-      console.log("receive", eventType);
       if (!this.listeners[eventType]) {
         this.listeners[eventType] = [];
       }
@@ -20,7 +19,6 @@
       }
     }
     dispatchEvent(eventType, eventData) {
-      console.log("dispatch", eventType);
       if (this.listeners[eventType]) {
         this.listeners[eventType].forEach((callback) => {
           callback(eventData);

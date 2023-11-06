@@ -864,7 +864,6 @@
           }
         }
       }
-      console.log(this.uniqueCircles);
     }
     printParts() {
       if (this.partsWrapper) {

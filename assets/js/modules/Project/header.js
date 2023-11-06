@@ -104,7 +104,6 @@ export default class ProjectHeader extends HTMLElement {
 
         //listen to events
         eventDispatcher.addEventListener('finishProject', e => {
-            console.log('project finished!')
             this.querySelector('#instructionBtn').removeAttribute("disabled");
             this.querySelector('#partsBtn').removeAttribute("disabled");
         });
@@ -123,7 +122,6 @@ export default class ProjectHeader extends HTMLElement {
 
     //Functions
     updateActiveLink(activePage) {
-        console.log(activePage)
         const links = this.querySelectorAll('[project-page-id]');
         links.forEach(link => {
             if (link.getAttribute('project-page-id') === activePage) {

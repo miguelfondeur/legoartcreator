@@ -112,9 +112,6 @@ export default class MosaicInstructions extends HTMLElement {
                 }
             }
             
-            // console.log(this.gridArray)
-            // console.log(this.uniqueColors.sort());
-            
             //Print Pages
             this.printPages();
 

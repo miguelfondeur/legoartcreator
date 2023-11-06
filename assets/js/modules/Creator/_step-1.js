@@ -141,7 +141,6 @@ export default class StepOne extends HTMLElement {
 
                 this.setAttribute('color', event.target.dataset.rgb)
                 //send event to update canvas and svg
-                console.log('this ran')
                 this.updateColor(event)
             })
         })

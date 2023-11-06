@@ -87,9 +87,6 @@ export default class MosaicParts extends HTMLElement {
                 }
             }
         }
-
-        // Now uniqueCircles contains the unique circles with quantities and additional properties
-        console.log(this.uniqueCircles);
     }
 
     printParts() {
