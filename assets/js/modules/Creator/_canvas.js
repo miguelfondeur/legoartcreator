@@ -68,7 +68,7 @@ export default class MosaicCanvas extends HTMLElement {
         super();
 
         //image
-        this.image = '';
+        this.image = new Image();
 
         //Data
         this.frame = '0,0,0';
@@ -182,7 +182,14 @@ export default class MosaicCanvas extends HTMLElement {
         this.grid.addEventListener('mouseup', () => this.handleImageMouseUp());
 
         //Draw Grid initially
-        this.drawGrid(this.size)
+        if(localStorage.getItem('brickData') && localStorage.getItem('imgURL')) {
+            this.image.src = localStorage.getItem('imgURL');
+            this.draw(this.image)
+            this.circles = JSON.parse(localStorage.getItem("brickData"));
+            this.drawCircles();
+        } else {
+            this.drawGrid(this.size);
+        }
 
         //listen to events
         eventDispatcher.addEventListener('finishProject', e => {
@@ -338,7 +345,9 @@ export default class MosaicCanvas extends HTMLElement {
 
         this.imgContext.restore();  // Ensure transformations and filters are reverted for future draws
 
-        localStorage.setItem("imgURL", this.image.src);
+        if(!localStorage.getItem('imgURL')) {
+            localStorage.setItem("imgURL", this.image.src);
+        }
         
         //Update Pointer Events
         this.grid.classList.remove('pointer-events-none');
