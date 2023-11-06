@@ -1,6 +1,6 @@
 {{ define "head" }}
-    {{ $project := resources.Get "js/modules/Project/index.js" | js.Build }} 
-    {{ $jsMin := $project | minify }}       
+    {{ $project := resources.Get "js/modules/Project/index.js" | js.Build (dict "sourcemap" "inline" ) }} 
+    {{ $jsMin := $project | minify}}       
     <script async type="module" src="{{ $jsMin.RelPermalink }}" defer></script>
 {{ end }}
 
