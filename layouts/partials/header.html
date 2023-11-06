@@ -1,13 +1,15 @@
 <header class="relative z-[90] border-b text-zinc-200">
-    <nav class="bg-white max-w-[1600px] w-full mx-auto h-[90px] flex items-center transition-all">
+    <nav class="bg-white max-w-[1600px] w-full mx-auto h-[90px] flex items-center transition-all {{ replace .RelPermalink "/" "!max-w-full" }}">
         <div class="flex px-4 w-full text-black uppercase font-medium h-full items-center">
             <a class="text-black mr-auto inline-flex flex-col items-center justify-center" href="/">
                 <img class="w-20 h-[32px]" src="/img/logo.svg" alt="Lego Art Logo">
                 <span class="text-black font-bold text-sm">Creator</span>
             </a>
             <ul id="nav-links" class="flex gap-10">
-                <li><a href="index.html" page-id="create" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Create</a></li>
+                <li><a href="index.html" page-id="create" class="transition pb-1 border-b-[3px] border-transparent hover:border-black {{ replace .RelPermalink "/" "border-black" }}">Create</a></li>
             </ul>
         </div>
     </nav>
 </header>
+
+

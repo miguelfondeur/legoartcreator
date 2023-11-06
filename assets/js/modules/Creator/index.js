@@ -122,7 +122,7 @@ export default class Editor extends HTMLElement {
                     </div>
                     <!-- Support -->
                     <div class="inline-flex flex-shrink-0 items-center text-sm">
-                        <a href="/contact.html" class="p-2 bg-white rounded-lg text-xs border border-gray-300">
+                        <a href="/contact/" class="p-2 bg-white rounded-lg text-xs border border-gray-300">
                             Give Feedback
                         </a>
                     </div>
@@ -306,13 +306,13 @@ export default class Editor extends HTMLElement {
         this.dialog.setAttribute("step", step);
         this.stepButtons.forEach(step => {
             step.classList.remove('text-sky-700');
-        })
-        this.querySelector(`[data-step="${step}"]`).classList.add('text-sky-700')
+        });
+        this.querySelector(`[data-step="${step}"]`).classList.add('text-sky-700');
         if(step == 3) {
             this.mosaic.drawMode = true;
             this.showImage.checked = false;
             this.mosaic.toggleShowImage(false);
-        }
+        };
         if(step === 4) {
             this.mosaic.createImage();
             this.querySelector('#canvas-view').classList.add('!hidden');
@@ -322,8 +322,9 @@ export default class Editor extends HTMLElement {
             this.querySelector('#canvas-view').classList.remove('!hidden');
             this.querySelector('#footer-controls').classList.remove('!hidden');
             this.querySelector('#results-view').classList.add('!hidden');
-        }
-    }
+        };
+    };
+
 }
 
-customElements.define('mosaic-editor', Editor);
+customElements.define('mosaic-creator', Editor);

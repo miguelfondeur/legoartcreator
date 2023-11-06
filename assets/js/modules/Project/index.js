@@ -1,4 +1,8 @@
 import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import ProjectHeader from './header.js';
+import Editor from '../Creator/index.js';
+import MosaicInstructions from '../Instructions/index.js';
+import MosaicParts from '../Parts/index.js';
 
 export default class Project extends HTMLElement {
 
@@ -6,21 +10,19 @@ export default class Project extends HTMLElement {
     constructor() {
         super();
 
-        const shadow = this.attachShadow({ mode: 'open' });
-
         //Initial Data
         this.activeView = 'creator';
 
         //Template
-        shadow.innerHTML = `
-            <style>
-                .flex { display: flex; }
-                .relative { position: relative; }
-                .min-h-full { min-height: 100%; }
-            </style>
+        this.innerHTML = `
             <section class="flex min-h-full relative">
-                <slot name="header"></slot>
-                <slot name="project"></slot>
+                <!-- Header -->
+                <project-header slot="header" active-page="creator"></project-header>
+
+                <!-- Project Views -->
+                <mosaic-creator project-view class="w-full"></mosaic-creator>
+                <mosaic-instructions project-view class="w-full"></mosaic-instructions>
+                <mosaic-parts project-view class="w-full"></mosaic-parts>
             </section>`
     }
 
@@ -31,12 +33,42 @@ export default class Project extends HTMLElement {
 
     // Stage: 'Component now connected to DOM'
     connectedCallback() {
+        // Set default view
+        this.changeProjectView(this.activeView);
+
         //listen to events  
-        
-        //this.initialize();
+
+        // Listen for the custom event from ProjectHeader
+        this.addEventListener('changeView', (e) => {
+            const newView = e.detail.view;
+            this.updateActiveLink(newView);
+            this.changeProjectView(newView);
+        });
     }
 
     //Functions
+    updateActiveLink(activePage) {
+
+    }
+
+    changeProjectView(view) {
+        console.log('hello?', view)
+        // Hide all views
+        const views = this.querySelectorAll('[project-view]');
+        views.forEach(view => view.style.display = 'none');
+
+        // Update the active-page attribute of ProjectHeader
+        const header = this.querySelector('project-header');
+        if (header) {
+            header.setAttribute('active-page', view);
+        }
+    
+        // Show the selected view
+        const selectedView = this.querySelector(`mosaic-${view}`);
+        if (selectedView) {
+            selectedView.style.display = 'block';
+        }
+    }
 }
 
 customElements.define('mosaic-project', Project);

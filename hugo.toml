@@ -8,3 +8,6 @@ title = "Lego Art Creator"
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+[minify]
+  disableHTML = false
+  minifyOutput = true

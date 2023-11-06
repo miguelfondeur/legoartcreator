@@ -34,6 +34,11 @@
         <!-- Styles -->
         {{ $styles := resources.Get "css/style.css" | minify }}
         <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">  
+        {{ if eq .RelPermalink "/" }}
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+        {{ end }}
         <!-- Insert Modules -->
         {{ block "head" . }}{{ end }}
 

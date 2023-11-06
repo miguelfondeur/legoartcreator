@@ -36,7 +36,6 @@ export default class ProjectHeader extends HTMLElement {
 
                     <button project-page-id="creator"
                             tabindex="0" 
-                            onclick="location.href='/';" 
                             class="px-4 py-2 rounded-full inline-flex items-center text-sky-700 transition-all shadow hover:shadow-md">
                         <svg class="w-5 mr-1.5" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.3805 14H2.61948C2.26978 14 2 13.7302 2 13.3905V2.61948C2 2.27977 2.27977 2 2.61948 2H13.3805C13.7202 2 14 2.27977 14 2.61948V13.3805C14 13.7302 13.7202 14 13.3805 14Z" stroke="currentColor" stroke-miterlimit="10"></path><path d="M8 2V14" stroke="currentColor" stroke-miterlimit="10"></path><path d="M14 8H8" stroke="currentColor" stroke-miterlimit="10"></path></svg>
                         Project
@@ -45,7 +44,6 @@ export default class ProjectHeader extends HTMLElement {
                             tabindex="0" 
                             id="instructionBtn"
                             disabled
-                            onclick="location.href='/instructions/';" 
                             class="px-4 py-2 rounded-full inline-flex items-center text-sky-700 disabled:pointer-events-none disabled:border-gray-200 disabled:text-gray-300 transition-all shadow hover:shadow-md"
                     >
                         <svg class="w-5 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -56,8 +54,7 @@ export default class ProjectHeader extends HTMLElement {
                     <button project-page-id="parts"
                             tabindex="0" 
                             id="partsBtn"
-                            disabled 
-                            onclick="location.href='/parts/';" 
+                            disabled  
                             class="px-4 py-2 rounded-full inline-flex items-center text-sky-700 disabled:pointer-events-none disabled:border-gray-200 disabled:text-gray-300 transition-all shadow hover:shadow-md"
                     >
                         <svg class="w-4 mr-1.5" viewBox="0 0 16 20" aria-hidden="true" data-di-rand="1694014409312" data-di-res-id="e815f25f-3607c9a7"><g fill="currentColor" fill-rule="evenodd"><path d="M4 3.512v5.804c0 .377.349.684.779.684.43 0 .779-.307.779-.684V3.512C5.558 2.33 6.653 1.368 8 1.368c1.347 0 2.442.962 2.442 2.144v5.804c0 .377.35.684.78.684.43 0 .778-.307.778-.684V3.512C12 1.575 10.206 0 8 0S4 1.575 4 3.512z"></path><path d="M2.46 6.33c-.269 0-.489.194-.5.441L1.435 18.19a.436.436 0 00.131.332.52.52 0 00.348.149h12.151c.276 0 .501-.207.501-.462l-.525-11.436c-.011-.248-.23-.442-.5-.442H2.46zM14.448 20l-12.974-.001a1.591 1.591 0 01-1.064-.462 1.357 1.357 0 01-.408-1.03L.56 6.372C.595 5.602 1.277 5 2.11 5h11.78c.835 0 1.516.602 1.551 1.372l.56 12.197c0 .789-.697 1.431-1.553 1.431z"></path></g></svg>
@@ -77,9 +74,15 @@ export default class ProjectHeader extends HTMLElement {
         //Get URL and set active page
     }
 
-    //Life Cycle Hooks
-    attributeChangedCallback(prop, oldVal, newVal) {
+    static get observedAttributes() {
+        return ['active-page']; // Add more attributes to the array if needed
+    }
 
+    //Life Cycle Hooks
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'active-page') {
+            this.updateActiveLink(newValue);
+        }
     }
 
     // Stage: 'Component now connected to DOM'
@@ -87,10 +90,6 @@ export default class ProjectHeader extends HTMLElement {
         this.render(); //renders your custom element to the DOM
 
         //Get Active Page
-        const initialActivePage = this.getAttribute('active-page');
-        if (initialActivePage) {
-            this.updateActiveLink(initialActivePage);
-        }
 
         //Get Local Storage Values
         if(localStorage.getItem('brickData')) { 
@@ -109,10 +108,22 @@ export default class ProjectHeader extends HTMLElement {
             this.querySelector('#instructionBtn').removeAttribute("disabled");
             this.querySelector('#partsBtn').removeAttribute("disabled");
         });
+
+        // Setup click event listeners for each project-page-id button
+        this.querySelectorAll('[project-page-id]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const pageId = button.getAttribute('project-page-id');
+                this.dispatchEvent(new CustomEvent('changeView', {
+                    bubbles: true, // Allows the event to bubble up through the DOM
+                    detail: { view: pageId }
+                }));
+            });
+        });
     }
 
     //Functions
     updateActiveLink(activePage) {
+        console.log(activePage)
         const links = this.querySelectorAll('[project-page-id]');
         links.forEach(link => {
             if (link.getAttribute('project-page-id') === activePage) {

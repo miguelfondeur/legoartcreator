@@ -10,9 +10,10 @@ export default class GlobalHeader extends HTMLElement {
                             <img class="w-20 h-[32px]" src="./img/logo.svg" alt="Lego Art Logo">
                             <span class="text-black font-bold text-sm">Creator</span>
                         </a>
+                        
                         <ul id="nav-links" class="flex gap-10">
                             <!-- <li><a href="index.html" page-id="home" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Home</a></li> -->
-                            <li><a href="index.html" page-id="create" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Create</a></li>
+                            <li><a href="/" page-id="create" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Create</a></li>
                             <!--
                                 <li><a href="discover.html" page-id="discover" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Discover</a></li>
                                 <li><a href="bricks.html" page-id="bricks" class="transition pb-1 border-b-[3px] border-transparent hover:border-black">Bricks</a></li>

@@ -1,10 +1,7 @@
 {{ define "head" }}
-    {{ $project := resources.Get "js/modules/Project/index.js" | js.Build }}
-    {{ $header := resources.Get "js/modules/Project/header.js" | js.Build }} 
-    {{ $creator := resources.Get "js/modules/Creator/index.js" | js.Build  }}         
-    <script async type="module" src="{{ $project.RelPermalink }}" defer></script>
-    <script async type="module" src="{{ $header.RelPermalink }}" defer></script>
-    <script async type="module" src="{{ $creator.RelPermalink }}" defer></script>
+    {{ $project := resources.Get "js/modules/Project/index.js" | js.Build }} 
+    {{ $jsMin := $project | minify }}       
+    <script async type="module" src="{{ $jsMin.RelPermalink }}" defer></script>
 {{ end }}
 
 {{ define "main" }}
@@ -12,10 +9,7 @@
     {{ partial "header" . }}
 
     <main class="flex-grow flex-col bg-zinc-100">
-        <mosaic-project class="w-full"> 
-            <project-header slot="header" active-page="creator"></project-header>
-            <mosaic-editor slot="project" class="w-full"/>
-        </mosaic-project>
+        <mosaic-project class="w-full"></mosaic-project>
 
         {{ .Content }}
 
