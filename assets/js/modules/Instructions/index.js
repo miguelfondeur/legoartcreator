@@ -119,7 +119,10 @@ export default class MosaicInstructions extends HTMLElement {
             this.printBoards();
 
         } else {
-            this.querySelector('#instructionBtn').disabled = true;
+            if(this.querySelector('#instructionBtn')) {
+                this.querySelector('#instructionBtn').disabled = true;
+            }
+            
         }
     }
 
