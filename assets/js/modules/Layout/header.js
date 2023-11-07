@@ -149,8 +149,8 @@ export default class GlobalHeader extends HTMLElement {
                     </div>
                     <div class="py-1" role="none">
                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                        <a href="account.html" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Account</a>
-                        <a href="dashboard.html" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Projects</a>
+                        <a href="/account/" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Account</a>
+                        <a href="/dashboard/" class="text-gray-700 block px-4 py-2 text-sm hover:bg-gray-100" role="menuitem" tabindex="-1">Projects</a>
                     </div>
                     <div class="py-1" role="none">
                         <button class="text-gray-700 block w-full px-4 py-2 text-left text-sm hover:bg-gray-100" role="menuitem" tabindex="-1" id="signOutBtn">Sign out</button>

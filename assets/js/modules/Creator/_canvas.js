@@ -347,6 +347,7 @@ export default class MosaicCanvas extends HTMLElement {
 
         if(!localStorage.getItem('imgURL')) {
             localStorage.setItem("imgURL", this.image.src);
+            eventDispatcher.dispatchEvent('handleImgURL', { dataURL: this.image.src });
         }
         
         //Update Pointer Events
@@ -784,12 +785,15 @@ export default class MosaicCanvas extends HTMLElement {
         const dataURL = tempCanvas.toDataURL('image/png');
         // Dispatch Event
         eventDispatcher.dispatchEvent('handleCreateImage', { dataURL: dataURL });
+        //Store Image
         localStorage.setItem("projectURL", dataURL);
     }
 
     saveProject() {
         //Save to Local Storage
         localStorage.setItem("brickData", JSON.stringify(this.circles));
+        //Dispatch Save event with data for other components
+        eventDispatcher.dispatchEvent('saveProject', { data: JSON.stringify(this.circles) });
     }
     
 }

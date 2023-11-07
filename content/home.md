@@ -27,7 +27,7 @@ draft: true
                 <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">A new and fun way to create lego art</h1>
                 <p class="mt-6 text-lg leading-8 text-gray-600">Ready to picture yourself in LEGO® bricks? Find out how you can book your Mosaic Maker experience now!</p>
                 <div class="mt-10 flex items-center gap-x-6">
-                <a href="create.html" class="rounded-md bg-black px-4 py-3 text-lg text-white shadow-sm text-white">
+                <a href="/create/" class="rounded-md bg-black px-4 py-3 text-lg text-white shadow-sm text-white">
                     Try it now <span aria-hidden="true">→</span>
                 </a>
                 </div>

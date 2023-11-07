@@ -44,7 +44,7 @@ class PageContainer extends HTMLElement {
             try {
                 await sb.auth.signOut();
                 // Handle any post-sign-out logic, like UI updates or redirects
-                window.location.replace('index.html')
+                window.location.replace('/')
                 
             } catch (error) {
                 console.error('Error signing out:', error);
@@ -99,7 +99,7 @@ class PageContainer extends HTMLElement {
             if(error) {
                 throw error;
             } else {
-                window.location.replace('index.html')
+                window.location.replace('/')
             }
         } catch(error) {
             console.log(error)

@@ -1,3 +1,5 @@
+import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+
 export default class MosaicInstructions extends HTMLElement {
         
     render() {
@@ -33,12 +35,14 @@ export default class MosaicInstructions extends HTMLElement {
             </div>`
     }
 
-
     constructor() {
         super();
 
         //Public Props
+        this.brickData = [];
         this.uniqueColors = [];
+        this.img = '';
+        this.projectImgURL = '';
 
         //Private Props
         this._user = null;
@@ -58,72 +62,88 @@ export default class MosaicInstructions extends HTMLElement {
         //render
         this.render();
 
+        //Get Elements
         this.instructionsPages = this.querySelector('#instructionPages');
+        this.projectImg = this.querySelector('#projectImg');
+        this.originalImg = this.querySelector('#originalImg');
 
-        if(this.querySelector('#projectImg')) {
-            this.querySelector('#projectImg').src = localStorage.getItem('projectURL');
+        //Initial Load with Local Storage
+        if(localStorage.getItem('projectURL') && localStorage.getItem('imgURL')) {
+            this.projectImg.src = localStorage.getItem('projectURL');
+            this.originalImg.style.backgroundImage = `url('${localStorage.getItem('imgURL')}')`;
         }
+        
+        //Load After Saving
+        eventDispatcher.addEventListener('handleImgURL', e => {
+            this.img = e.dataURL;
+            this.originalImg.style.backgroundImage = `url('${this.img}')`;
+        });
 
-        if(this.querySelector('#originalImg')) {
-            this.querySelector('#originalImg').style.backgroundImage = `url('${localStorage.getItem('imgURL')}')`;
-        }
+        eventDispatcher.addEventListener('handleCreateImage', e => {
+            console.log('handledCreateImage', e.dataURL)
+            this.projectImgURL = e.dataURL;
+            this.projectImg.src = this.projectImgURL;
+        });
 
-        //Get Local Storage Values
-        if(localStorage.getItem('brickData')) { 
-            this.brickData = JSON.parse(localStorage.getItem('brickData'));
-            this.createInstructions();
+        eventDispatcher.addEventListener('saveProject', e => {
+            this.brickData = JSON.parse(e.data);
+            //Get Local Storage Values
+            if(this.brickData.length) { 
+                this.createInstructions();
 
-            //Consolodate
-            this.brickData.forEach((circle, i) => {
-                let fill = this.brickData[i].fill;
-                this.uniqueColors.push( `rgb( ${fill} )`); 
-            });
+                //Consolodate
+                this.brickData.forEach((circle, i) => {
+                    let fill = this.brickData[i].fill;
+                    this.uniqueColors.push( `rgb( ${fill} )`); 
+                });
 
-            this.uniqueColors =  [...new Set(this.uniqueColors)].sort();
-            
-            //Create Multi Level Array
-            
-            // Define the sizes of the grids
-            const gridSize = 48; // 48x48 grid
-            const subGridSize = 16; // 16x16 sub-grid
+                this.uniqueColors =  [...new Set(this.uniqueColors)].sort();
+                
+                //Create Multi Level Array
+                
+                // Define the sizes of the grids
+                const gridSize = 48; // 48x48 grid
+                const subGridSize = 16; // 16x16 sub-grid
 
-            // Calculate the number of sub-grids in each dimension
-            const numSubGridsX = gridSize / subGridSize;
-            const numSubGridsY = gridSize / subGridSize;
+                // Calculate the number of sub-grids in each dimension
+                const numSubGridsX = gridSize / subGridSize;
+                const numSubGridsY = gridSize / subGridSize;
 
-            // Create a multi-level array to represent the grids
-            this.gridArray = [];
+                // Create a multi-level array to represent the grids
+                this.gridArray = [];
 
-            // Iterate through the circle data and organize it into grids
-            for (let subGridY = 0; subGridY < numSubGridsY; subGridY++) {
-                for (let subGridX = 0; subGridX < numSubGridsX; subGridX++) {
-                    const gridData = [];
-                    for (let y = 0; y < subGridSize; y++) {
-                    const rowData = [];
-                    for (let x = 0; x < subGridSize; x++) {
-                        const circleIndexX = subGridX * subGridSize + x;
-                        const circleIndexY = subGridY * subGridSize + y;
-                        const circle = this.brickData[circleIndexY * gridSize + circleIndexX];
-                        rowData.push(circle);
+                // Iterate through the circle data and organize it into grids
+                for (let subGridY = 0; subGridY < numSubGridsY; subGridY++) {
+                    for (let subGridX = 0; subGridX < numSubGridsX; subGridX++) {
+                        const gridData = [];
+                        for (let y = 0; y < subGridSize; y++) {
+                        const rowData = [];
+                        for (let x = 0; x < subGridSize; x++) {
+                            const circleIndexX = subGridX * subGridSize + x;
+                            const circleIndexY = subGridY * subGridSize + y;
+                            const circle = this.brickData[circleIndexY * gridSize + circleIndexX];
+                            rowData.push(circle);
+                        }
+                        gridData.push(rowData);
+                        }
+                        this.gridArray.push(gridData);
                     }
-                    gridData.push(rowData);
-                    }
-                    this.gridArray.push(gridData);
                 }
-            }
-            
-            //Print Pages
-            this.printPages();
+                
+                //Print Pages
+                this.printPages();
 
-            //Print Each Canvas
-            this.printBoards();
+                //Print Each Canvas
+                this.printBoards();
 
-        } else {
-            if(this.querySelector('#instructionBtn')) {
-                this.querySelector('#instructionBtn').disabled = true;
+            } else {
+                if(this.querySelector('#instructionBtn')) {
+                    this.querySelector('#instructionBtn').disabled = true;
+                } 
             }
-            
-        }
+        });
+
+
     }
 
     //Methods

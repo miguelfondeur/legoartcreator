@@ -32,5 +32,5 @@ draft: false
     <p>We may update this Cookie Policy from time to time to reflect changes in our use of cookies or for other operational, legal, or regulatory reasons. We encourage you to revisit this policy periodically to stay informed about our use of cookies.</p>
     <br>
     <h2 class="text-xl">7. Contact Us</h2>
-    <p>If you have any questions or concerns about our use of cookies or this Cookie Policy, please contact us <a href="/contact.html" class="text-sky-700 underline">here</a>.</p>
+    <p>If you have any questions or concerns about our use of cookies or this Cookie Policy, please contact us <a href="/contact/" class="text-sky-700 underline">here</a>.</p>
 </div>

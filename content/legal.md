@@ -28,7 +28,7 @@ draft: false
         <!-- Other sections of the disclaimer, such as third-party links and privacy, can be added as needed -->
         <p><strong>Contact Information</strong></p>
         <br>
-        <p>If you have any questions or concerns about this legal disclaimer, please contact us at <a href="contact.html" class="underline text-sky-700">here</a>.</p>
+        <p>If you have any questions or concerns about this legal disclaimer, please contact us at <a href="/contact/" class="underline text-sky-700">here</a>.</p>
     </section>
 </div>
 

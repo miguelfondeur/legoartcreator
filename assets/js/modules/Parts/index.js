@@ -1,4 +1,5 @@
 import { allBrickColors } from '../../data/allBrickColors.js';
+import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
 
 export default class MosaicParts extends HTMLElement {
         
@@ -17,13 +18,11 @@ export default class MosaicParts extends HTMLElement {
         this.uniqueCircles = [];
         this.brickData = [];
 
+        //Get Initial Brick Data
         if(localStorage.getItem('brickData')) { 
             this.brickData = JSON.parse(localStorage.getItem('brickData'));
-            
             this.getParts();
         }
-
-        
     }
 
 
@@ -42,7 +41,18 @@ export default class MosaicParts extends HTMLElement {
 
         this.partsWrapper = this.querySelector('#partsWrapper');
 
-        this.printParts();
+        //Print After Saving
+        eventDispatcher.addEventListener('saveProject', e => {
+            this.brickData = JSON.parse(e.data);
+            this.getParts();
+
+            this.printParts();
+        })
+        
+        //Print If there was something saved
+        if(this.uniqueCircles.length) {
+            this.printParts();
+        }
     }
 
     //Methods
