@@ -68,9 +68,12 @@ export default class MosaicInstructions extends HTMLElement {
         this.originalImg = this.querySelector('#originalImg');
 
         //Initial Load with Local Storage
-        if(localStorage.getItem('projectURL') && localStorage.getItem('imgURL')) {
+        if(localStorage.getItem('projectURL') && localStorage.getItem('imgURL') && localStorage.getItem('brickData')) {
             this.projectImg.src = localStorage.getItem('projectURL');
             this.originalImg.style.backgroundImage = `url('${localStorage.getItem('imgURL')}')`;
+            this.brickData = JSON.parse(localStorage.getItem('brickData'));   
+
+            this.initializeBrickData();
         }
         
         //Load After Saving
@@ -88,62 +91,8 @@ export default class MosaicInstructions extends HTMLElement {
         eventDispatcher.addEventListener('saveProject', e => {
             this.brickData = JSON.parse(e.data);
             //Get Local Storage Values
-            if(this.brickData.length) { 
-                this.createInstructions();
-
-                //Consolodate
-                this.brickData.forEach((circle, i) => {
-                    let fill = this.brickData[i].fill;
-                    this.uniqueColors.push( `rgb( ${fill} )`); 
-                });
-
-                this.uniqueColors =  [...new Set(this.uniqueColors)].sort();
-                
-                //Create Multi Level Array
-                
-                // Define the sizes of the grids
-                const gridSize = 48; // 48x48 grid
-                const subGridSize = 16; // 16x16 sub-grid
-
-                // Calculate the number of sub-grids in each dimension
-                const numSubGridsX = gridSize / subGridSize;
-                const numSubGridsY = gridSize / subGridSize;
-
-                // Create a multi-level array to represent the grids
-                this.gridArray = [];
-
-                // Iterate through the circle data and organize it into grids
-                for (let subGridY = 0; subGridY < numSubGridsY; subGridY++) {
-                    for (let subGridX = 0; subGridX < numSubGridsX; subGridX++) {
-                        const gridData = [];
-                        for (let y = 0; y < subGridSize; y++) {
-                        const rowData = [];
-                        for (let x = 0; x < subGridSize; x++) {
-                            const circleIndexX = subGridX * subGridSize + x;
-                            const circleIndexY = subGridY * subGridSize + y;
-                            const circle = this.brickData[circleIndexY * gridSize + circleIndexX];
-                            rowData.push(circle);
-                        }
-                        gridData.push(rowData);
-                        }
-                        this.gridArray.push(gridData);
-                    }
-                }
-                
-                //Print Pages
-                this.printPages();
-
-                //Print Each Canvas
-                this.printBoards();
-
-            } else {
-                if(this.querySelector('#instructionBtn')) {
-                    this.querySelector('#instructionBtn').disabled = true;
-                } 
-            }
+            this.initializeBrickData();
         });
-
-
     }
 
     //Methods
@@ -245,7 +194,61 @@ export default class MosaicInstructions extends HTMLElement {
         }
     }
 
+    initializeBrickData() {
+        if(this.brickData.length) { 
+            this.createInstructions();
 
+            //Consolodate
+            this.brickData.forEach((circle, i) => {
+                let fill = this.brickData[i].fill;
+                this.uniqueColors.push( `rgb( ${fill} )`); 
+            });
+
+            this.uniqueColors =  [...new Set(this.uniqueColors)].sort();
+            
+            //Create Multi Level Array
+            
+            // Define the sizes of the grids
+            const gridSize = 48; // 48x48 grid
+            const subGridSize = 16; // 16x16 sub-grid
+
+            // Calculate the number of sub-grids in each dimension
+            const numSubGridsX = gridSize / subGridSize;
+            const numSubGridsY = gridSize / subGridSize;
+
+            // Create a multi-level array to represent the grids
+            this.gridArray = [];
+
+            // Iterate through the circle data and organize it into grids
+            for (let subGridY = 0; subGridY < numSubGridsY; subGridY++) {
+                for (let subGridX = 0; subGridX < numSubGridsX; subGridX++) {
+                    const gridData = [];
+                    for (let y = 0; y < subGridSize; y++) {
+                    const rowData = [];
+                    for (let x = 0; x < subGridSize; x++) {
+                        const circleIndexX = subGridX * subGridSize + x;
+                        const circleIndexY = subGridY * subGridSize + y;
+                        const circle = this.brickData[circleIndexY * gridSize + circleIndexX];
+                        rowData.push(circle);
+                    }
+                    gridData.push(rowData);
+                    }
+                    this.gridArray.push(gridData);
+                }
+            }
+            
+            //Print Pages
+            this.printPages();
+
+            //Print Each Canvas
+            this.printBoards();
+
+        } else {
+            if(this.querySelector('#instructionBtn')) {
+                this.querySelector('#instructionBtn').disabled = true;
+            } 
+        }
+    }
 
 
 
