@@ -23,7 +23,18 @@ export default class Project extends HTMLElement {
                 <mosaic-creator project-view class="w-full h-full"></mosaic-creator>
                 <mosaic-instructions project-view class="w-full"></mosaic-instructions>
                 <mosaic-parts project-view class="w-full"></mosaic-parts>
-            </section>`
+            </section>
+            
+            <!-- Modal Dialog -->
+            <dialog id="beta-modal" class="flex flex-col modal-container bg-white w-96 mx-auto rounded-lg z-[100] p-6 shadow-lg !hidden">
+                <h2 class="text-lg font-semibold mb-4">Welcome to Lego Art Creator (Beta)!</h2>
+                <p class="mb-4">
+                    Your feedback is crucial as we improve our platform. Feel free to share your thoughts, 
+                    suggestions, or report issues using the button below or by visiting our <a href="/contact/" class="outline-0 text-sky-700 underline">contact&nbsp;page</a>. 
+                    Please keep in mind that our site is a work in progress. Thank you for joining us on this journey!
+                </p>
+                <button id="close-modal" class="ml-auto bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700 focus:outline-none focus:ring focus:border-sky-300">Got it</button>
+            </dialog>`
     }
 
     //Life Cycle Hooks
