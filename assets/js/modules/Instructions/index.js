@@ -157,7 +157,7 @@ export default class MosaicInstructions extends HTMLElement {
         ctx.lineWidth = 1;
         // Set a larger font size for the numbers
         const fontSize = 18; // Adjust the size as needed
-        ctx.font = fontSize+'px';
+        ctx.font = fontSize + 'px Arial'; // Include font family
 
         // Set the font color for the numbers
         ctx.fillStyle = 'blue'; // Change this to the desired color
@@ -168,31 +168,32 @@ export default class MosaicInstructions extends HTMLElement {
                 const circle = gridData[row][col];
 
                 // Find the index of the circle's fill color in uniqueColors
-                const colorIndex = this.uniqueColors.indexOf( `rgb( ${circle.fill} )` );
+                const colorIndex = this.uniqueColors.indexOf(`rgb(${circle.fill})`);
 
-                //Calculate circle position based on row, col, and cellSize
-                
-                const circleX = col * cellSize + cellSize / 2 + ctx.lineWidth / 2; // Compensate for stroke width
-                const circleY = row * cellSize + cellSize / 2 + ctx.lineWidth / 2; // Compensate for stroke width
-                const circleRadius = cellSize / 2 - ctx.lineWidth / 2; // Adjust for stroke width
+                // Calculate circle position based on row, col, and cellSize
+                // Adjust position to avoid overlap by adding half the stroke width
+                const circleX = col * cellSize + cellSize / 2;
+                const circleY = row * cellSize + cellSize / 2;
+                // Reduce the radius to account for the stroke width, avoiding overlap
+                const circleRadius = cellSize / 2 - ctx.lineWidth;
 
-                // Assuming circle is an object with fill and stroke properties
+                // Draw the circle
                 ctx.fillStyle = `rgb(${circle.fill})`;
                 ctx.strokeStyle = `rgb(${circle.stroke})`;
                 ctx.beginPath();
                 ctx.arc(circleX, circleY, circleRadius, 0, Math.PI * 2);
                 ctx.fill();
-                //ctx.stroke();
+                ctx.stroke();
 
                 // Display the corresponding number on the circle
-                ctx.fillStyle = `rgb(${circle.stroke})`;
-                ctx.font = '15px Arial'; // You can adjust the font size and style
+                ctx.fillStyle = `rgb(${circle.stroke})`; // For better visibility, ensure this color contrasts with the stroke color
                 ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(colorIndex + 1, circleX, circleY);
+                ctx.textBaseline = 'alphabetic'; // Changed from 'middle' to 'alphabetic'
+                ctx.fillText(colorIndex + 1, circleX, circleY + fontSize * 0.35); // Adjust the Y position slightly
             }
         }
     }
+
 
     initializeBrickData() {
         if(this.brickData.length) { 
