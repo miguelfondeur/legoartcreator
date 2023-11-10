@@ -3,6 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --grid-color: #ff0000; /* Red color */
+}
+
+.svg-grid {
+    color: var(--grid-color);
+}
+
 /* Layout Utility Classes */
 * { 
     box-sizing: border-box; 

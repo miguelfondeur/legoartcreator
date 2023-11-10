@@ -709,14 +709,14 @@ video {
   margin-bottom: 3rem;
 }
 
-.my-auto {
-  margin-top: auto;
-  margin-bottom: auto;
-}
-
 .my-4 {
   margin-top: 1rem;
   margin-bottom: 1rem;
+}
+
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .-mb-6 {
@@ -949,6 +949,10 @@ video {
 
 .min-h-\[240px\] {
   min-height: 240px;
+}
+
+.min-h-\[480px\] {
+  min-height: 480px;
 }
 
 .min-h-\[500px\] {
@@ -2055,6 +2059,15 @@ video {
 .\[mask-image\:radial-gradient\(32rem_32rem_at_center\2c white\2c transparent\)\] {
   -webkit-mask-image: radial-gradient(32rem 32rem at center,white,transparent);
           mask-image: radial-gradient(32rem 32rem at center,white,transparent);
+}
+
+:root {
+  --grid-color: #ff0000;
+  /* Red color */
+}
+
+.svg-grid {
+  color: var(--grid-color);
 }
 
 /* Layout Utility Classes */
