@@ -15,20 +15,20 @@ export default class MosaicCanvas extends HTMLElement {
                 #wrapper[size="1440"] canvas { width: 1440px; }
                 .max-w-full { max-width: 100%; }
                 /* .overflow-x-auto { overflow-x: auto; } */
-                #svg-grid, #small-grid, canvas {
+                svg-grid, small-grid, canvas {
                     transition-property: all;
                     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
                     transition-duration: 150ms;
                 }
-                #svg-grid { opacity: 1; }
-                #square-grid,
-                #small-square-grid,
-                #small-grid { 
+                svg-grid { opacity: 1; }
+                square-grid,
+                small-square-grid,
+                small-grid { 
                     opacity: 0; 
                 }
                 canvas { transform: translateZ(0);}
-                #wrapper[size="160"] #svg-grid { display: none; }
-                #wrapper[size="160"] #small-grid { opacity: 1 }
+                #wrapper[size="160"] svg-grid { display: none; }
+                #wrapper[size="160"] small-grid { opacity: 1 }
             </style>
             <!--Canvas Container -->
             <div id="container"
@@ -48,8 +48,8 @@ export default class MosaicCanvas extends HTMLElement {
                     ></canvas>
                     <!-- SVG Prview Grid -->
                     <div id="grid-wrapper" class="absolute z-10 top-0 left-0 w-full h-full max-w-none" style="color: rgb(${this.color});">
-                        <img id="svg-grid" src="/img/grids/grid.svg" class="right-0 top-0 max-w-none absolute min-h-[480px] h-full">
-                        <img id="small-grid" src="/img/grids/smallgrid.svg" class="right-0 top-0 max-w-none absolute min-h-[480px] h-full">
+                        <svg-grid class="absolute h-480px"></svg-grid>
+                        <small-grid class="absolute h-480px"></small-grid>
                         <!--  <square-grid class="absolute h-480px"></square-grid>  -->
                         <!--  <small-square-grid class="absolute h-480px"></small-square-grid>  -->
                     </div>
