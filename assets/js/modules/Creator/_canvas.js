@@ -615,7 +615,7 @@ export default class MosaicCanvas extends HTMLElement {
             let newStrokeColor = brickColors[closestColor.index].stroke;
             
             this.circles[i].fill = newColor;
-            this.circles[i].stroke = newColor;
+            this.circles[i].stroke = newStrokeColor;
 
             // this.circles[i].fill = results[i];
         }

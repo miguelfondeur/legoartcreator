@@ -4,9 +4,9 @@ export default class MosaicInstructions extends HTMLElement {
         
     render() {
         this.innerHTML = /*html*/ `
-            <div class="flex flex-col flex-grow w-full min-h-full pt-[56px] items-center" >
+            <div class="flex flex-col flex-grow w-full min-h-full pt-[56px] px-4 items-center" >
                 <!-- First Slide -->
-                <section id="coverPage" class="m-4 bg-white shadow-lg shadow-gray-500 w-full h-[768px] max-w-screen-md flex flex-col">
+                <section id="coverPage" class="my-4 bg-white shadow-lg shadow-gray-500 w-full h-[768px] max-w-screen-md flex flex-col">
                     <div class="w-full flex flex-grow">
                         <div class="w-7/12 bg-cover bg-center" id="originalImg"></div>
                         <div class="w-5/12 bg-red-800 border-l-2 border-white bg-gradient-to-b from-[#507896] to-[#223d53]">
@@ -182,10 +182,10 @@ export default class MosaicInstructions extends HTMLElement {
                 ctx.beginPath();
                 ctx.arc(circleX, circleY, circleRadius, 0, Math.PI * 2);
                 ctx.fill();
-                ctx.stroke();
+                //ctx.stroke();
 
                 // Display the corresponding number on the circle
-                ctx.fillStyle = 'white';
+                ctx.fillStyle = `rgb(${circle.stroke})`;
                 ctx.font = '15px Arial'; // You can adjust the font size and style
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
