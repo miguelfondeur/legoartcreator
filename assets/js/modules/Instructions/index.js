@@ -23,8 +23,8 @@ export default class MosaicInstructions extends HTMLElement {
                                 4167
                             </li>
                             <!--
-                            <li>Size:</li>
-                            <li>Price:</li>
+                                <li>Size:</li>
+                                <li>Price:</li>
                             -->
                         </ul>
                     </div>
@@ -156,7 +156,7 @@ export default class MosaicInstructions extends HTMLElement {
         // Set the stroke width to 1
         ctx.lineWidth = 1;
         // Set a larger font size for the numbers
-        const fontSize = 18; // Adjust the size as needed
+        const fontSize = 16; // Adjust the size as needed
         ctx.font = fontSize + 'px Arial'; // Include font family
 
         // Set the font color for the numbers
@@ -168,7 +168,7 @@ export default class MosaicInstructions extends HTMLElement {
                 const circle = gridData[row][col];
 
                 // Find the index of the circle's fill color in uniqueColors
-                const colorIndex = this.uniqueColors.indexOf(`rgb(${circle.fill})`);
+                const colorIndex = this.uniqueColors.indexOf(`rgb( ${circle.fill} )`);
 
                 // Calculate circle position based on row, col, and cellSize
                 // Adjust position to avoid overlap by adding half the stroke width

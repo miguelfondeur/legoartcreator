@@ -92,7 +92,7 @@ export default class MosaicParts extends HTMLElement {
                         img: matchingColor.img,
                         id: matchingColor.id
                     };
-
+                    console.log(circle)
                     this.uniqueCircles.push(circle);
                 }
             }
