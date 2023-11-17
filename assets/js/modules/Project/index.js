@@ -103,6 +103,7 @@ export default class Project extends HTMLElement {
         if (selectedView) {
             selectedView.style.display = 'block';
         }
+        window.location.hash = `#${view}`;
     }
 }
 

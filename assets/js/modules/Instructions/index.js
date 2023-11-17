@@ -4,7 +4,7 @@ export default class MosaicInstructions extends HTMLElement {
         
     render() {
         this.innerHTML = /*html*/ `
-            <div class="flex flex-col flex-grow w-full min-h-full pt-[56px] px-4 items-center" >
+            <div id="instructions" class="flex flex-col flex-grow w-full min-h-full pt-[56px] px-4 items-center" >
                 <!-- First Slide -->
                 <section id="coverPage" class="my-4 bg-white shadow-lg shadow-gray-500 w-full h-[768px] max-w-screen-md flex flex-col">
                     <div class="w-full flex flex-grow">

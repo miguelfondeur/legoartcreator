@@ -71,10 +71,10 @@ export default class Editor extends HTMLElement {
                 </dialog>
 
                 <!-- Canvas View -->
-                <section id="canvas-view" class="w-full flex items-center justify-center relative  mt-[56px] overflow-hidden">
-                    <div class="absolute flex h-full w-full transition-all  pt-[24px] overflow-auto">
+                <section id="canvas-view" class="w-full relative  mt-[56px] overflow-hidden">
+                    <div id="mosaic-wrapper" class="absolute h-full w-full transition-all block overflow-auto">
                         <mosaic-canvas 
-                            class="w-[calc(100%+200px)] h-[calc(100%+200px)] flex justify-center items-center pl-[78px] lg:pl-[440px] pr-4"
+                            class="w-[calc(100vw+200px)] h-[calc(100vh+200px)] flex justify-center items-center pl-[78px] lg:pl-[440px] pr-4"
                             step="${this.step}" 
                             size="${this.size}" 
                             color="${ this.color }"
@@ -186,6 +186,8 @@ export default class Editor extends HTMLElement {
         this.finishButton = this.querySelector('#finishButton');
         this.closeModalButton = this.querySelector('#closeModal');
         this.sizeSlider = this.querySelector('#size-slider');
+
+        this.updateScrollPosition();
         
         this.showImage.addEventListener('change', (e) => {
             this.mosaic.toggleShowImage(e.target.checked);
@@ -343,6 +345,18 @@ export default class Editor extends HTMLElement {
             this.querySelector('#results-view').classList.add('!hidden');
         };
     };
+
+    updateScrollPosition() {
+        const parentDiv = this.querySelector('#mosaic-wrapper'); // Parent container with overflow
+        const mosaicWrapper = this.querySelector('mosaic-canvas');
+    
+        // Calculate the center position of the scaled mosaic-wrapper
+        const centerX = (mosaicWrapper.offsetWidth - parentDiv.offsetWidth) / 2;
+        const centerY = (mosaicWrapper.offsetHeight - parentDiv.offsetHeight) / 2;
+    
+        // Scroll to the center of the mosaic-wrapper
+        parentDiv.scrollTo(centerX, centerY);
+    }
 
     // Function to update the scale of mosaic-view
     updateMosaicViewScale() {

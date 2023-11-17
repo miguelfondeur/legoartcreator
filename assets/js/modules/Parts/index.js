@@ -5,7 +5,7 @@ export default class MosaicParts extends HTMLElement {
         
     render() {
         this.innerHTML = /*html*/ `
-            <div class="flex flex-col flex-grow w-full min-h-full pt-[56px] items-center" >
+            <div id="parts" class="flex flex-col flex-grow w-full min-h-full pt-[56px] items-center" >
                 <div id="partsWrapper" class="px-4 my-12 w-full max-w-5xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>    
             </div>`
     }
