@@ -32,7 +32,7 @@ export default class MosaicCanvas extends HTMLElement {
             </style>
             <!--Canvas Container -->
             <div id="container"
-                 class="mx-auto w-min max-w-full border-[10px] outline-1 shadow-lg" 
+                 class="mx-auto w-min border-[10px] outline-1 shadow-lg" 
                  style="border-color: rgb( ${ this.frame } )"
             >
                 <div id="wrapper" 
@@ -49,8 +49,8 @@ export default class MosaicCanvas extends HTMLElement {
                     <!-- SVG Prview Grid -->
                     <div id="grid-wrapper" class="absolute z-10 top-0 left-0 w-full h-full max-w-none" style="color: rgb(${this.color});">
                         <svg-grid class="absolute h-480px"></svg-grid>
-                        <small-grid class="absolute h-480px"></small-grid>
                         <!--  <square-grid class="absolute h-480px"></square-grid>  -->
+                        <small-grid class="absolute h-480px"></small-grid>
                         <!--  <small-square-grid class="absolute h-480px"></small-square-grid>  -->
                     </div>
                     <!-- Canvas Element -->

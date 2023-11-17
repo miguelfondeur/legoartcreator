@@ -23,6 +23,13 @@ export default class Project extends HTMLElement {
                 <mosaic-creator project-view class="w-full h-full"></mosaic-creator>
                 <mosaic-instructions project-view class="w-full"></mosaic-instructions>
                 <mosaic-parts project-view class="w-full"></mosaic-parts>
+
+                <!-- Support -->
+                <div class="z-50 fixed right-3 bottom-3 inline-flex flex-shrink-0 items-center text-sm">
+                    <a href="/contact/" class="p-2 bg-white rounded-lg text-xs border border-gray-300">
+                        Give Feedback
+                    </a>
+                </div>
             </section>
             
             <!-- Modal Dialog -->

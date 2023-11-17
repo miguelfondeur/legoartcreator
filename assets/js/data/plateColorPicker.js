@@ -30,5 +30,13 @@ export const platePickerData = [
         "rgb": [211,189,227],
         "alpha": "1",
         "id": "6133812"
-    }
+    },
+    {
+        "name": "Olive Green",
+        "family": "green",
+        "isDark": true,
+        "rgb": [171,169,83],
+        "alpha": "1",
+        "id": "6301768"
+    },
 ]

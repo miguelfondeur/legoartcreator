@@ -22,14 +22,14 @@ export default class Editor extends HTMLElement {
             </style>
             <div class="flex min-h-full relative">
                 <!-- Sidebar -->
-                <aside class="backdrop-blur-sm min-w-[72px] flex-col flex px-4 text-sm flex-shrink-0 pt-20 bg-zinc-100/90 z-40 top-0 left-0 h-[calc(100%-50px)] relative absolute" id="dashboard-steps" step="${this.step}">
+                <aside class="backdrop-blur-sm min-w-[72px] flex-col flex px-4 text-sm flex-shrink-0 pt-20 bg-zinc-100/80 z-40 top-0 left-0 h-[calc(100%-50px)] absolute" id="dashboard-steps" step="${this.step}">
                     <button 
                         class="cursor-pointer flex flex-col items-center justify-center py-3 text-sky-700" 
                         data-step="1"
                         onclick="updateStep(1)"
                     >
                         <svg class="w-6" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.3805 14H2.61948C2.26978 14 2 13.7302 2 13.3905V2.61948C2 2.27977 2.27977 2 2.61948 2H13.3805C13.7202 2 14 2.27977 14 2.61948V13.3805C14 13.7302 13.7202 14 13.3805 14Z" stroke="currentColor" stroke-miterlimit="10"></path><path d="M8 2V14" stroke="currentColor" stroke-miterlimit="10"></path><path d="M14 8H8" stroke="currentColor" stroke-miterlimit="10"></path></svg>
-                        <span>Canvas</span>
+                        Canvas
                     </button>
                     <button 
                         class="cursor-pointer flex flex-col items-center justify-center py-3"
@@ -57,7 +57,13 @@ export default class Editor extends HTMLElement {
                     </button>
                 </aside>
 
-                <dialog id="modal" open class="ml-[118px] mt-20 z-40 p-4 bg-white shadow-xl rounded-2xl w-80" step="1">
+                <dialog id="modal" open class="lg:block ml-[88px] mt-20 z-40 p-4 bg-white shadow-xl rounded-2xl w-80" step="1">
+                    <button id="closeModal" class="absolute right-3 top-3 lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <!-- Steps -->
                     <step-one size="${this.size}"></step-one>
                     <step-two size="${this.size}" color="${ this.color }"></step-two>
                     <step-three color="${ this.color }"></step-three>
@@ -65,10 +71,10 @@ export default class Editor extends HTMLElement {
                 </dialog>
 
                 <!-- Canvas View -->
-                <section id="canvas-view" class="w-full flex items-center justify-center overflow-auto relative pl-[440px]">
-                    <div class="w-full flex items-center justify-center absolute h-full">
+                <section id="canvas-view" class="w-full flex items-center justify-center relative  mt-[56px] overflow-hidden">
+                    <div class="absolute flex h-full w-full transition-all  pt-[24px] overflow-auto">
                         <mosaic-canvas 
-                            class="shadow-2xl"
+                            class="w-[calc(100%+200px)] h-[calc(100%+200px)] flex justify-center items-center pl-[78px] lg:pl-[440px] pr-4"
                             step="${this.step}" 
                             size="${this.size}" 
                             color="${ this.color }"
@@ -79,7 +85,9 @@ export default class Editor extends HTMLElement {
 
                 <!-- Results View -->
                 <section id="results-view" class="w-full flex flex-col items-center justify-center pl-[80px] !hidden">
-                    <img id="previewImage" src="" alt="Project Preview" class="mb-4 min-h-[240px] min-w-[240px]">
+                    <div class="bg-black p-[10px] mb-4">
+                        <img id="previewImage" src="" alt="Project Preview" class="min-h-[240px] min-w-[240px]">
+                    </div>
                     <button id="finishButton" class="text-lg max-w-[240px] cursor-pointer flex mb-1 w-full justify-center items-center py-3 shadow-sm rounded-full bg-orange-500 text-black">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-1.5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v1.5M3 21v-6m0 0l2.77-.693a9 9 0 016.208.682l.108.054a9 9 0 006.086.71l3.114-.732a48.524 48.524 0 01-.005-10.499l-3.11.732a9 9 0 01-6.085-.711l-.108-.054a9 9 0 00-6.208-.682L3 4.5M3 15V4.5" />
@@ -89,11 +97,11 @@ export default class Editor extends HTMLElement {
                 </section> 
 
                 <!-- Footer Controls -->
-                <footer id="footer-controls" class="backdrop-blur-sm h-[50px] z-40 absolute w-full bottom-0 left-0 bg-zinc-100/90 px-4 flex items-center justify-left">
+                <footer id="footer-controls" class="backdrop-blur-sm h-[50px] z-40 absolute w-full bottom-0 left-0 bg-zinc-100/80 px-4 flex items-center justify-left">
                      <!-- Zoom -->
                     <div class="flex flex-col mt-1 justify-center mr-4">
                         <label class="flex items-center">
-                            <input class="accent-[rgb(50,50,50)]" type="range" id="saturation-slider" min="0" max="2" step="0.1" value="1">
+                            <input class="accent-[rgb(50,50,50)]" type="range" id="size-slider" min="1" max="2" step="0.1" value="1">
                             <span class="text-sm ml-2">100%</span> 
                         </label>
                     </div>
@@ -119,12 +127,6 @@ export default class Editor extends HTMLElement {
                             </svg>
                             <span>Redo</span>
                         </button>
-                    </div>
-                    <!-- Support -->
-                    <div class="inline-flex flex-shrink-0 items-center text-sm">
-                        <a href="/contact/" class="p-2 bg-white rounded-lg text-xs border border-gray-300">
-                            Give Feedback
-                        </a>
                     </div>
                 </footer>
             </div>
@@ -176,11 +178,14 @@ export default class Editor extends HTMLElement {
         this.render(); //renders your custom element to the DOM
 
         this.mosaic = this.querySelector('mosaic-canvas');
+        this.mosaicView = this.querySelector('#mosaic-view');
         this.dialog = this.querySelector('dialog');
         this.stepButtons = this.querySelectorAll('[data-step]');
         this.showImage = this.querySelector('#showImage');
         this.previewImage = this.querySelector('#previewImage');
         this.finishButton = this.querySelector('#finishButton');
+        this.closeModalButton = this.querySelector('#closeModal');
+        this.sizeSlider = this.querySelector('#size-slider');
         
         this.showImage.addEventListener('change', (e) => {
             this.mosaic.toggleShowImage(e.target.checked);
@@ -191,10 +196,22 @@ export default class Editor extends HTMLElement {
             eventDispatcher.dispatchEvent('finishProject');
         })
 
+        //Close Modal
+        this.closeModalButton.addEventListener('click', () => {
+            this.querySelector('#modal').classList.add('hidden');
+            this.stepButtons.forEach(step => {
+                step.classList.remove('text-sky-700');
+            });
+        });        
+
         //listen to events
         eventDispatcher.addEventListener('handleCreateImage', e => {
             this.previewImage.src = e.dataURL;
         });
+        
+        this.sizeSlider.addEventListener('input', (e) => {
+            this.updateMosaicViewScale();
+        })
 
         this.addEventListener('updateSize', (e)=> {
             this.mosaic.size = e.detail.size 
@@ -301,12 +318,15 @@ export default class Editor extends HTMLElement {
 
     //Functions
     updateStep(step) {
+        this.querySelector('#modal').classList.remove('hidden');
         this.step = step;
         this.dialog.setAttribute("step", step);
+
         this.stepButtons.forEach(step => {
             step.classList.remove('text-sky-700');
         });
         this.querySelector(`[data-step="${step}"]`).classList.add('text-sky-700');
+
         if(step == 3) {
             this.mosaic.drawMode = true;
             this.showImage.checked = false;
@@ -324,6 +344,12 @@ export default class Editor extends HTMLElement {
         };
     };
 
+    // Function to update the scale of mosaic-view
+    updateMosaicViewScale() {
+        const scaleValue = this.sizeSlider.value;
+        // Apply the scale transformation
+        this.mosaic.style.transform = `scale(${scaleValue})`;
+    }
 }
 
 customElements.define('mosaic-creator', Editor);

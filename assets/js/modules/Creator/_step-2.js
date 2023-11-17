@@ -31,7 +31,7 @@ export default class StepTwo extends HTMLElement {
                 <div class="flex flex-col pb-2 mb-2">
                     <div class="flex gap-2 border-b border-gray-200 mb-4">
                         <button class="inline-flex text-sm border-b-[3px] border-black pb-2">Upload</button>
-                        <button class="inline-flex text-sm pb-2">Discover</button>
+                        <!-- <button class="inline-flex text-sm pb-2">Discover</button> -->
                     </div>
                     <p class="text-xs font-light mb-3 text-black">
                         Accepted formats .jpg, .jpeg, .png, .svg
