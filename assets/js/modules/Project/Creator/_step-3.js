@@ -1,4 +1,4 @@
-import { allBrickColors } from '../../data/allBrickColors.js';
+import { allBrickColors } from '../../../data/allBrickColors.js';
 
 export default class StepThree extends HTMLElement {
     constructor() {

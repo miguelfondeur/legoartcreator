@@ -1,8 +1,8 @@
 import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
 import ProjectHeader from './header.js';
-import Editor from '../Creator/index.js';
-import MosaicInstructions from '../Instructions/index.js';
-import MosaicParts from '../Parts/index.js';
+import Editor from './Creator/index.js';
+import MosaicInstructions from './Instructions/index.js';
+import MosaicParts from './Parts/index.js';
 
 export default class Project extends HTMLElement {
 
@@ -34,7 +34,7 @@ export default class Project extends HTMLElement {
             
             <!-- Modal Dialog -->
             <dialog id="beta-modal" class="flex flex-col modal-container bg-white w-96 mx-auto rounded-lg z-[100] p-6 shadow-lg !hidden">
-                <h2 class="text-lg font-semibold mb-4">Welcome to Lego Art Creator (Beta)!</h2>
+                <h2 class="text-lg font-semibold mb-4">Welcome to Brick Art Creator (Beta)!</h2>
                 <p class="mb-4">
                     Your feedback is crucial as we improve our platform. Feel free to share your thoughts, 
                     suggestions, or report issues using the button below or by visiting our <a href="/contact/" class="outline-0 text-sky-700 underline">contact&nbsp;page</a>. 
@@ -45,9 +45,6 @@ export default class Project extends HTMLElement {
     }
 
     //Life Cycle Hooks
-    attributeChangedCallback(prop, oldVal, newVal) {
-
-    }
 
     // Stage: 'Component now connected to DOM'
     connectedCallback() {
@@ -83,10 +80,6 @@ export default class Project extends HTMLElement {
     }
 
     //Functions
-    updateActiveLink(activePage) {
-
-    }
-
     changeProjectView(view) {
         // Hide all views
         const views = this.querySelectorAll('[project-view]');
@@ -104,6 +97,20 @@ export default class Project extends HTMLElement {
             selectedView.style.display = 'block';
         }
         window.location.hash = `#${view}`;
+    }
+
+    //Functions
+    updateActiveLink(activePage) {
+        const links = this.querySelectorAll("[project-page-id]");
+        links.forEach((link) => {
+            if (link.getAttribute("project-page-id") === activePage) {
+            link.classList.add("bg-sky-600", "!text-white");
+            link.classList.remove("border-transparent");
+            } else {
+            link.classList.add("border-transparent");
+            link.classList.remove("bg-sky-600", "!text-white");
+            }
+        });
     }
 }
 

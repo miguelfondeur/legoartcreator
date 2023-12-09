@@ -1,5 +1,5 @@
-import { allBrickColors } from '../../data/allBrickColors.js';
-import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import { allBrickColors } from '../../../data/allBrickColors.js';
+import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
 
 export default class MosaicParts extends HTMLElement {
         

@@ -1,4 +1,4 @@
-import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
 import './_canvas.js';
 import './_step-1.js';
 import './_step-2.js';
@@ -188,15 +188,6 @@ export default class Editor extends HTMLElement {
         this.sizeSlider = this.querySelector('#size-slider');
 
         this.updateScrollPosition();
-        
-        this.showImage.addEventListener('change', (e) => {
-            this.mosaic.toggleShowImage(e.target.checked);
-            this.querySelector('step-two').toggleImageSettings(e.target.checked);
-        })
-
-        this.finishButton.addEventListener('click', (e) => {
-            eventDispatcher.dispatchEvent('finishProject');
-        })
 
         //Close Modal
         this.closeModalButton.addEventListener('click', () => {
@@ -207,14 +198,20 @@ export default class Editor extends HTMLElement {
         });        
 
         //listen to events
-        eventDispatcher.addEventListener('handleCreateImage', e => {
-            this.previewImage.src = e.dataURL;
-        });
         
+        this.showImage.addEventListener('change', (e) => {
+            this.mosaic.toggleShowImage(e.target.checked);
+            this.querySelector('step-two').toggleImageSettings(e.target.checked);
+        })
+
+        this.finishButton.addEventListener('click', (e) => {
+            eventDispatcher.dispatchEvent('finishProject');
+        })
+
         this.sizeSlider.addEventListener('input', (e) => {
             this.updateMosaicViewScale();
         })
-
+        
         this.addEventListener('updateSize', (e)=> {
             this.mosaic.size = e.detail.size 
         });

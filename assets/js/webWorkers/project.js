@@ -4,8 +4,8 @@
 
 //Project data Model
 const project = {
-    name: "",
-    size: "",
+    name: "New Project",
+    size: "480",
     image: "",
     projectImage: "",
     uniqueBricks: [],

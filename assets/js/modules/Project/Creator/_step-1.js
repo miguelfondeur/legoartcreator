@@ -1,5 +1,5 @@
 //import '../Forms/_colorpicker.js';
-import { platePickerData } from '../../data/plateColorPicker.js';
+import { platePickerData } from '../../../data/plateColorPicker.js';
 // import '../Modal.js';
 // import '../ImageWidget.js';
 

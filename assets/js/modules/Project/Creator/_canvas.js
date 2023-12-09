@@ -1,9 +1,9 @@
 import '../SVGGrids/_grid.js';
 import '../SVGGrids/_smallgrid.js';
-import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
 //import '../Grids/_squareGrid.js';
 //import '../Grids/_smallSqareGrid.js';
-import { brickColors } from '../../data/brickColors.js';
+import { brickColors } from '../../../data/brickColors.js';
 
 export default class MosaicCanvas extends HTMLElement {
     render() {

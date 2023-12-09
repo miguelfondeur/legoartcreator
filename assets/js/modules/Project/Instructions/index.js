@@ -1,4 +1,4 @@
-import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
 
 export default class MosaicInstructions extends HTMLElement {
         
