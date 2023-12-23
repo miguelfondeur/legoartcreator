@@ -717,20 +717,20 @@
         "bricklink": "98138"
       }
     },
-    // {
-    //     "name": "Flat Silver",    
-    //     "family": "gray",
-    //     "rgb": [141,148,156],
-    //     "alpha": "1",
-    //     "stroke": [0,0,0],
-    //     "price": "0.03",
-    //     "img": "/img/bricks/flat-silver.jpeg",
-    //     "id" : {
-    //         "element": "4655241",
-    //         "design": "35381",       
-    //         "bricklink": "98138",
-    //     }
-    // },
+    {
+        "name": "Flat Silver",    
+        "family": "gray",
+        "rgb": [141,148,156],
+        "alpha": "1",
+        "stroke": [0,0,0],
+        "price": "0.03",
+        "img": "/img/bricks/flat-silver.jpeg",
+        "id" : {
+            "element": "4655241",
+            "design": "35381",       
+            "bricklink": "98138",
+        }
+    },
     {
       "name": "Silver Metalic",
       "family": "metalic",

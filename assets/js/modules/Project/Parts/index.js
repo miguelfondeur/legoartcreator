@@ -5,7 +5,22 @@ export default class MosaicParts extends HTMLElement {
         
     render() {
         this.innerHTML = /*html*/ `
-            <div id="parts" class="flex flex-col flex-grow w-full min-h-full pt-[56px] items-center" >
+            <div id="parts" class="flex flex-col lg:flex-row flex-grow w-full min-h-full pt-[56px] px-4 mx-auto xl:container" >
+                <div id="totalWrapper" class="px-4 pt-4 pb-8 my-12 flex-shrink-0 bg-white w-[300px] h-min border border-gray-200 rounded-2xl shadow-xl">
+                    <section>
+                        <p class="text-xl mb-4">Parts</p>
+                        <p>Total Parts: #</p>
+                        <p>Total Costs on Lego: $</p>
+                        <p>Total Costs on Webrick: $</p>
+                        <hr class="my-4">
+                        <button class="bg-sky-600 text-white mt-auto text-sm text-center rounded-xl w-full p-3 cursor-pointer mb-2">
+                            Download Parts Data
+                        </button>
+                        <button class="w-full hover:bg-gray-100 px-2 md:px-4 py-2 rounded-full inline-flex items-center justify-center text-sky-700 transition-all shadow hover:shadow-md border-transparent">
+                            Upload Parts Data to Webrick
+                        </button>
+                    </section>
+                </div>
                 <div id="partsWrapper" class="px-4 my-12 w-full max-w-5xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>    
             </div>`
     }
@@ -90,7 +105,8 @@ export default class MosaicParts extends HTMLElement {
                         family: matchingColor.family,
                         price: matchingColor.price,
                         img: matchingColor.img,
-                        id: matchingColor.id
+                        id: matchingColor.id,
+                        color: matchingColor.color_id,
                     };
                     this.uniqueCircles.push(circle);
                 }
@@ -107,8 +123,19 @@ export default class MosaicParts extends HTMLElement {
                     <p class="uppercase">${part.name}</p>
                     <p class="uppercase text-gray-500 text-xs mb-2">${part.id.element}/${part.id.design}</p>
                     <p class="">$${ Math.round( (parseFloat(part.price) * parseFloat(part.quantity)) * 100) / 100 }</p>
-                    <p class="text-gray-500 uppercase text-xs mb-4">$${part.price} x ${part.quantity}</p>
-                    <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" target="blank" class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded w-full p-3 cursor-pointer">Buy on LEGO</a>
+                    <p class="text-gray-500 uppercase text-xs mb-3">$${part.price} x ${part.quantity}</p>
+                    <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
+                        target="blank" 
+                        class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer mb-2"
+                    >
+                        Buy on LEGO
+                    </a>
+                    <a href="https://www.webrick.com/flat-tile-1x1-round-98138.html?color=${part.color}&quantity=76&brand=80/#aid=2046" 
+                        target="blank" 
+                        class="bg-[#f57d20] text-white text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer"
+                    >
+                        Buy on Webrick
+                    </a>
                 </section>`
             ).join('')}`
         }

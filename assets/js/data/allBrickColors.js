@@ -7,6 +7,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/dark-brown.jpeg",
+            "color_id": 45,
             "id" : {
                 "element":  "6322813",
                 "design": "35381",
@@ -21,6 +22,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/reddish-brown.jpeg",
+            "color_id": 36,
             "id" : {
                 "element":  "6284586",
                 "design": "35381",
@@ -36,6 +38,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/sand-yellow.jpeg",
+            "color_id": 29,
             "id" : {
                 "element":  "6322841",
                 "design": "35381",
@@ -50,6 +53,7 @@ export const allBrickColors = [
             "stroke": [130, 66, 42],
             "price": "0.04",
             "img": "/img/bricks/transparent-brown.jpeg",
+            "color_id": 23,
             "id" : {
                 "element": "6274744",
                 "design": "35380",
@@ -64,6 +68,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/dark-red.jpeg",
+            "color_id": 33,
             "id" : {
                 "element": "6284585",
                 "design": "35381",
@@ -79,6 +84,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/bright-red.jpeg",
+            "color_id": 8,
             "id" : {
                 "element": "6284574",
                 "design": "35381",
@@ -94,6 +100,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/vibrant-coral.jpeg",
+            "color_id": 0,
             "id" : {
                 "element":  "6311436",
                 "design": "35381",
@@ -108,6 +115,7 @@ export const allBrickColors = [
             "stroke": [179, 0, 6],
             "price": "0.04",
             "img": "/img/bricks/transparent-red.jpeg",
+            "color_id": 16,
             "id" : {
                 "element": "6258607",
                 "design": "35380",
@@ -122,6 +130,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/dark-orange.jpeg",
+            "color_id": 14,
             "id" : {
                 "element": "6322840",
                 "design": "35381",
@@ -137,6 +146,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.04",
             "img": "/img/bricks/bright-orange.jpeg",
+            "color_id": 22,
             "id" : {
                 "element": "6284582",
                 "design": "35381",
@@ -152,6 +162,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/flame-yellowish-orange.jpeg",
+            "color_id": 35,
             "id" : {
                 "element": "6322822",
                 "design": "35381",
@@ -166,6 +177,7 @@ export const allBrickColors = [
             "stroke": [255, 126, 20],
             "price": "0.03",
             "img": "/img/bricks/transparent-bright-orange.jpeg",
+            "color_id": 34,
             "id" : {
                 "element": "6274747",
                 "design": "35380",
@@ -181,6 +193,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/bright-yellow.jpeg",
+            "color_id": 11,
             "id" : {
                 "element": "6284577",
                 "design": "35381",
@@ -196,6 +209,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/cool-yellow.jpeg",
+            "color_id": 42,
             "id" : {
                 "element": "6343806",
                 "design": "35381",
@@ -211,6 +225,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/vibrant-yellow.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6376825",
                 "design": "35381",
@@ -225,6 +240,7 @@ export const allBrickColors = [
             "stroke": [235, 247, 45],
             "price": "0.04",
             "img": "/img/bricks/transparent-yellow.jpeg",
+            "color_id": 19,
             "id" : {
                 "element": "6274740",
                 "design": "35380",
@@ -239,8 +255,24 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/olive-green.jpeg",
+            "color_id": 55,
             "id" : {
                 "element": "6284595",
+                "design": "35381",
+                "bricklink": "98138",
+            }
+        },
+        {
+            "name": "Sand Green",
+            "family": "green",
+            "rgb": [111,148,122],
+            "alpha": "1",
+            "stroke": [0,0,0],
+            "price": "0.04",
+            "img": "/img/bricks/sand-green.jpeg",
+            "color_id": 32,
+            "id" : {
+                "element": "6403175",
                 "design": "35381",
                 "bricklink": "98138",
             }
@@ -253,6 +285,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/bright-yellowish-green.jpeg",
+            "color_id": 25,
             "id" : {
                 "element": "6284583",
                 "design": "35381",
@@ -268,6 +301,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/spring-yellowish-green.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6284598",
                 "design": "35381",
@@ -282,6 +316,7 @@ export const allBrickColors = [
             "stroke": [16, 203, 49],
             "price": "0.04",
             "img": "/img/bricks/transparent-bright-green.jpeg",
+            "color_id": 46,
             "id" : {
                 "element": "6274748",
                 "design": "35380",
@@ -297,6 +332,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.04",
             "img": "/img/bricks/earth-green.jpeg",
+            "color_id": 31,
             "id" : {
                 "element": "6397157",
                 "design": "35380",
@@ -311,6 +347,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.05",
             "img": "/img/bricks/dark-green.jpeg",
+            "color_id": 12,
             "id" : {
                 "element": "6396247",
                 "design": "35381",
@@ -325,6 +362,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/bright-green.jpeg",
+            "color_id": 13,
             "id" : {
                 "element": "6353793",
                 "design": "35381",
@@ -339,6 +377,7 @@ export const allBrickColors = [
             "stroke": [33, 118, 37],
             "price": "0.04",
             "img": "/img/bricks/transparent-green.jpeg",
+            "color_id": 20,
             "id" : {
                 "element": "6274742",
                 "design": "35380",
@@ -353,6 +392,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/bright-purple.jpeg",
+            "color_id": 40,
             "id" : {
                 "element": "6322821",
                 "design": "35381",
@@ -367,6 +407,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/light-purple.jpeg",
+            "color_id": 41,
             "id" : {
                 "element": "6284587",
                 "design": "35381",
@@ -381,6 +422,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/light-nougat.jpeg",
+            "color_id": 65,
             "id" : {
                 "element": "6315196",
                 "design": "35381",
@@ -395,6 +437,7 @@ export const allBrickColors = [
             "stroke": [206, 29, 155],
             "price": "0.04",
             "img": "/img/bricks/transparent-medium-reddish-violet.jpeg",
+            "color_id": 24,
             "id" : {
                 "element": "6274745",
                 "design": "35380",
@@ -409,6 +452,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/bright-reddish-violet.jpeg",
+            "color_id": 26,
             "id" : {
                 "element": "6322816",
                 "design": "35381",
@@ -423,6 +467,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.04",
             "img": "/img/bricks/medium-lavender.jpeg",
+            "color_id": 52,
             "id" : {
                 "element": "6346374",
                 "design": "35381",
@@ -437,6 +482,22 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/lavender.jpeg",
+            "color_id": 53,
+            "id" : {
+                "element": "6322820",
+                "design": "35381",
+                "bricklink": "98138",
+            }
+        },
+        {
+            "name": "Medium Lilac",
+            "family": "lilac",
+            "rgb": [76,46,146],
+            "alpha": "1",
+            "stroke": [0,0,0],
+            "price": "0.03",
+            "img": "/img/bricks/medium-lilac.jpeg",
+            "color_id": 43,
             "id" : {
                 "element": "6322820",
                 "design": "35381",
@@ -451,6 +512,7 @@ export const allBrickColors = [
             "stroke": [85, 37, 183],
             "price": "0.04",
             "img": "/img/bricks/transparent-bright-violet.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6325432",
                 "design": "35380",
@@ -466,6 +528,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/earth-blue.jpeg",
+            "color_id": 30,
             "id" : {
                 "element": "6284584",
                 "design": "35381",
@@ -481,6 +544,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/bright-blue.jpeg",
+            "color_id": 10,
             "id" : {
                 "element": "6284575",
                 "design": "35381",
@@ -495,6 +559,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/medium-blue.jpeg",
+            "color_id": 21,
             "id" : {
                 "element": "6284602",
                 "design": "35381",
@@ -509,6 +574,7 @@ export const allBrickColors = [
             "stroke": [0, 87, 166],
             "price": "0.04",
             "img": "/img/bricks/transparent-blue.jpeg",
+            "color_id": 18,
             "id" : {
                 "element": "6273627",
                 "design": "35380",
@@ -523,6 +589,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/dark-azur.jpeg",
+            "color_id": 49,
             "id" : {
                 "element": "6322824",
                 "design": "35381",
@@ -537,6 +604,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/medium-azur.jpeg",
+            "color_id": 50,
             "id" : {
                 "element": "6322819",
                 "design": "35381",
@@ -552,6 +620,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/light-royal-blue.jpeg",
+            "color_id": 39,
             "id" : {
                 "element": "6322823",
                 "design": "35381",
@@ -566,6 +635,7 @@ export const allBrickColors = [
             "stroke": [104, 188, 197],
             "price": "0.04",
             "img": "/img/bricks/transparent-light-blue.jpeg",
+            "color_id": 17,
             "id" : {
                 "element": "6274739",
                 "design": "35380",
@@ -580,6 +650,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/bright-bluish-green.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6311437",
                 "design": "35381",
@@ -595,6 +666,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/aqua.jpeg",
+            "color_id": 51,
             "id" : {
                 "element": "6322818",
                 "design": "35381",
@@ -609,6 +681,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.26",
             "img": "/img/bricks/white-glow.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6284592",
                 "design": "35381",
@@ -623,6 +696,7 @@ export const allBrickColors = [
             "stroke": [104, 188, 197],
             "price": "0.04",
             "img": "/img/bricks/transparent-light-blue-opalescence.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6299900",
                 "design": "35380",
@@ -638,6 +712,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/dark-stone-grey.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6284596",
                 "design": "35381",
@@ -653,6 +728,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/medium-stone-grey.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6284071",
                 "design": "35381",
@@ -667,6 +743,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/white.jpeg",
+            "color_id": 5,
             "id" : {
                 "element": "6284572",
                 "design": "35381",
@@ -681,6 +758,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.04",
             "img": "/img/bricks/transparent.jpeg",
+            "color_id": 15,
             "id" : {
                 "element": "6274738",
                 "design": "35380",
@@ -695,6 +773,7 @@ export const allBrickColors = [
             "stroke": [255,255,255],
             "price": "0.03",
             "img": "/img/bricks/black.jpeg",
+            "color_id": 4,
             "id" : {
                 "element": "6284070",
                 "design": "35381",
@@ -709,26 +788,28 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/sand-blue.jpeg",
+            "color_id": 64,
             "id" : {
                 "element": "6322842",
                 "design": "35381",
                 "bricklink": "98138",
             }
         },
-        // {
-        //     "name": "Flat Silver",    
-        //     "family": "gray",
-        //     "rgb": [141,148,156],
-        //     "alpha": "1",
-        //     "stroke": [0,0,0],
-        //     "price": "0.03",
-        //     "img": "/img/bricks/flat-silver.jpeg",
-        //     "id" : {
-        //         "element": "4655241",
-        //         "design": "35381",       
-        //         "bricklink": "98138",
-        //     }
-        // },
+        {
+            "name": "Flat Silver",    
+            "family": "gray",
+            "rgb": [141,148,156],
+            "alpha": "1",
+            "stroke": [0,0,0],
+            "price": "0.03",
+            "img": "/img/bricks/flat-silver.jpeg",
+            "color_id": 48,
+            "id" : {
+                "element": "4655241",
+                "design": "35381",       
+                "bricklink": "98138",
+            }
+        },
         {
             "name": "Silver Metalic",
             "family": "metalic",
@@ -737,6 +818,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/silver-metallic.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6238890",
                 "design": "35381",
@@ -751,6 +833,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/warm-gold.jpeg",
+            "color_id": 44,
             "id" : {
                 "element": "6238891",
                 "design": "35381",
@@ -765,6 +848,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/medium-nougat.jpeg",
+            "color_id": 47,
             "id" : {
                 "element": "6284589",
                 "design": "35381",
@@ -779,6 +863,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.04",
             "img": "/img/bricks/nougat.jpeg",
+            "color_id": 0,
             "id" : {
                 "element": "6343472",
                 "design": "35381",
@@ -794,6 +879,7 @@ export const allBrickColors = [
             "stroke": [0,0,0],
             "price": "0.03",
             "img": "/img/bricks/brick-yellow.jpeg",
+            "color_id": 9,
             "id" : {
                 "element": "6284573",
                 "design": "35381",
