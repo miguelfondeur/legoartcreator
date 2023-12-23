@@ -6,6 +6,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/dark-brown.jpeg",
             "color_id": 45,
             "id" : {
@@ -21,6 +22,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/reddish-brown.jpeg",
             "color_id": 36,
             "id" : {
@@ -37,6 +39,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/sand-yellow.jpeg",
             "color_id": 29,
             "id" : {
@@ -52,6 +55,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [130, 66, 42],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-brown.jpeg",
             "color_id": 23,
             "id" : {
@@ -67,6 +71,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/dark-red.jpeg",
             "color_id": 33,
             "id" : {
@@ -83,6 +88,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-red.jpeg",
             "color_id": 8,
             "id" : {
@@ -99,6 +105,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/vibrant-coral.jpeg",
             "color_id": 0,
             "id" : {
@@ -114,6 +121,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [179, 0, 6],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-red.jpeg",
             "color_id": 16,
             "id" : {
@@ -129,6 +137,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/dark-orange.jpeg",
             "color_id": 14,
             "id" : {
@@ -145,6 +154,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-orange.jpeg",
             "color_id": 22,
             "id" : {
@@ -161,6 +171,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/flame-yellowish-orange.jpeg",
             "color_id": 35,
             "id" : {
@@ -176,6 +187,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [255, 126, 20],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-bright-orange.jpeg",
             "color_id": 34,
             "id" : {
@@ -192,6 +204,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-yellow.jpeg",
             "color_id": 11,
             "id" : {
@@ -208,6 +221,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/cool-yellow.jpeg",
             "color_id": 42,
             "id" : {
@@ -224,6 +238,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/vibrant-yellow.jpeg",
             "color_id": 0,
             "id" : {
@@ -239,6 +254,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [235, 247, 45],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-yellow.jpeg",
             "color_id": 19,
             "id" : {
@@ -254,6 +270,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/olive-green.jpeg",
             "color_id": 55,
             "id" : {
@@ -269,6 +286,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/sand-green.jpeg",
             "color_id": 32,
             "id" : {
@@ -284,6 +302,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-yellowish-green.jpeg",
             "color_id": 25,
             "id" : {
@@ -300,6 +319,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/spring-yellowish-green.jpeg",
             "color_id": 0,
             "id" : {
@@ -315,6 +335,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [16, 203, 49],
             "price": "0.04",
+            "wb_price": "0.03",
             "img": "/img/bricks/transparent-bright-green.jpeg",
             "color_id": 46,
             "id" : {
@@ -331,6 +352,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/earth-green.jpeg",
             "color_id": 31,
             "id" : {
@@ -346,6 +368,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.05",
+            "wb_price": "0.02",
             "img": "/img/bricks/dark-green.jpeg",
             "color_id": 12,
             "id" : {
@@ -361,6 +384,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-green.jpeg",
             "color_id": 13,
             "id" : {
@@ -376,6 +400,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [33, 118, 37],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-green.jpeg",
             "color_id": 20,
             "id" : {
@@ -391,6 +416,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-purple.jpeg",
             "color_id": 40,
             "id" : {
@@ -406,6 +432,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/light-purple.jpeg",
             "color_id": 41,
             "id" : {
@@ -421,6 +448,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/light-nougat.jpeg",
             "color_id": 65,
             "id" : {
@@ -436,6 +464,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [206, 29, 155],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-medium-reddish-violet.jpeg",
             "color_id": 24,
             "id" : {
@@ -451,6 +480,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-reddish-violet.jpeg",
             "color_id": 26,
             "id" : {
@@ -466,6 +496,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/medium-lavender.jpeg",
             "color_id": 52,
             "id" : {
@@ -481,6 +512,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/lavender.jpeg",
             "color_id": 53,
             "id" : {
@@ -496,6 +528,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/medium-lilac.jpeg",
             "color_id": 43,
             "id" : {
@@ -511,6 +544,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [85, 37, 183],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-bright-violet.jpeg",
             "color_id": 0,
             "id" : {
@@ -527,6 +561,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/earth-blue.jpeg",
             "color_id": 30,
             "id" : {
@@ -543,6 +578,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-blue.jpeg",
             "color_id": 10,
             "id" : {
@@ -558,6 +594,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/medium-blue.jpeg",
             "color_id": 21,
             "id" : {
@@ -573,6 +610,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [0, 87, 166],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-blue.jpeg",
             "color_id": 18,
             "id" : {
@@ -588,6 +626,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/dark-azur.jpeg",
             "color_id": 49,
             "id" : {
@@ -603,6 +642,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/medium-azur.jpeg",
             "color_id": 50,
             "id" : {
@@ -619,6 +659,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/light-royal-blue.jpeg",
             "color_id": 39,
             "id" : {
@@ -634,6 +675,7 @@ export const allBrickColors = [
             "alpha": ".5",
             "stroke": [104, 188, 197],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-light-blue.jpeg",
             "color_id": 17,
             "id" : {
@@ -649,6 +691,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/bright-bluish-green.jpeg",
             "color_id": 0,
             "id" : {
@@ -665,6 +708,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/aqua.jpeg",
             "color_id": 51,
             "id" : {
@@ -680,6 +724,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.26",
+            "wb_price": "0.02",
             "img": "/img/bricks/white-glow.jpeg",
             "color_id": 0,
             "id" : {
@@ -695,6 +740,7 @@ export const allBrickColors = [
             "alpha": ".7",
             "stroke": [104, 188, 197],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent-light-blue-opalescence.jpeg",
             "color_id": 0,
             "id" : {
@@ -711,6 +757,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/dark-stone-grey.jpeg",
             "color_id": 0,
             "id" : {
@@ -727,6 +774,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/medium-stone-grey.jpeg",
             "color_id": 0,
             "id" : {
@@ -742,6 +790,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/white.jpeg",
             "color_id": 5,
             "id" : {
@@ -757,6 +806,7 @@ export const allBrickColors = [
             "alpha": ".1",
             "stroke": [0,0,0],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/transparent.jpeg",
             "color_id": 15,
             "id" : {
@@ -772,6 +822,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [255,255,255],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/black.jpeg",
             "color_id": 4,
             "id" : {
@@ -787,6 +838,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/sand-blue.jpeg",
             "color_id": 64,
             "id" : {
@@ -802,6 +854,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/flat-silver.jpeg",
             "color_id": 48,
             "id" : {
@@ -817,6 +870,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/silver-metallic.jpeg",
             "color_id": 0,
             "id" : {
@@ -832,6 +886,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/warm-gold.jpeg",
             "color_id": 44,
             "id" : {
@@ -847,6 +902,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/medium-nougat.jpeg",
             "color_id": 47,
             "id" : {
@@ -862,6 +918,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.04",
+            "wb_price": "0.02",
             "img": "/img/bricks/nougat.jpeg",
             "color_id": 0,
             "id" : {
@@ -878,6 +935,7 @@ export const allBrickColors = [
             "alpha": "1",
             "stroke": [0,0,0],
             "price": "0.03",
+            "wb_price": "0.02",
             "img": "/img/bricks/brick-yellow.jpeg",
             "color_id": 9,
             "id" : {

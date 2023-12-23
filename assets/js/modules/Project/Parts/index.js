@@ -16,9 +16,9 @@ export default class MosaicParts extends HTMLElement {
                         <button class="bg-sky-600 text-white mt-auto text-sm text-center rounded-xl w-full p-3 cursor-pointer mb-2">
                             Download Parts Data
                         </button>
-                        <button class="w-full hover:bg-gray-100 px-2 md:px-4 py-2 rounded-full inline-flex items-center justify-center text-sky-700 transition-all shadow hover:shadow-md border-transparent">
+                        <a href="https://www.webrick.com/toolkit#aid=2046" target="blank" class="w-full hover:bg-gray-100 px-2 md:px-4 py-2 rounded-full inline-flex items-center justify-center text-sky-700 transition-all shadow hover:shadow-md border-transparent">
                             Upload Parts Data to Webrick
-                        </button>
+                        </a>
                     </section>
                 </div>
                 <div id="partsWrapper" class="px-4 my-12 w-full max-w-5xl grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"></div>    
@@ -104,6 +104,7 @@ export default class MosaicParts extends HTMLElement {
                         name: matchingColor.name,
                         family: matchingColor.family,
                         price: matchingColor.price,
+                        wb_price: matchingColor.wb_price,
                         img: matchingColor.img,
                         id: matchingColor.id,
                         color: matchingColor.color_id,
@@ -121,9 +122,17 @@ export default class MosaicParts extends HTMLElement {
                 <section class="p-4 bg-white border border-gray-200 w-full flex flex-col">
                     <img class="w-1/2 mx-auto" src=${part.img} >
                     <p class="uppercase">${part.name}</p>
-                    <p class="uppercase text-gray-500 text-xs mb-2">${part.id.element}/${part.id.design}</p>
-                    <p class="">$${ Math.round( (parseFloat(part.price) * parseFloat(part.quantity)) * 100) / 100 }</p>
-                    <p class="text-gray-500 uppercase text-xs mb-3">$${part.price} x ${part.quantity}</p>
+                    <p class="uppercase text-gray-500 mb-2">${part.id.element}/${part.id.design}</p>
+                    <!-- Price -->
+                    <p class="mb-2 inline-flex flex-wrap items-center">
+                        <span class="mr-1">Lego Price: $${ Math.round( (parseFloat(part.price) * parseFloat(part.quantity)) * 100) / 100 }</span>
+                        <span class="text-gray-500 uppercase text-xs ">( $${part.price} x ${part.quantity} )</span>
+                    </p>
+                    <p class="mb-2 inline-flex flex-wrap items-center">
+                        <span class="mr-1">Webrick Price: $${ Math.round( (parseFloat(part.wb_price) * parseFloat(part.quantity)) * 100) / 100 }</span>
+                        <span class="text-gray-500 uppercase text-xs ">( $${part.wb_price} x ${part.quantity} )</span>
+                    </p>
+                    <!-- Buy Buttons -->
                     <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
                         target="blank" 
                         class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer mb-2"

@@ -838,10 +838,6 @@ video {
   margin-top: auto;
 }
 
-.mb-auto {
-  margin-bottom: auto;
-}
-
 .box-content {
   box-sizing: content-box;
 }
@@ -962,10 +958,6 @@ video {
   height: 100%;
 }
 
-.h-\[400px\] {
-  height: 400px;
-}
-
 .h-min {
   height: -moz-min-content;
   height: min-content;
@@ -989,10 +981,6 @@ video {
 
 .min-h-screen {
   min-height: 100vh;
-}
-
-.min-h-\[400px\] {
-  min-height: 400px;
 }
 
 .w-1\/2 {
@@ -1071,6 +1059,10 @@ video {
   width: 100px;
 }
 
+.w-\[300px\] {
+  width: 300px;
+}
+
 .w-\[500px\] {
   width: 500px;
 }
@@ -1094,14 +1086,6 @@ video {
 .w-min {
   width: -moz-min-content;
   width: min-content;
-}
-
-.w-\[400px\] {
-  width: 400px;
-}
-
-.w-\[300px\] {
-  width: 300px;
 }
 
 .min-w-\[110px\] {
@@ -1230,12 +1214,16 @@ video {
   grid-template-rows: repeat(3, minmax(0, 1fr));
 }
 
-.flex-row {
-  flex-direction: row;
-}
-
 .flex-col {
   flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.items-end {
+  align-items: flex-end;
 }
 
 .items-center {
@@ -1481,6 +1469,11 @@ video {
   background-color: rgb(137 144 147 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#f57d20\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 125 32 / var(--tw-bg-opacity));
+}
+
 .bg-\[\#ffcf02\] {
   --tw-bg-opacity: 1;
   background-color: rgb(255 207 2 / var(--tw-bg-opacity));
@@ -1555,11 +1548,6 @@ video {
 .bg-zinc-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(82 82 91 / var(--tw-bg-opacity));
-}
-
-.bg-\[\#f57d20\] {
-  --tw-bg-opacity: 1;
-  background-color: rgb(245 125 32 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-0 {
@@ -1740,6 +1728,10 @@ video {
   padding-bottom: 1.5rem;
 }
 
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
 .pl-16 {
   padding-left: 4rem;
 }
@@ -1776,6 +1768,10 @@ video {
   padding-top: 0.75rem;
 }
 
+.pt-4 {
+  padding-top: 1rem;
+}
+
 .pt-6 {
   padding-top: 1.5rem;
 }
@@ -1786,14 +1782,6 @@ video {
 
 .pt-\[56px\] {
   padding-top: 56px;
-}
-
-.pb-8 {
-  padding-bottom: 2rem;
-}
-
-.pt-4 {
-  padding-top: 1rem;
 }
 
 .text-left {
@@ -2723,42 +2711,6 @@ dialog::backdrop {
 
   100% {
     box-shadow: 0 0 0 10px rgba(0, 73, 123, 0);
-  }
-}
-
-@media (min-width: 1024px) {
-  .lg\:container {
-    width: 100%;
-  }
-
-  @media (min-width: 640px) {
-    .lg\:container {
-      max-width: 640px;
-    }
-  }
-
-  @media (min-width: 768px) {
-    .lg\:container {
-      max-width: 768px;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .lg\:container {
-      max-width: 1024px;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .lg\:container {
-      max-width: 1280px;
-    }
-  }
-
-  @media (min-width: 1536px) {
-    .lg\:container {
-      max-width: 1536px;
-    }
   }
 }
 
