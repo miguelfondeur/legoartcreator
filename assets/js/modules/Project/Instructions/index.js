@@ -32,6 +32,13 @@ export default class MosaicInstructions extends HTMLElement {
 
                 <div id="instructionPages" class="w-full"></div>
                 
+                <section class="my-4 bg-white shadow-lg shadow-gray-500 w-full h-[768px] max-w-screen-md flex flex-col">
+                    <div class="w-full h-full border-l-2 border-white bg-gradient-to-b from-[#507896] to-[#223d53]">
+                        <div class="border-[8px] border-black w-1/2 mx-auto mt-20 shadow-xl shadow-black aspect-square">
+                            <img id="projectFinale" src="" class="shadow-inner w-full">
+                        </div>
+                    </div>
+                </section>
             </div>`
     }
 
@@ -65,11 +72,13 @@ export default class MosaicInstructions extends HTMLElement {
         //Get Elements
         this.instructionsPages = this.querySelector('#instructionPages');
         this.projectImg = this.querySelector('#projectImg');
+        this.projectFinale = this.querySelector('#projectFinale');
         this.originalImg = this.querySelector('#originalImg');
 
         //Initial Load with Local Storage
         if(localStorage.getItem('projectURL') && localStorage.getItem('imgURL') && localStorage.getItem('brickData')) {
             this.projectImg.src = localStorage.getItem('projectURL');
+            this.projectFinale.src = localStorage.getItem('projectURL');
             this.originalImg.style.backgroundImage = `url('${localStorage.getItem('imgURL')}')`;
             this.brickData = JSON.parse(localStorage.getItem('brickData'));   
 
@@ -85,6 +94,7 @@ export default class MosaicInstructions extends HTMLElement {
         eventDispatcher.addEventListener('handleCreateImage', e => {
             this.projectImgURL = e.dataURL;
             this.projectImg.src = this.projectImgURL;
+            this.projectFinale.src = localStorage.getItem('projectURL');
         });
 
         eventDispatcher.addEventListener('saveProject', e => {
