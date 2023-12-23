@@ -4,9 +4,14 @@ export default class ProjectHeader extends HTMLElement {
     //Teamplte
     render() {
         this.innerHTML = `
-            <header class="flex items-center justify-between bg-white w-full h-[56px] absolute left-0 z-50 border-b text-zinc-200">
+            <header class="flex items-center bg-white w-full h-[56px] absolute left-0 z-50 border-b text-zinc-200">
+                <!-- Logo -->
+                <a class=" text-black inline-flex flex-col items-center justify-center px-4" href="/">
+                    <img class="h-[22px]" src="/img/logo.svg" alt="Lego Art Logo">
+                    <span class="text-black text-xs uppercase">Creator</span>
+                </a>
                 <!-- Name -->
-                <div class="flex items-center h-full min-w-[110px] px-4 border-r border-zinc-200 text-black text-sm flex-shrink-0">
+                <div class="flex items-center h-full min-w-[110px] px-4 border-x border-zinc-200 text-black text-sm flex-shrink-0 mr-auto">
                     <label for="projectTitle" class="text-xs text-gray-400 mr-2 sr-only">Project Title</label>
                     <input id="projectTitle" type="text" readonly value="My Project" class="inline-flex outline-none">
                 </div>
