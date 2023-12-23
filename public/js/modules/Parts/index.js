@@ -724,7 +724,7 @@
     //     "alpha": "1",
     //     "stroke": [0,0,0],
     //     "price": "0.03",
-    //     "img": "/img/bricks/flat-silver.png",
+    //     "img": "/img/bricks/flat-silver.jpeg",
     //     "id" : {
     //         "element": "4655241",
     //         "design": "35381",       
