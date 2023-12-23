@@ -10,6 +10,7 @@ export default class MosaicParts extends HTMLElement {
                     <section>
                         <p class="text-xl mb-4">Parts</p>
                         <p>Total Parts: #</p>
+                        <p>Total Unique Pieces: #<p>
                         <p>Total Costs on Lego: $</p>
                         <p>Total Costs on Webrick: $</p>
                         <hr class="my-4">
