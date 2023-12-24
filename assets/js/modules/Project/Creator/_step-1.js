@@ -125,6 +125,7 @@ export default class StepOne extends HTMLElement {
                 cancelable: true
             });
             e.target.dispatchEvent(event);
+            localStorage.setItem("size", e.tartget.value);
         });
 
         colorElements.forEach( (elem,i) => {

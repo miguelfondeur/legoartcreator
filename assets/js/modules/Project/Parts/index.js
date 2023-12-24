@@ -6,13 +6,13 @@ export default class MosaicParts extends HTMLElement {
     render() {
         this.innerHTML = /*html*/ `
             <div id="parts" class="flex flex-col lg:flex-row flex-grow w-full min-h-full pt-[56px] px-4 mx-auto xl:container" >
-                <div id="totalWrapper" class="px-4 pt-4 pb-8 my-12 flex-shrink-0 bg-white w-[300px] h-min border border-gray-200 rounded-2xl shadow-xl">
+                <div id="totalWrapper" class="sticky top-[65px] px-4 pt-4 pb-8 my-12 flex-shrink-0 bg-white w-[300px] h-min border border-gray-200 rounded-2xl shadow-xl">
                     <section>
                         <p class="text-xl mb-4">Parts</p>
-                        <p>Total Parts: #</p>
-                        <p>Total Unique Pieces: #<p>
-                        <p>Total Costs on Lego: $</p>
-                        <p>Total Costs on Webrick: $</p>
+                        <p>Total Parts: <span id="total_parts"></span></p>
+                        <p>Total Unique Pieces: <span id="pieces"></span><p>
+                        <p>Total Costs on Lego: <span id="lego_price"></span></p>
+                        <p>Total Costs on Webrick: <span id="wb_price"></span></p>
                         <hr class="my-4">
                         <button class="bg-sky-600 text-white mt-auto text-sm text-center rounded-xl w-full p-3 cursor-pointer mb-2">
                             Download Parts Data
@@ -39,6 +39,7 @@ export default class MosaicParts extends HTMLElement {
             this.brickData = JSON.parse(localStorage.getItem('brickData'));
             this.getParts();
         }
+        this.size = JSON.parse(localStorage.getItem('size'));
     }
 
 
@@ -68,6 +69,13 @@ export default class MosaicParts extends HTMLElement {
         //Print If there was something saved
         if(this.uniqueCircles.length) {
             this.printParts();
+        }
+
+        if(this.size) {
+            console.log(this.size)
+            this.querySelector('#total_parts').innerHTML = this.size;
+        } else {
+            this.querySelector('#total_parts').innerHTML = "2500";
         }
     }
 
@@ -123,20 +131,20 @@ export default class MosaicParts extends HTMLElement {
                 <section class="p-4 bg-white border border-gray-200 w-full flex flex-col">
                     <img class="w-1/2 mx-auto" src=${part.img} >
                     <p class="uppercase">${part.name}</p>
-                    <p class="uppercase text-gray-500 mb-2">${part.id.element}/${part.id.design}</p>
+                    <p class="uppercase text-gray-500 mb-2 text-xs">${part.id.element}/${part.id.design}</p>
                     <!-- Price -->
                     <p class="mb-2 inline-flex flex-wrap items-center">
                         <span class="mr-1">Lego Price: $${ Math.round( (parseFloat(part.price) * parseFloat(part.quantity)) * 100) / 100 }</span>
                         <span class="text-gray-500 uppercase text-xs ">( $${part.price} x ${part.quantity} )</span>
                     </p>
-                    <p class="mb-2 inline-flex flex-wrap items-center">
+                    <p class="mb-4 inline-flex flex-wrap items-center">
                         <span class="mr-1">Webrick Price: $${ Math.round( (parseFloat(part.wb_price) * parseFloat(part.quantity)) * 100) / 100 }</span>
                         <span class="text-gray-500 uppercase text-xs ">( $${part.wb_price} x ${part.quantity} )</span>
                     </p>
                     <!-- Buy Buttons -->
                     <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
                         target="blank" 
-                        class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer mb-2"
+                        class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer mb-1"
                     >
                         Buy on LEGO
                     </a>

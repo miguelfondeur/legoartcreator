@@ -136,12 +136,10 @@ export default class Editor extends HTMLElement {
     //Stage: Component Created
     constructor() {
         super(); //this is needed to inherit HTMLElement properties and is standard JS
-
         //Initial Data
         this.step = 1;
         this.size = 480;
         this.color = [0,0,0];
-
         //Get from local storage?
         window.updateStep = this.updateStep.bind(this);
     }
@@ -211,7 +209,7 @@ export default class Editor extends HTMLElement {
         this.sizeSlider.addEventListener('input', (e) => {
             this.updateMosaicViewScale();
         })
-        
+
         this.addEventListener('updateSize', (e)=> {
             this.mosaic.size = e.detail.size 
         });
@@ -325,7 +323,6 @@ export default class Editor extends HTMLElement {
             step.classList.remove('text-sky-700');
         });
         this.querySelector(`[data-step="${step}"]`).classList.add('text-sky-700');
-
         if(step == 3) {
             this.mosaic.drawMode = true;
             this.showImage.checked = false;
