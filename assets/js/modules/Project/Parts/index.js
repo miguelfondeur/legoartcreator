@@ -1,4 +1,5 @@
 import { allBrickColors } from '../../../data/allBrickColors.js';
+import { frameParts } from '../../../data/frameData.js';
 import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
 
 export default class MosaicParts extends HTMLElement {
@@ -71,8 +72,9 @@ export default class MosaicParts extends HTMLElement {
             this.printParts();
         }
 
+        this.querySelector('#pieces').innerHTML = this.uniquePartsCount;
+
         if(this.size) {
-            console.log(this.size)
             this.querySelector('#total_parts').innerHTML = this.size;
         } else {
             this.querySelector('#total_parts').innerHTML = "2500";
@@ -122,24 +124,61 @@ export default class MosaicParts extends HTMLElement {
                 }
             }
         }
+
+        //Get Unique Parts Quantity
+        if(this.size === "") {
+            this.uniquePartsCount = this.uniqueCircles.length + 16; 
+        } else {
+            this.uniquePartsCount = this.uniqueCircles.length + 16;
+        }
     }
 
     printParts() {
         //Print Pages
         if(this.partsWrapper) {
-            this.partsWrapper.innerHTML = `${ this.uniqueCircles.map((part, i) => ` 
-                <section class="p-4 bg-white border border-gray-200 w-full flex flex-col">
-                    <img class="w-1/2 mx-auto" src=${part.img} >
-                    <p class="uppercase">${part.name}</p>
-                    <p class="uppercase text-gray-500 mb-2 text-xs">${part.id.element}/${part.id.design}</p>
+            this.partsWrapper.innerHTML = `
+                ${ this.uniqueCircles.map((part, i) => ` 
+                    <div class="p-4 bg-white border border-gray-200 w-full flex flex-col">
+                        <img class="w-1/2 mx-auto" src=${part.img} >
+                        <p class="uppercase">${part.name}</p>
+                        <p class="uppercase text-gray-500 mb-2 text-xs">${part.id.element}/${part.id.design}</p>
+                        <!-- Price -->
+                        <p class="mb-2 inline-flex flex-wrap items-center">
+                            <span class="mr-1">Lego Price: $${ Math.round( (parseFloat(part.price) * parseFloat(part.quantity)) * 100) / 100 }</span>
+                            <span class="text-gray-500 uppercase text-xs ">( $${part.price} x ${part.quantity} )</span>
+                        </p>
+                        <p class="mb-4 inline-flex flex-wrap items-center">
+                            <span class="mr-1">Webrick Price: $${ Math.round( (parseFloat(part.wb_price) * parseFloat(part.quantity)) * 100) / 100 }</span>
+                            <span class="text-gray-500 uppercase text-xs ">( $${part.wb_price} x ${part.quantity} )</span>
+                        </p>
+                        <!-- Buy Buttons -->
+                        <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
+                            target="blank" 
+                            class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer mb-1"
+                        >
+                            Buy on LEGO
+                        </a>
+                        <a href="https://www.webrick.com/flat-tile-1x1-round-98138.html?color=${part.color}&quantity=76&brand=80/#aid=2046" 
+                            target="blank" 
+                            class="bg-[#f57d20] text-white text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer"
+                        >
+                            Buy on Webrick
+                        </a>
+                    </div>`
+                ).join('')}
+                <!-- Canvas -->
+                <div class="p-4 bg-white border border-gray-200 w-full flex flex-col">
+                    <img class="w-1/2 mx-auto mb-2" src=${frameParts.canvas[0].img} >
+                    <p class="uppercase">${frameParts.canvas[0].name}</p>
+                    <p class="uppercase text-gray-500 mb-2 text-xs">${frameParts.canvas[0].id.element}/${frameParts.canvas[0].id.design}</p>
                     <!-- Price -->
                     <p class="mb-2 inline-flex flex-wrap items-center">
-                        <span class="mr-1">Lego Price: $${ Math.round( (parseFloat(part.price) * parseFloat(part.quantity)) * 100) / 100 }</span>
-                        <span class="text-gray-500 uppercase text-xs ">( $${part.price} x ${part.quantity} )</span>
+                        <span class="mr-1">Lego Price: $${ Math.round( (parseFloat(frameParts.canvas[0].price) * parseFloat(frameParts.canvas[0].quantity)) * 100) / 100 }</span>
+                        <span class="text-gray-500 uppercase text-xs ">( $${frameParts.canvas[0].price} x ${frameParts.canvas[0].quantity} )</span>
                     </p>
                     <p class="mb-4 inline-flex flex-wrap items-center">
-                        <span class="mr-1">Webrick Price: $${ Math.round( (parseFloat(part.wb_price) * parseFloat(part.quantity)) * 100) / 100 }</span>
-                        <span class="text-gray-500 uppercase text-xs ">( $${part.wb_price} x ${part.quantity} )</span>
+                        <span class="mr-1">Webrick Price: $${ Math.round( (parseFloat(frameParts.canvas[0].wb_price) * parseFloat(frameParts.canvas[0].quantity)) * 100) / 100 }</span>
+                        <span class="text-gray-500 uppercase text-xs ">( $${frameParts.canvas[0].wb_price} x ${frameParts.canvas[0].quantity} )</span>
                     </p>
                     <!-- Buy Buttons -->
                     <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
@@ -148,14 +187,44 @@ export default class MosaicParts extends HTMLElement {
                     >
                         Buy on LEGO
                     </a>
-                    <a href="https://www.webrick.com/flat-tile-1x1-round-98138.html?color=${part.color}&quantity=76&brand=80/#aid=2046" 
+                    <a href="https://www.webrick.com/flat-tile-1x1-round-98138.html?color=${frameParts.canvas[0].color}&quantity=76&brand=80/#aid=2046" 
                         target="blank" 
                         class="bg-[#f57d20] text-white text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer"
                     >
-                        Buy on Webrick
+                        Buy on Webrick  
                     </a>
-                </section>`
-            ).join('')}`
+                </div>
+                <!-- Frame Parts -->
+                ${ frameParts.frame.map((frame_part, i) => `
+                    <div class="p-4 bg-white border border-gray-200 w-full flex flex-col">
+                        <img class="w-1/2 mx-auto mb-2" src=${frame_part.img} >
+                        <p class="uppercase leading-tight">${frame_part.name}</p>
+                        <p class="uppercase text-gray-500 mb-2 text-xs">${frame_part.id.element}/${frame_part.id.design}</p>
+                        <!-- Price -->
+                        <p class="mb-2 inline-flex flex-wrap items-center">
+                            <span class="mr-1">Lego Price: $${ Math.round( (parseFloat(frame_part.price) * parseFloat(frame_part.quantity)) * 100) / 100 }</span>
+                            <span class="text-gray-500 uppercase text-xs ">( $${frame_part.price} x ${frame_part.quantity} )</span>
+                        </p>
+                        <p class="mb-4 inline-flex flex-wrap items-center">
+                            <span class="mr-1">Webrick Price: $${ Math.round( (parseFloat(frame_part.wb_price) * parseFloat(frame_part.quantity)) * 100) / 100 }</span>
+                            <span class="text-gray-500 uppercase text-xs ">( $${frame_part.wb_price} x ${frame_part.quantity} )</span>
+                        </p>
+                        <!-- Buy Buttons -->
+                        <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
+                            target="blank" 
+                            class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer mb-1"
+                        >
+                            Buy on LEGO
+                        </a>
+                        <a href="https://www.webrick.com/flat-tile-1x1-round-98138.html?color=${frame_part.color}&quantity=76&brand=80/#aid=2046" 
+                            target="blank" 
+                            class="bg-[#f57d20] text-white text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer"
+                        >
+                            Buy on Webrick
+                        </a>
+                    </div>`
+                ).join('')}
+            `
         }
     }
 
