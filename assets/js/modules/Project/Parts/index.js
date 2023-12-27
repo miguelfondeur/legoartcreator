@@ -207,19 +207,28 @@ export default class MosaicParts extends HTMLElement {
                             <span class="mr-1">Webrick Price: $${ Math.round( (parseFloat(part.wb_price) * parseFloat(part.quantity)) * 100) / 100 }</span>
                             <span class="text-gray-500 uppercase text-xs leading-none">( $${part.wb_price} x ${part.quantity} )</span>
                         </p>
-                        <!-- Buy Buttons -->
-                        <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
-                            target="blank" 
-                            class="bg-sky-600 text-white mt-auto text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer mb-1"
-                        >
-                            Buy on LEGO
-                        </a>
                         <a href="https://www.webrick.com/flat-tile-1x1-round-98138.html?color=${part.color}&quantity=76&brand=80/#aid=2046" 
                             target="blank" 
-                            class="bg-[#f57d20] text-white text-sm uppercase text-center rounded-xl w-full p-2 cursor-pointer"
+                            class="bg-[#f57d20] text-white text-sm mt-auto uppercase text-center rounded-xl w-full p-2 cursor-pointer"
                         >
                             Buy on Webrick
                         </a>
+                        <div class="flex items-center justify-center gap-2 mt-2">
+                            <!-- Bricklink -->
+                            <a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=98138&idColor=${part.id.color_id}#T=S&C=158&O={%22color%22:${part.id.color_id},%22iconly%22:0}" 
+                                target="blank" 
+                                class="text-sky-600 bg-white shadow text-sm text-center rounded-xl w-full p-2 cursor-pointer"
+                            >
+                                Bricklink
+                            </a>
+                            <!-- Lego -->
+                            <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
+                                target="blank" 
+                                class="text-sky-600 bg-white shadow text-sm text-center rounded-xl w-full p-2 cursor-pointer"
+                            >
+                                LEGO
+                            </a>
+                        </div>
                     </div>`
                 ).join('')}`
         }

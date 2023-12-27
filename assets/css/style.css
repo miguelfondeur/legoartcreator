@@ -1981,6 +1981,11 @@ video {
   color: rgb(212 212 216 / var(--tw-text-opacity));
 }
 
+.text-sky-600 {
+  --tw-text-opacity: 1;
+  color: rgb(2 132 199 / var(--tw-text-opacity));
+}
+
 .underline {
   text-decoration-line: underline;
 }
