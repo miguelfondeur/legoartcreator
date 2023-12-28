@@ -22,7 +22,11 @@ class PageContainer extends HTMLElement {
                 <slot name="header"></slot>
             </header>
         
-            <slot name="content"></slot>`;
+            <slot name="content"></slot>
+
+            <footer>
+                <slot name="footer"></slot>
+            </footer>`;
     }
 
     connectedCallback() {

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="h-full" lang="en">
+    <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KLD6WJNMLR"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KLD6WJNMLR');
+        </script>
+        <!-- Meta Tags -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="referrer" content="origin">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5,  viewport-fit=cover, shrink-to-fit=no">
+        <!-- Titles and Description -->
+        <title>Brick Art Creator | Page or Resource Not Found</title>
+        <meta name="description" content="An online tool for creating brick art for your home.">
+        <meta name="keywords" content="Bricks, Art, Dots, Creator, Mosaic, Lego">
+        <!-- Favicons -->
+        <link rel="icon" type="image/x-icon" href="./img/favicons/favicon.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="./img/favicons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="./img/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="./img/favicons/favicon-16x16.png">
+        <link rel="mask-icon" href="./img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+        <!-- Web App -->
+        <link rel="manifest" href="site.webmanifest">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+        <!-- Libraries -->
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+        <!-- Styles -->
+        <link rel="stylesheet" href="./css/main.css">
+        <!-- Modules -->
+        <script type="module" src="./js/modules/Layout/page.js" defer></script>
+        <script type="module" src="./js/modules/Layout/header.js" defer></script>
+        <script async type="module" src="./js/modules/Project/index.js" defer></script>
+    </head>
+    <body class="flex min-h-screen h-full flex-col">
+        <page-container>
+
+            <header slot="header">
+                <global-header
+                    full-width="true"
+                    active-page="create"
+                ></global-header>
+            </header>
+
+            <main slot="content" class="flex-grow flex-col bg-zinc-100 min-h-content h-full">
+                <!-- noscript tag starts -->
+                <noscript>
+                    <!-- We need JS Modal -->
+                    <div class="bg-red-100 text-red-800 p-4 m-4 flex flex-col shadow rounded-lg w-full max-w-screen-md mx-auto">
+                        <strong>JavaScript Required:</strong> Our website uses JavaScript to provide you with the best experience. Please enable JavaScript in your browser settings and reload this page.
+                    </div>
+                </noscript>
+
+                <!-- noscript tag ends -->
+                <section class="flex flex-col h-full items-center justify-center text-center">
+                    <p class="text-xl font-semibold text-sky-700">404</p>
+                    <h1 class="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">Page not found</h1>
+                    <p class="mt-6 text-base leading-7 text-gray-600">Sorry, we couldn’t find the page you’re looking for.</p>
+                    <div class="mt-10 flex items-center justify-center gap-x-6">
+                        <a href="/" class="rounded-md bg-sky-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Go back home</a>
+                    </div>
+                </section>
+            </main>
+
+            <footer slot="footer" class="bg-white">
+                <div class="border-t border-gray-200 mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-20 lg:px-8">
+                    <nav class="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12" aria-label="Footer">
+                        <div class="pb-6">
+                            <a href="/" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Create</a>
+                        </div>
+                        <div class="pb-6">
+                            <a href="/about" class="text-sm leading-6 text-gray-600 hover:text-gray-900">About</a>
+                        </div>
+                        <div class="pb-6">
+                            <a href="/contact" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Contact</a>
+                        </div>
+                        <div class="pb-6">
+                            <a href="/privacy" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Privacy Policy</a>
+                        </div>
+                        <div class="pb-6">
+                            <a href="/cookies" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Cookies</a>
+                        </div>
+                        <div class="pb-6">
+                            <a href="/legal" class="text-sm leading-6 text-gray-600 hover:text-gray-900">Legal Disclamer</a>
+                        </div>
+                    </nav>                 
+                    <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; 2023 Brick Art Creator, In

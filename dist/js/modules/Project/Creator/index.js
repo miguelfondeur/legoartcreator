@@ -103,7 +103,7 @@ export default class Editor extends HTMLElement {
                     <div class="flex flex-col mt-1 justify-center mr-4">
                         <label class="flex items-center">
                             <input class="accent-[rgb(50,50,50)]" type="range" id="size-slider" min="1" max="2" step="0.1" value="1">
-                            <span class="text-sm ml-2">100%</span> 
+                            <span class="text-sm ml-2" id="size-slider-number">100%</span> 
                         </label>
                     </div>
                     <!-- Show/Hide Image -->
@@ -185,6 +185,7 @@ export default class Editor extends HTMLElement {
         this.finishButton = this.querySelector('#finishButton');
         this.closeModalButton = this.querySelector('#closeModal');
         this.sizeSlider = this.querySelector('#size-slider');
+        this.sizeNumber = this.querySelector('#size-slider-number');
 
         this.updateScrollPosition();
 
@@ -209,6 +210,7 @@ export default class Editor extends HTMLElement {
 
         this.sizeSlider.addEventListener('input', (e) => {
             this.updateMosaicViewScale();
+            this.sizeNumber.innerHTML = ( parseFloat((this.sizeSlider.value * 100).toFixed(2)) ) + '%';
         })
 
         this.addEventListener('updateSize', (e)=> {
