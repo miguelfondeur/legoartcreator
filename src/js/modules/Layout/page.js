@@ -1,5 +1,3 @@
-import GlobalHeader from "./header.js";
-import GlobalFooter from "./footer.js";
 import sb from "../../config/supabaseClient.js";
 
 class PageContainer extends HTMLElement {
@@ -24,11 +22,7 @@ class PageContainer extends HTMLElement {
                 <slot name="header"></slot>
             </header>
         
-            <slot name="content"></slot>
-
-            <footer>
-                <slot name="footer"></slot>
-            </footer>`;
+            <slot name="content"></slot>`;
     }
 
     connectedCallback() {

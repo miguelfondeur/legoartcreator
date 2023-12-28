@@ -35,21 +35,13 @@
         <link rel="stylesheet" href="../../dist/css/main.css">
         <!-- Modules -->
         <script type="module" src="../js/modules/Layout/page.js" defer></script>
+        <script type="module" src="../js/modules/Layout/header.js" defer></script>
         <script async type="module" src="../js/modules/Project/index.js" defer></script>
-        <script async type="module" src="../js/modules/Project/header.js" defer></script>
-        <script async type="module" src="../js/modules/Creator/index.js" defer></script>
     </head>
     <body class="flex min-h-screen h-full flex-col">
         <page-container>
             
-            <header slot="header">
-                <global-header
-                    full-width="true"
-                    active-page="create"
-                ></global-header>
-            </header>
-            
-            <main class="flex-grow flex-col bg-zinc-100">
+            <main slot="content" class="flex-grow flex-col bg-zinc-100 min-h-screen h-full">
                 <!-- noscript tag starts -->
                 <noscript>
                     <!-- We need JS Modal -->
@@ -58,12 +50,9 @@
                     </div>
                 </noscript>
                 <!-- noscript tag ends -->
-        
-                <mosaic-project class="w-full"></mosaic-project>
-        
+                <mosaic-project class="w-full h-full"></mosaic-project>
             </main>
         
         </page-container>
-
     </body>
 </html>
