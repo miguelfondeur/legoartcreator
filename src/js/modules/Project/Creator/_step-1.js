@@ -78,7 +78,7 @@ export default class StepOne extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['size', 'color','frame'];       
+        return ['size'];       
     }
 
     //Life Cycle Hooks
@@ -94,18 +94,6 @@ export default class StepOne extends HTMLElement {
     }
     set size(val) {
         this.setAttribute('size', val)
-    }
-    get color() {
-        return this.getAttribute("color");
-    }
-    set color(val) {
-        this.setAttribute('color', val)
-    }
-    get frame() {
-        return this.getAttribute("frame");
-    }
-    set frame(val) {
-        this.setAttribute('frame', val)
     }
 
     connectedCallback() {

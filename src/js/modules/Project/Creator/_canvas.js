@@ -104,7 +104,7 @@ export default class MosaicCanvas extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['size', 'color', 'image', 'frame'];       
+        return ['size', 'color', 'frame'];       
     }
     
     // A configuration map that associates canvasWidth values with their respective settings

@@ -8,22 +8,6 @@ export default class StepTwo extends HTMLElement {
         this.imageUrl = '';
         this.imageLocked = false;
     }
-
-    static get observedAttributes() {
-        return ['count', 'color', 'name', 'avatar', 'file', 'size'];       
-    }
-    
-    //Getters and Setters
-    get size() {
-        return this.getAttribute("size");
-    }
-    set size(val) {
-        this.setAttribute('size', val)
-    }
-
-    //getters
-    
-    //setters
     
     render() {
         this.innerHTML = /*html*/ `
@@ -116,15 +100,6 @@ export default class StepTwo extends HTMLElement {
                     <p class="text-xs font-light">Skip to <span class="">'Edit'</span> to trace your image, reset your bricks or free draw!</p>
                 </div>
             </div>`;
-    }
-
-    //Life Cycle Hooks
-    attributeChangedCallback(prop, oldVal, newVal) {
-        if (prop === 'size') {
-            const imageWidget = this.querySelector('image-widget');
-            
-            if(imageWidget)  imageWidget.setAttribute('size', this.size );  
-        }
     }
 
     connectedCallback() {

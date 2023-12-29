@@ -2,18 +2,30 @@
     Project Web Worker
 *****************************/
 
+console.log('From the Web Worker');
+
 //Imports
-import { brickColors } from "js/data/brickColors";
-import { initialProjectData } from "js/data/initialProjectData";
+import { initialBrickData } from "../data/initialBrickData.js";
 
 //Project data Model
 const project = {
     name: "New Project",
     size: "480",
+    frameColor: "0,0,0", 
+    canvasColor: "0,0,0",
     image: "",
+    imageEditor: {
+        x: 0,
+        y: 0,
+        zoomLevel: 1,
+        rotation: 0, 
+        saturation: 1, 
+        flippedHorizontal: false,
+        brightness: 1, 
+        contrast: 1, 
+    },
     processedImage: "",
     projectImage: "",
-    frameColor: "",
     brickData: [], //If no localStorage data, hydrate with initialProjectData.js
     uniqueBricks: [],
     bricks: [],
@@ -21,12 +33,7 @@ const project = {
     canvasBricks: [],
 }
 
-//Initialize Data from LocalStorage
-if(localStorage.getItem('brickData')) { 
-    console.log('Web Worker: has brickData')
-} else {
-    console.log('No brick data')
-}
+//Check IndexedDB !! Web Workers can't work with local storage. 
 
 //Message Actions
 self.onmessage = function(message) {

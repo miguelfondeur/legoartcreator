@@ -66,8 +66,8 @@ export default class Editor extends HTMLElement {
                     </button>
                     <!-- Steps -->
                     <step-one size="${this.size}"></step-one>
-                    <step-two size="${this.size}" color="${ this.color }"></step-two>
-                    <step-three color="${ this.color }"></step-three>
+                    <step-two></step-two>
+                    <step-three></step-three>
                     <step-four></step-four>
                 </dialog>
 
@@ -76,9 +76,8 @@ export default class Editor extends HTMLElement {
                     <div id="mosaic-wrapper" class="absolute h-full w-full transition-all block overflow-auto">
                         <mosaic-canvas 
                             class="w-[calc(100vw+200px)] h-[calc(100vh+200px)] flex justify-center items-center pl-[78px] lg:pl-[440px] pr-4"
-                            step="${this.step}" 
                             size="${this.size}" 
-                            color="${ this.color }"
+                            color="${ this.canvasColor }"
                         >
                         </mosaic-canvas>
                     </div>
@@ -139,8 +138,10 @@ export default class Editor extends HTMLElement {
         super(); //this is needed to inherit HTMLElement properties and is standard JS
         //Initial Data
         this.step = 1;
+
         this.size = 480;
-        this.color = [0,0,0];
+        this.canvasColor = [0,0,0];
+        
         //Get from local storage?
         window.updateStep = this.updateStep.bind(this);
     }
@@ -149,7 +150,6 @@ export default class Editor extends HTMLElement {
     attributeChangedCallback(prop, oldVal, newVal) {
         //Will not persist because we're literally re-rendering every time we update the props
         if (prop === 'step') {
-            const dash = this.querySelector('#dashboard-steps');
             const mosaic = this.querySelector('mosaic-canvas');
             if(mosaic && newVal !== "3") {
                 mosaic.drawMode = false;
@@ -157,17 +157,13 @@ export default class Editor extends HTMLElement {
             }
         } 
         if (prop === 'size') {
-            const mosaic = this.querySelector('mosaic-canvas');
-            const stepTwo = this.querySelector('step-two');
-            
+            const mosaic = this.querySelector('mosaic-canvas');            
             if(mosaic) mosaic.setAttribute('size', this.size );
-            //if(stepOne) stepOne.setAttribute('size', this.size );
-            if(stepTwo) stepTwo.setAttribute('size', this.size );
         }
         if (prop === 'color') {
             const mosaicCanvas = this.querySelector('mosaic-canvas');
             if(mosaicCanvas) {
-                mosaicCanvas.color = this.color;
+                mosaicCanvas.color = this.canvasColor;
             }
         }
     }
