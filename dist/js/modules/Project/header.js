@@ -7,7 +7,7 @@ export default class ProjectHeader extends HTMLElement {
             <header class="flex items-center bg-white w-full h-[56px] absolute left-0 z-50 border-b text-zinc-200">
                 <!-- Logo -->
                 <a class=" text-black inline-flex flex-col items-center justify-center px-4" href="/">
-                    <img class="h-[22px]" src="../img/logo.svg" alt="Lego Art Logo">
+                    <img class="h-[22px]" src="img/logo.svg" alt="Lego Art Logo">
                     <span class="text-black text-xs uppercase">Creator</span>
                 </a>
                 <!-- Name -->
