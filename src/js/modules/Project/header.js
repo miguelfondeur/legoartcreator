@@ -83,7 +83,7 @@ export default class ProjectHeader extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['active-page']; // Add more attributes to the array if needed
+        return ['active-page', 'name']; // Add more attributes to the array if needed
     }
 
     //Life Cycle Hooks
@@ -91,7 +91,13 @@ export default class ProjectHeader extends HTMLElement {
         if (name === 'active-page') {
             this.updateActiveLink(newValue);
         }
+        if (name === 'name') {
+            this.querySelector('#projectTitle').value = newValue;
+        }
     }
+
+    get name() { return this.getAttribute("name"); }
+    set name(val) { this.setAttribute('name', val); }
 
     // Stage: 'Component now connected to DOM'
     connectedCallback() {

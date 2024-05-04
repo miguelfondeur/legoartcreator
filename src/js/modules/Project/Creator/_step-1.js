@@ -30,17 +30,19 @@ export default class StepOne extends HTMLElement {
                     <label class="w-auto text-sm text-gray-800">Frame Color:</label>
                     <div class="rounded-md flex bg-white shadow-xs p-2">
                         <div class="flex">
-                            <div class="cursor-pointer w-6 h-6 rounded-full m-05 border-2 border-gray-300 active-color ${ this.frameColor === "Black" ? 'active-color' : ''}"
+                            <div class="cursor-pointer w-6 h-6 rounded-full m-05 border-2 border-gray-300 active-color ${ this.frame === "black" ? 'active-color' : ''}"
                                 style="background-color: rgb(0,0,0)"
                                 title="Black Frame"
-                                data-frame="Black"
+                                data-frame="black"
+                                data-color="black"
                                 data-framergb="0,0,0"
                                 tabindex="0"
                             ></div>
-                            <div class="cursor-pointer w-6 h-6 rounded-full m-05 border-2 border-gray-300 ${ this.frameColor === "White" ? 'active-color' : ''}"
+                            <div class="cursor-pointer w-6 h-6 rounded-full m-05 border-2 border-gray-300 ${ this.frame === "white" ? 'active-color' : ''}"
                                 style="background-color: rgb(255,255,255)"
                                 title="White Frame"
-                                data-frame="White"
+                                data-frame="white"
+                                data-color="white"
                                 data-framergb="255,255,255"
                                 tabindex="0"
                             ></div>
@@ -53,9 +55,10 @@ export default class StepOne extends HTMLElement {
                     <div class="rounded-md flex bg-white shadow-xs p-2">
                         ${ platePickerData.map(color => ` 
                             <div class="flex flex-col">
-                                <div class="cursor-pointer w-6 h-6 rounded-full m-05 border-2 border-gray-300 ${ color.name === this.canvasColor ? 'active-color' : ''}"
+                                <div class="cursor-pointer w-6 h-6 rounded-full m-05 border-2 border-gray-300 ${ color.name.toLocaleLowerCase() === this.canvas ? 'active-color' : ''}"
                                     style="background-color: rgb(${color.rgb})"
                                     title="${color.name}"
+                                    data-color="${color.name}"
                                     data-rgb="${color.rgb}"
                                     data-element="${color.id.element}"
                                     tabindex="0"
@@ -64,7 +67,6 @@ export default class StepOne extends HTMLElement {
                         ).join('')}
                     </div>
                 </div>
-
             </div>`
     }
 
@@ -73,27 +75,55 @@ export default class StepOne extends HTMLElement {
         super();
 
         this.activeColor = "6284070";
-        this.canvasColor = "Black";
-        this.frameColor = "Black";
+        this.canvas = "black";
+        this.frame = "black";
     }
 
     static get observedAttributes() {
-        return ['size'];       
-    }
-
-    //Life Cycle Hooks
-    attributeChangedCallback(prop, oldVal, newVal) {
-        if (prop === 'size') {
-            //this.render() 
-        }
+        return ['size', 'frame', 'canvas'];       
     }
 
     //Getters and Setters
-    get size() {
-        return this.getAttribute("size");
-    }
-    set size(val) {
-        this.setAttribute('size', val)
+    get size() { return this.getAttribute("size") }
+    set size(val) { this.setAttribute('size', val) }
+    get frame() { return this.getAttribute("frame") }
+    set frame(val) { this.setAttribute('frame', val) }
+    get canvas() { return this.getAttribute("canvas") }
+    set canvas(val) { this.setAttribute('canvas', val) }
+
+    //Life Cycle Hooks
+    attributeChangedCallback(prop, oldVal, newVal) {
+        if(oldVal !== newVal) { //Has it changed??
+            if (prop === 'size') {
+                if(this.querySelector('#sizeSelect')) {
+                    this.querySelector('#sizeSelect').value = newVal;
+                }
+            }
+            if (prop === 'frame') {
+                const frameElements = this.querySelectorAll('[data-frame]');
+                if(frameElements) {
+                    frameElements.forEach(elem => {
+                        if(elem.dataset.color === newVal) {
+                            elem.classList.add('active-color')
+                        } else {
+                            elem.classList.remove('active-color')
+                        }
+                    })
+                }
+            }
+            if (prop === 'canvas') {
+                const colorElements = this.querySelectorAll('[data-rgb]');
+                if(colorElements) {
+                    colorElements.forEach(elem => {
+                        if(elem.dataset.color.toLocaleLowerCase() === newVal) {
+                            elem.classList.add('active-color')
+                        } else {
+                            elem.classList.remove('active-color')
+                        }
+                    })
+                }
+            }
+        }
     }
 
     connectedCallback() {

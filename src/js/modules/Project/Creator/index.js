@@ -146,24 +146,39 @@ export default class Editor extends HTMLElement {
         window.updateStep = this.updateStep.bind(this);
     }
 
+    static get observedAttributes() {
+        return ['size', 'frame', 'canvas'];       
+    }
+
     //Life Cycle Hooks
     attributeChangedCallback(prop, oldVal, newVal) {
-        //Will not persist because we're literally re-rendering every time we update the props
-        if (prop === 'step') {
-            const mosaic = this.querySelector('mosaic-canvas');
-            if(mosaic && newVal !== "3") {
-                mosaic.drawMode = false;
-                mosaic.paintMode = false;
+        console.log(prop)
+        if(oldVal !== newVal) { //Has it changed??
+            //Will not persist because we're literally re-rendering every time we update the props
+            if (prop === 'step') {
+                const mosaic = this.querySelector('mosaic-canvas');
+                if(mosaic && newVal !== "3") {
+                    mosaic.drawMode = false;
+                    mosaic.paintMode = false;
+                }
+            } 
+            if (prop === 'size') {
+                const mosaic = this.querySelector('mosaic-canvas');  
+                const stepOne = this.querySelector('step-one');            
+                if(mosaic) mosaic.setAttribute('size', newVal );
+                if(stepOne) stepOne.setAttribute('size', newVal );
             }
-        } 
-        if (prop === 'size') {
-            const mosaic = this.querySelector('mosaic-canvas');            
-            if(mosaic) mosaic.setAttribute('size', this.size );
-        }
-        if (prop === 'color') {
-            const mosaicCanvas = this.querySelector('mosaic-canvas');
-            if(mosaicCanvas) {
-                mosaicCanvas.color = this.canvasColor;
+            if (prop === 'frame') {
+                const mosaicCanvas = this.querySelector('mosaic-canvas');
+                const stepOne = this.querySelector('step-one');            
+                if(stepOne) stepOne.setAttribute('frame', newVal );
+                if(mosaicCanvas) mosaicCanvas.setAttribute('frame', newVal );
+            }
+            if (prop === 'canvas') {
+                const mosaicCanvas = this.querySelector('mosaic-canvas');
+                const stepOne = this.querySelector('step-one');            
+                if(stepOne) stepOne.canvas = newVal;
+                if(mosaicCanvas) mosaicCanvas.color = newVal;
             }
         }
     }

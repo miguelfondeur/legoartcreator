@@ -1,4 +1,5 @@
 import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import projectWorker from '../../webWorkers/projectWorker.js';
 import ProjectHeader from './header.js';
 import Editor from './Creator/index.js';
 import MosaicInstructions from './Instructions/index.js';
@@ -9,6 +10,23 @@ export default class Project extends HTMLElement {
     //Stage: Component Created
     constructor() {
         super();
+
+        projectWorker.postMessage({ command: 'fetchData', componentId: 'canvas' });
+
+        // Listen for messages from the worker
+        projectWorker.onmessage = (e) => {
+            const store = e.data;
+            //You can also hide the data with a method like setSize and add the value.. Then you can handle the update in the method
+            //SIZE 
+            this.querySelector('mosaic-creator').setAttribute('size', store.size);
+            //NAME
+            this.querySelector('project-header').setAttribute('name', store.name);
+            this.querySelector('mosaic-instructions').setAttribute('name', store.name);
+            //FRAME COLOR
+            this.querySelector('mosaic-creator').setAttribute('frame', store.frame);
+            //CANVAS COLOR
+            this.querySelector('mosaic-creator').setAttribute('canvas', store.canvas);
+        };
 
         //Initial Data
         this.activeView = 'creator';
@@ -50,8 +68,6 @@ export default class Project extends HTMLElement {
     connectedCallback() {
         // Set default view
         this.changeProjectView(this.activeView);
-
-        //listen to events  
 
         // Listen for the custom event from ProjectHeader
         this.addEventListener('changeView', (e) => {

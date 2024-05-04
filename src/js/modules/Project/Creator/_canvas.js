@@ -102,10 +102,6 @@ export default class MosaicCanvas extends HTMLElement {
         this.brightness = 1; 
         this.contrast = 1; 
     }
-
-    static get observedAttributes() {
-        return ['size', 'color', 'frame'];       
-    }
     
     // A configuration map that associates canvasWidth values with their respective settings
     static GRID_CONFIG = {
@@ -135,26 +131,60 @@ export default class MosaicCanvas extends HTMLElement {
     /******************
     GETTERS & SETTERS
     ******************/
-    get size() {
-        return this.getAttribute("size");
-    }
-    set size(val) {
-        this.setAttribute('size', val);
+    static get observedAttributes() {
+        return ['size', 'color', 'frame'];       
     }
 
-    get color() {
-        return this.getAttribute("color");
-    }
-    set color(val) {
-        this.setAttribute('color', val);
-    }
+    get size() { return this.getAttribute("size") }
+    set size(val) { this.setAttribute('size', val) }
 
-    get frame() {
-        return this.getAttribute("frame");
+    get frame() { return this.getAttribute("frame") }
+    set frame(val) { this.setAttribute('frame', val) }
+
+    get color() { return this.getAttribute("color") }
+    set color(val) { this.setAttribute('color', val) }
+
+    //Attributes Changed
+    attributeChangedCallback(prop, oldVal, newVal) {
+        //Will not persist because we're literally re-rendering every time we update the props
+        if (prop === 'size') {
+            if(this.wrapper) {
+                this.wrapper.setAttribute('size', newVal );
+            }
+            if(this.canvas) {
+                if(newVal === '160')
+                    this.canvas.setAttribute('width', '480' );
+                else {
+                    this.canvas.setAttribute('width', newVal );
+                }
+            }
+            //Draw Canvas on Size Update
+            this.drawGrid(newVal)
+        }
+
+        if (prop === 'frame') {
+            if(this.container) {
+                this.container.style.borderColor = newVal;
+                if(newVal === 'white') {
+                    this.container.classList.add('outline-[#ddd]');
+                    this.wrapper.classList.add('!border-[#ddd]');
+                } else {
+                    this.container.classList.remove('outline-[#ddd]');
+                    this.wrapper.classList.remove('!border-[#ddd]');
+                }
+            }
+        }
+
+        if (prop === 'color') {
+            if(this.grid) {
+                this.grid.style.color = newVal;
+            }
+            if(this.canvas) {
+                this.canvas.style.backgroundColor = newVal;
+            } 
+        }
     }
-    set frame(val) {
-        this.setAttribute('frame', val);
-    }
+    
 
     /******************
     LIFE CYCLES
@@ -203,47 +233,6 @@ export default class MosaicCanvas extends HTMLElement {
             this.canvas.classList.add('!bg-transparent')
         } else {
             this.canvas.classList.remove('!bg-transparent')
-        }
-    }
-
-    //Attributes Changed
-    attributeChangedCallback(prop, oldVal, newVal) {
-        //Will not persist because we're literally re-rendering every time we update the props
-        if (prop === 'size') {
-            if(this.wrapper) {
-                this.wrapper.setAttribute('size', newVal );
-            }
-            if(this.canvas) {
-                if(newVal === '160')
-                    this.canvas.setAttribute('width', '480' );
-                else {
-                    this.canvas.setAttribute('width', newVal );
-                }
-            }
-            //Draw Canvas on Size Update
-            this.drawGrid(newVal)
-        }
-
-        if (prop === 'color') {
-            if(this.grid) {
-                this.grid.style.color = `rgb(${newVal})`;
-            }
-            if(this.canvas) {
-                this.canvas.style.backgroundColor = `rgb(${newVal})`;
-            } 
-        }
-
-        if (prop === 'frame') {
-            if(this.container) {
-                this.container.style.borderColor = `rgb(${newVal})`;
-                if(newVal === '255,255,255') {
-                    this.container.classList.add('outline-[#ddd]');
-                    this.wrapper.classList.add('!border-[#ddd]');
-                } else {
-                    this.container.classList.remove('outline-[#ddd]');
-                    this.wrapper.classList.remove('!border-[#ddd]');
-                }
-            }
         }
     }
 
