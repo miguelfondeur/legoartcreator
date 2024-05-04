@@ -94,7 +94,7 @@ export default class MosaicInstructions extends HTMLElement {
         eventDispatcher.addEventListener('handleCreateImage', e => {
             this.projectImgURL = e.dataURL;
             this.projectImg.src = this.projectImgURL;
-            this.projectFinale.src = localStorage.getItem('projectURL');
+            this.projectFinale.src = this.projectImgURL;
         });
 
         eventDispatcher.addEventListener('saveProject', e => {

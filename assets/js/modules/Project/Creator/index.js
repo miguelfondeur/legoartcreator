@@ -308,6 +308,8 @@ export default class Editor extends HTMLElement {
             //Do something with Canvas, call a function and pass the e.detail.image to it
             this.mosaic.image = e.detail.image;
             this.mosaic.draw();
+            //localstorage
+            localStorage.setItem("projectURL", e.detail.image);
         })
 
         this.addEventListener('resetCanvas', (e)=> {
