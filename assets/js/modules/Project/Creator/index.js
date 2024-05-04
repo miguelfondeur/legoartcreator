@@ -272,6 +272,11 @@ export default class Editor extends HTMLElement {
             this.mosaic.handleDownload();
         })
 
+        eventDispatcher.addEventListener('handleCreateImage', e => {
+            this.projectImgURL = e.dataURL;
+            this.previewImage.src = this.projectImgURL;
+        });
+
         this.addEventListener('updateActiveColor', (event) => {
             this.mosaic.activeColor = event.detail.color;
             this.mosaic.activeColorAlpha = event.detail.alpha;
