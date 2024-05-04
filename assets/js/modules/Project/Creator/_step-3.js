@@ -24,7 +24,7 @@ export default class StepThree extends HTMLElement {
     //setters
     
     render() {
-        this.innerHTML = /*html*/ `
+        this.innerHTML = `
             <style>
                 .half-square {
                     height: 50%;

@@ -7,7 +7,7 @@ import { brickColors } from '../../../data/brickColors.js';
 
 export default class MosaicCanvas extends HTMLElement {
     render() {
-        this.innerHTML = /*html*/ `
+        this.innerHTML = `
             <style>
                 #wrapper[size="320"] canvas { width: 320px; }
                 #wrapper[size="480"] canvas, #wrapper[size="160"] canvas { width: 480px; }
@@ -316,6 +316,8 @@ export default class MosaicCanvas extends HTMLElement {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         //Draw Grid with initial data
         this.drawGrid(this.size) 
+        //localStorage
+        localStorage.setItem("brickData", []);
     }
 
     /************************
@@ -345,10 +347,8 @@ export default class MosaicCanvas extends HTMLElement {
 
         this.imgContext.restore();  // Ensure transformations and filters are reverted for future draws
 
-        if(!localStorage.getItem('imgURL')) {
-            localStorage.setItem("imgURL", this.image.src);
-            eventDispatcher.dispatchEvent('handleImgURL', { dataURL: this.image.src });
-        }
+        localStorage.setItem("imgURL", this.image.src);
+        eventDispatcher.dispatchEvent('handleImgURL', { dataURL: this.image.src });
         
         //Update Pointer Events
         this.grid.classList.remove('pointer-events-none');
