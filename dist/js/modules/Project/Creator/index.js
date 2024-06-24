@@ -66,8 +66,8 @@ export default class Editor extends HTMLElement {
                     </button>
                     <!-- Steps -->
                     <step-one size="${this.size}"></step-one>
-                    <step-two size="${this.size}" color="${ this.color }"></step-two>
-                    <step-three color="${ this.color }"></step-three>
+                    <step-two></step-two>
+                    <step-three></step-three>
                     <step-four></step-four>
                 </dialog>
 
@@ -76,9 +76,8 @@ export default class Editor extends HTMLElement {
                     <div id="mosaic-wrapper" class="absolute h-full w-full transition-all block overflow-auto">
                         <mosaic-canvas 
                             class="w-[calc(100vw+200px)] h-[calc(100vh+200px)] flex justify-center items-center pl-[78px] lg:pl-[440px] pr-4"
-                            step="${this.step}" 
                             size="${this.size}" 
-                            color="${ this.color }"
+                            color="${ this.canvasColor }"
                         >
                         </mosaic-canvas>
                     </div>
@@ -140,34 +139,48 @@ export default class Editor extends HTMLElement {
         //Initial Data
         this.step = 1;
         this.size = 480;
-        this.color = [0,0,0];
+        this.canvasColor = [0,0,0];
+        
         //Get from local storage?
         window.updateStep = this.updateStep.bind(this);
     }
 
+    static get observedAttributes() {
+        return ['size', 'frame', 'canvas', 'image'];       
+    }
+
     //Life Cycle Hooks
     attributeChangedCallback(prop, oldVal, newVal) {
-        //Will not persist because we're literally re-rendering every time we update the props
-        if (prop === 'step') {
-            const dash = this.querySelector('#dashboard-steps');
+        //console.log(prop)
+        if(oldVal !== newVal) { //Has it changed??
             const mosaic = this.querySelector('mosaic-canvas');
-            if(mosaic && newVal !== "3") {
-                mosaic.drawMode = false;
-                mosaic.paintMode = false;
-            }
-        } 
-        if (prop === 'size') {
-            const mosaic = this.querySelector('mosaic-canvas');
+            const stepOne = this.querySelector('step-one');
             const stepTwo = this.querySelector('step-two');
-            
-            if(mosaic) mosaic.setAttribute('size', this.size );
-            //if(stepOne) stepOne.setAttribute('size', this.size );
-            if(stepTwo) stepTwo.setAttribute('size', this.size );
-        }
-        if (prop === 'color') {
-            const mosaicCanvas = this.querySelector('mosaic-canvas');
-            if(mosaicCanvas) {
-                mosaicCanvas.color = this.color;
+            const showImage = this.querySelector('#showImage');
+            switch (prop) {
+                case 'step':
+                    if(mosaic && newVal !== "3") {
+                        mosaic.drawMode = false;
+                        mosaic.paintMode = false;
+                    }
+                    break;
+                case 'size':        
+                    if(mosaic) mosaic.setAttribute('size', newVal );
+                    if(stepOne) stepOne.setAttribute('size', newVal );
+                    break;
+                case 'frame':            
+                    if(stepOne) stepOne.setAttribute('frame', newVal );
+                    if(mosaic) mosaic.setAttribute('frame', newVal );
+                    break;
+                case 'canvas':            
+                    if(stepOne) stepOne.canvas = newVal;
+                    if(mosaic) mosaic.color = newVal;
+                    break;
+                case 'image':
+                    if(mosaic) mosaic.setAttribute('image', newVal );
+                    if(stepTwo) stepTwo.toggleImageSettings(true)
+                    showImage.checked = true;
+                    break;
             }
         }
     }
@@ -198,7 +211,6 @@ export default class Editor extends HTMLElement {
         });        
 
         //listen to events
-        
         this.showImage.addEventListener('change', (e) => {
             this.mosaic.toggleShowImage(e.target.checked);
             this.querySelector('step-two').toggleImageSettings(e.target.checked);
@@ -213,49 +225,9 @@ export default class Editor extends HTMLElement {
             this.sizeNumber.innerHTML = ( parseFloat((this.sizeSlider.value * 100).toFixed(2)) ) + '%';
         })
 
-        this.addEventListener('updateSize', (e)=> {
-            this.mosaic.size = e.detail.size 
-        });
-        
-        this.addEventListener('updateColor', (e)=> {
-            this.mosaic.color = e.detail.color;
-        });
-
-        this.addEventListener('updateFrame', (e)=> {
-            this.mosaic.frame = e.detail.color;
-        });
-
         this.addEventListener('handleResetBricks', (e)=> {
             this.mosaic.handleResetCanvas();
         });  
-
-        this.addEventListener('handleSaturation', e=> {
-            this.mosaic.handleSaturation(e.detail.value);
-        })
-
-        this.addEventListener('handleBrightness', e=> {
-            this.mosaic.handleBrightness(e.detail.value);
-        })
-
-        this.addEventListener('handleContrast', e=> {
-            this.mosaic.handleContrast(e.detail.value);
-        })
-
-        this.addEventListener('handleFlip', e=> {
-            this.mosaic.handleFlipImage();
-        })
-
-        this.addEventListener('handleResetImage', (e)=> {
-            this.mosaic.handleResetImage();
-        });  
-        
-        this.addEventListener('handleZoom', (e)=> {
-            this.mosaic.handleZoom(e.detail.factor);
-        }); 
-
-        this.addEventListener('handleRotate', (e)=> {
-            this.mosaic.handleRotate(e.detail.factor);
-        }); 
 
         this.addEventListener('updateDrawMode', event => {
             if(this.step === 3) {
@@ -298,16 +270,6 @@ export default class Editor extends HTMLElement {
             this.mosaic.lockImage(event.detail.locked);
         })      
 
-        //Get Image
-        this.addEventListener('updateImage', (e) => {
-            this.showImage.checked = true;
-            this.mosaic.toggleShowImage(true)
-            this.file = e.detail.image;
-            //Do something with Canvas, call a function and pass the e.detail.image to it
-            this.mosaic.image = e.detail.image;
-            this.mosaic.draw();
-        })
-
         this.addEventListener('resetCanvas', (e)=> {
             this.showImage.checked = true;
             this.mosaic.toggleShowImage(true)
@@ -317,6 +279,27 @@ export default class Editor extends HTMLElement {
     }
 
     //Functions
+    initializeWithSettings(data) {
+        this.applySettings(data.settings);
+        const stepTwo = this.querySelector('#stepTwo')
+        if (stepTwo) {
+            stepTwo.initializeWithSettings(data.settings);
+        }
+    }
+
+    applySettings(settings) {
+        const mosaic = this.querySelector('mosaic-canvas');
+        const stepTwo = this.querySelector('#stepTwo');
+        // Apply settings to the current component and propagate to necessary children
+        if (mosaic) mosaic.applySettings(settings);
+        if (stepTwo) stepTwo.applySettings(settings);
+    }
+
+    updateSettings(settings) {
+        // Update settings dynamically after initial load
+        this.applySettings(settings);
+    }
+
     updateStep(step) {
         this.querySelector('#modal').classList.remove('hidden');
         this.step = step;

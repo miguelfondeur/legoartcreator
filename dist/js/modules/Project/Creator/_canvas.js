@@ -102,10 +102,6 @@ export default class MosaicCanvas extends HTMLElement {
         this.brightness = 1; 
         this.contrast = 1; 
     }
-
-    static get observedAttributes() {
-        return ['size', 'color', 'image', 'frame'];       
-    }
     
     // A configuration map that associates canvasWidth values with their respective settings
     static GRID_CONFIG = {
@@ -135,26 +131,67 @@ export default class MosaicCanvas extends HTMLElement {
     /******************
     GETTERS & SETTERS
     ******************/
-    get size() {
-        return this.getAttribute("size");
-    }
-    set size(val) {
-        this.setAttribute('size', val);
+    static get observedAttributes() {
+        return ['size', 'color', 'frame', 'image'];       
     }
 
-    get color() {
-        return this.getAttribute("color");
-    }
-    set color(val) {
-        this.setAttribute('color', val);
+    get size() { return this.getAttribute("size") }
+    set size(val) { this.setAttribute('size', val) }
+
+    get frame() { return this.getAttribute("frame") }
+    set frame(val) { this.setAttribute('frame', val) }
+
+    get color() { return this.getAttribute("color") }
+    set color(val) { this.setAttribute('color', val) }
+
+    get image() { return this.getAttribute("image") }
+    set image(val) {
+        if (this.getAttribute('image') !== val) {
+            this.setAttribute('image', val);
+        }
     }
 
-    get frame() {
-        return this.getAttribute("frame");
+    //Attributes Changed
+    attributeChangedCallback(prop, oldVal, newVal) {
+        switch (prop) {
+            case 'size':
+                if(this.wrapper) this.wrapper.setAttribute('size', newVal );
+                if(this.canvas) {
+                    if(newVal === '160')
+                        this.canvas.setAttribute('width', '480' );
+                    else {
+                        this.canvas.setAttribute('width', newVal );
+                    }
+                }
+                //Draw Canvas on Size Update
+                this.drawGrid(newVal)
+                break;
+            case 'frame':
+                if(this.container) {
+                    this.container.style.borderColor = `rgb(${newVal})`;
+                    if(newVal === '255,255,255') {
+                        this.container.classList.add('outline-[#ddd]');
+                        this.wrapper.classList.add('!border-[#ddd]');
+                    } else {
+                        this.container.classList.remove('outline-[#ddd]');
+                        this.wrapper.classList.remove('!border-[#ddd]');
+                    }
+                }
+                break;
+            case 'color':
+                if(this.grid) this.grid.style.color = `rgb(${newVal})`;
+                if(this.canvas) this.canvas.style.backgroundColor = `rgb(${newVal})`;
+                break;
+            case 'image':
+                this.toggleShowImage(true);
+                if (this._image !== newVal) {
+                    this._image = newVal; // Use a private property to handle the actual image data
+                    this.draw();
+                }
+                break;
+        }
     }
-    set frame(val) {
-        this.setAttribute('frame', val);
-    }
+    
 
     /******************
     LIFE CYCLES
@@ -198,52 +235,21 @@ export default class MosaicCanvas extends HTMLElement {
         });
     }
 
+    applySettings(settings) {
+        console.log('applySettings settings', settings)
+        this.handleSaturation(settings.saturation);
+        this.handleBrightness(settings.brightness);
+        this.handleContrast(settings.contrast);
+        this.handleFlipImage(settings.flippedHorizontal);
+        this.handleZoom(settings.zoomLevel); 
+        this.handleRotate(settings.rotation);
+    }
+
     toggleTraceMode(traceMode) {
         if(traceMode) {
             this.canvas.classList.add('!bg-transparent')
         } else {
             this.canvas.classList.remove('!bg-transparent')
-        }
-    }
-
-    //Attributes Changed
-    attributeChangedCallback(prop, oldVal, newVal) {
-        //Will not persist because we're literally re-rendering every time we update the props
-        if (prop === 'size') {
-            if(this.wrapper) {
-                this.wrapper.setAttribute('size', newVal );
-            }
-            if(this.canvas) {
-                if(newVal === '160')
-                    this.canvas.setAttribute('width', '480' );
-                else {
-                    this.canvas.setAttribute('width', newVal );
-                }
-            }
-            //Draw Canvas on Size Update
-            this.drawGrid(newVal)
-        }
-
-        if (prop === 'color') {
-            if(this.grid) {
-                this.grid.style.color = `rgb(${newVal})`;
-            }
-            if(this.canvas) {
-                this.canvas.style.backgroundColor = `rgb(${newVal})`;
-            } 
-        }
-
-        if (prop === 'frame') {
-            if(this.container) {
-                this.container.style.borderColor = `rgb(${newVal})`;
-                if(newVal === '255,255,255') {
-                    this.container.classList.add('outline-[#ddd]');
-                    this.wrapper.classList.add('!border-[#ddd]');
-                } else {
-                    this.container.classList.remove('outline-[#ddd]');
-                    this.wrapper.classList.remove('!border-[#ddd]');
-                }
-            }
         }
     }
 
@@ -261,7 +267,6 @@ export default class MosaicCanvas extends HTMLElement {
     /******************
     METHODS
     ******************/
-
     drawGrid(canvasWidth) {
         //Guard Clauses
         if (!this.context) return;  // Guard Clause
@@ -340,16 +345,15 @@ export default class MosaicCanvas extends HTMLElement {
             this.flipHorizontally();
         }
 
-        this.drawImage(this.image);
+        if (this.image && this.image !== '') {
+            this.drawImage(this.image);
+        } else {
+            console.log('No image data available to draw');
+        }
 
         this.applyAdjustments();
 
         this.imgContext.restore();  // Ensure transformations and filters are reverted for future draws
-
-        if(!localStorage.getItem('imgURL')) {
-            localStorage.setItem("imgURL", this.image.src);
-            eventDispatcher.dispatchEvent('handleImgURL', { dataURL: this.image.src });
-        }
         
         //Update Pointer Events
         this.grid.classList.remove('pointer-events-none');
@@ -404,22 +408,43 @@ export default class MosaicCanvas extends HTMLElement {
         this.imgContext.scale(-1, 1);  // Flip the context horizontally
     }
 
-    drawImage(image) {
-        const scale = this.canvas.width / this.image.width;
-        const scaledWidth = this.image.width * scale * this.zoomLevel;
-        const scaledHeight = this.image.height * scale * this.zoomLevel;
-        const drawX = this.x - this.imgCanvas.width / 2;
-        const drawY = this.y - this.imgCanvas.height / 2;
-        if (image instanceof HTMLImageElement || image instanceof HTMLCanvasElement /*... other types */) {
-            this.imgContext.drawImage(image, drawX, drawY, scaledWidth, scaledHeight);
-        } else {
-            console.error('Invalid image type:', image);
-        }
+    drawImage(imageSrc) {
+        const img = new Image();
+        img.onload = () => {
+            this.applyTransformations();  // Apply transformations before drawing
+            
+            const scale = this.imgCanvas.width / img.width;
+            const scaledWidth = img.width * scale * this.zoomLevel;
+            const scaledHeight = img.height * scale * this.zoomLevel;
+            // Centering the image in the canvas
+            const drawX = (this.imgCanvas.width - scaledWidth) / 2 + this.x;
+            const drawY = (this.imgCanvas.height - scaledHeight) / 2 + this.y;
+    
+            this.imgContext.clearRect(0, 0, this.imgCanvas.width, this.imgCanvas.height);
+            this.imgContext.drawImage(img, drawX, drawY, scaledWidth, scaledHeight);
+            this.imgContext.restore();
+        };
+        img.onerror = () => {
+            console.error('Failed to load image:', imageSrc);
+        };
+        img.src = imageSrc;
+    }
+
+    applyTransformations() {
+        this.imgContext.save();  // Save the current state to restore it later
+        // Translate to the center of the canvas
+        this.imgContext.translate(this.imgCanvas.width / 2, this.imgCanvas.height / 2);
+        // Rotate the context
+        this.imgContext.rotate(this.rotation * Math.PI / 180);
+        // Translate back after rotation
+        this.imgContext.translate(-this.imgCanvas.width / 2, -this.imgCanvas.height / 2);
     }
 
     handleRotate(factor) {
-        this.rotation = (this.rotation + factor) % 360; // Rotate by 90 degrees
-        this.draw(); // Redraw the image with the new rotation setting
+        console.log('this.rotation', this.rotation);
+        this.rotation = (this.rotation + factor + 360) % 360;
+        this.drawImage(this.image.src); // Redraw the image with the new rotation setting
+        
     }
 
     handleSaturation(value) {
@@ -589,7 +614,7 @@ export default class MosaicCanvas extends HTMLElement {
             this.context.restore();
         }
         //Save to Local Storage
-        localStorage.setItem("brickData", JSON.stringify(this.circles));
+        //localStorage.setItem("brickData", JSON.stringify(this.circles));
     }
 
     convert() {
@@ -787,12 +812,12 @@ export default class MosaicCanvas extends HTMLElement {
         // Dispatch Event
         eventDispatcher.dispatchEvent('handleCreateImage', { dataURL: dataURL });
         //Store Image
-        localStorage.setItem("projectURL", dataURL);
+        //localStorage.setItem("projectURL", dataURL);
     }
 
     saveProject() {
         //Save to Local Storage
-        localStorage.setItem("brickData", JSON.stringify(this.circles));
+        //localStorage.setItem("brickData", JSON.stringify(this.circles));
         //Dispatch Save event with data for other components
         eventDispatcher.dispatchEvent('saveProject', { data: JSON.stringify(this.circles) });
     }

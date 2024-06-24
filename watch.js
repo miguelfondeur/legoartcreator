@@ -1,6 +1,6 @@
 const chokidar = require('chokidar');
 const path = require('path');
-const includeHtmlPartials = require('./includePartials'); // Assuming includePartials.js exports its function
+const includeHtmlPartials = require('./tasks/includeHtmlPartials'); // Assuming includePartials.js exports its function
 
 const sourceDir = 'path/to/your/html'; // Source directory of your HTML files
 const partialsDir = 'path/to/your/partials'; // Directory where partials are stored

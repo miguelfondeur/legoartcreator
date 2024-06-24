@@ -1,4 +1,5 @@
 import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import projectWorker from '../../webWorkers/projectWorker.js';
 
 export default class ProjectHeader extends HTMLElement {
     //Teamplte
@@ -13,7 +14,7 @@ export default class ProjectHeader extends HTMLElement {
                 <!-- Name -->
                 <div class="flex items-center h-full min-w-[110px] px-4 border-x border-zinc-200 text-black text-sm flex-shrink-0 mr-auto">
                     <label for="projectTitle" class="text-xs text-gray-400 mr-2 sr-only">Project Title</label>
-                    <input id="projectTitle" type="text" readonly value="My Project" class="inline-flex outline-none">
+                    <input id="projectTitle" type="text" value="My Project" class="inline-flex outline-none">
                 </div>
                 <div class="flex items-center text-sm gap-2 px-4 text-black">
                     <!-- 
@@ -83,7 +84,7 @@ export default class ProjectHeader extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['active-page']; // Add more attributes to the array if needed
+        return ['active-page', 'name']; // Add more attributes to the array if needed
     }
 
     //Life Cycle Hooks
@@ -91,7 +92,13 @@ export default class ProjectHeader extends HTMLElement {
         if (name === 'active-page') {
             this.updateActiveLink(newValue);
         }
+        if (name === 'name') {
+            this.querySelector('#projectTitle').value = newValue;
+        }
     }
+
+    get name() { return this.getAttribute("name"); }
+    set name(val) { this.setAttribute('name', val); }
 
     // Stage: 'Component now connected to DOM'
     connectedCallback() {
@@ -107,8 +114,6 @@ export default class ProjectHeader extends HTMLElement {
             this.querySelector('#instructionBtn').disabled = true;
             this.querySelector('#partsBtn').disabled = true;
         }
-        
-        //this.initialize();
 
         //listen to events
         eventDispatcher.addEventListener('finishProject', e => {
@@ -126,6 +131,13 @@ export default class ProjectHeader extends HTMLElement {
                 }));
             });
         });
+
+        this.querySelector('#projectTitle').addEventListener('change', this.debounce(function(e) {
+            projectWorker.postMessage({
+                command: 'updateName', 
+                name: e.target.value
+            });
+        }, 250)); 
     }
 
     //Functions
@@ -140,6 +152,15 @@ export default class ProjectHeader extends HTMLElement {
                 link.classList.remove('bg-sky-600', 'hover:bg-sky-600','!text-white');
             }
         });
+    }
+
+    debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            const context = this;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
     }
 }
 

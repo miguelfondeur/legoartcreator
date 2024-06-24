@@ -1,4 +1,5 @@
 import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import projectWorker from '../../webWorkers/projectWorker.js';
 import ProjectHeader from './header.js';
 import Editor from './Creator/index.js';
 import MosaicInstructions from './Instructions/index.js';
@@ -9,6 +10,47 @@ export default class Project extends HTMLElement {
     //Stage: Component Created
     constructor() {
         super();
+
+        projectWorker.postMessage({ command: 'fetchData', componentId: 'canvas' });
+
+        projectWorker.onmessage = (e) => {
+            const { type, payload } = e.data;
+            switch (type) {
+                case 'dataFetched':
+                    // Apply all the initial data
+                    this.querySelector('project-header').setAttribute('name', payload.name);
+                    this.querySelector('mosaic-instructions').setAttribute('name', payload.name);
+                    this.querySelector('mosaic-creator').setAttribute('size', payload.size);
+                    this.querySelector('mosaic-creator').setAttribute('frame', payload.frame);
+                    this.querySelector('mosaic-creator').setAttribute('canvas', payload.canvas);
+                    this.querySelector('mosaic-creator').setAttribute('image', payload.image);
+                    this.querySelector('mosaic-creator').initializeWithSettings(payload);
+                    break; 
+                case 'nameUpdated':
+                    this.querySelector('project-header').setAttribute('name', payload.name);
+                    this.querySelector('mosaic-instructions').setAttribute('name', payload.name);
+                    break;
+                case 'sizeUpdated':
+                    this.querySelector('mosaic-creator').setAttribute('size', payload.size);
+                    break;
+                case 'frameUpdated':
+                    this.querySelector('mosaic-creator').setAttribute('frame', payload.frame);
+                    break;
+                case 'canvasUpdated':
+                    this.querySelector('mosaic-creator').setAttribute('canvas', payload.canvas);
+                    break;
+                case 'imageUpdated':
+                    this.querySelector('mosaic-creator').setAttribute('image', payload.image);
+                    break;
+                case 'settingsUpdated':
+                    this.updateSettings(payload.settings);
+                    break;
+                case 'error':
+                    // Handle any errors
+                    console.error('Error from worker:', payload.message);
+                    break;
+            }
+        };        
 
         //Initial Data
         this.activeView = 'creator';
@@ -51,8 +93,6 @@ export default class Project extends HTMLElement {
         // Set default view
         this.changeProjectView(this.activeView);
 
-        //listen to events  
-
         // Listen for the custom event from ProjectHeader
         this.addEventListener('changeView', (e) => {
             const newView = e.detail.view;
@@ -80,6 +120,14 @@ export default class Project extends HTMLElement {
     }
 
     //Functions
+    updateSettings(settings) {
+        // Update components that depend on settings
+        const mosaicCreator = this.querySelector('mosaic-creator');
+        if (mosaicCreator) {
+            mosaicCreator.updateSettings(settings);
+        }
+    }
+
     changeProjectView(view) {
         // Hide all views
         const views = this.querySelectorAll('[project-view]');
@@ -99,7 +147,6 @@ export default class Project extends HTMLElement {
         window.location.hash = `#${view}`;
     }
 
-    //Functions
     updateActiveLink(activePage) {
         const links = this.querySelectorAll("[project-page-id]");
         links.forEach((link) => {

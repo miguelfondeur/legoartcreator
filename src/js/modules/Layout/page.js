@@ -64,8 +64,10 @@ class PageContainer extends HTMLElement {
         if (!localStorage.getItem("betaModalClosed")) {
             // If not closed, open the modal automatically
             const betaModal = document.getElementById("beta-modal");
-            betaModal.classList.remove('!hidden');
-            betaModal.showModal();
+            if(betaModal) {
+                betaModal.classList.remove('!hidden');
+                betaModal.showModal();
+            }
         }
 
         if(document.getElementById("close-modal")) {

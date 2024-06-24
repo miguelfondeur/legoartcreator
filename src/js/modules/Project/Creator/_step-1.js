@@ -1,12 +1,9 @@
-//import '../Forms/_colorpicker.js';
 import { platePickerData } from '../../../data/plateColorPicker.js';
 import projectWorker from '../../../webWorkers/projectWorker.js';
-// import '../Modal.js';
-// import '../ImageWidget.js';
 
 export default class StepOne extends HTMLElement {
     render() {
-        this.innerHTML = /*html*/ `
+        this.innerHTML = `
             <style>
                 .active-color {
                     outline: 2px solid #006DBC;
@@ -73,10 +70,45 @@ export default class StepOne extends HTMLElement {
     //Constructor
     constructor() {
         super();
+    }
 
-        this.activeColor = "6284070";
-        this.canvas = "black";
-        this.frame = "black";
+    connectedCallback() {
+        this.render();
+        const sizeSelect = this.querySelector('#sizeSelect');
+        const colorElements = this.querySelectorAll('[data-rgb]');
+        const frameElements = this.querySelectorAll('[data-frame]');
+        
+        //Update Size on Click
+        sizeSelect.addEventListener('change', e => {
+            this.size = e.target.value;  // Updates the component's attribute which triggers attributeChangedCallback
+            projectWorker.postMessage({ command: 'updateSize', size: e.target.value });  // Sends the updated size to the worker
+        });
+
+        colorElements.forEach( (elem,i) => {
+            elem.addEventListener('click', e => {
+                colorElements.forEach(item => {
+                    item.classList.remove('active-color');
+                })
+                //Set Active Color
+                this.activeColor = colorElements[i].dataset.element;
+                //Update class
+                if(this.activeColor === colorElements[i].dataset.element) {
+                    colorElements[i].classList.add('active-color');
+                }
+
+                this.setAttribute('color', e.target.dataset.rgb)
+                //send event to update canvas and svg
+                projectWorker.postMessage({ command: 'updateCanvas', canvas: e.target.dataset.rgb });  // Sends the updated color to the worker
+            })
+        })
+
+        frameElements.forEach(elem => {
+            elem.addEventListener('click', e => {
+                this.setAttribute('frame', e.target.dataset.rgb)
+                //send event to update canvas and svg
+                projectWorker.postMessage({ command: 'updateFrame', frame: e.target.dataset.framergb });  // Sends the updated color to the worker
+            })
+        })
     }
 
     static get observedAttributes() {
@@ -94,135 +126,40 @@ export default class StepOne extends HTMLElement {
     //Life Cycle Hooks
     attributeChangedCallback(prop, oldVal, newVal) {
         if(oldVal !== newVal) { //Has it changed??
-            if (prop === 'size') {
-                if(this.querySelector('#sizeSelect')) {
-                    this.querySelector('#sizeSelect').value = newVal;
-                }
-            }
-            if (prop === 'frame') {
-                const frameElements = this.querySelectorAll('[data-frame]');
-                if(frameElements) {
-                    frameElements.forEach(elem => {
-                        if(elem.dataset.color === newVal) {
-                            elem.classList.add('active-color')
-                        } else {
-                            elem.classList.remove('active-color')
-                        }
-                    })
-                }
-            }
-            if (prop === 'canvas') {
-                const colorElements = this.querySelectorAll('[data-rgb]');
-                if(colorElements) {
-                    colorElements.forEach(elem => {
-                        if(elem.dataset.color.toLocaleLowerCase() === newVal) {
-                            elem.classList.add('active-color')
-                        } else {
-                            elem.classList.remove('active-color')
-                        }
-                    })
-                }
+            switch (prop) {
+                case 'size':
+                    const sizeSelect = this.querySelector('#sizeSelect');
+                    if (sizeSelect && sizeSelect.value !== newVal) {
+                        sizeSelect.value = newVal;  // Updates the dropdown if the new value differs
+                    }
+                    break;
+                case 'frame':
+                    const frameElements = this.querySelectorAll('[data-frame]');
+                    if(frameElements) {
+                        frameElements.forEach(elem => {
+                            if(elem.dataset.framergb === newVal) {
+                                elem.classList.add('active-color')
+                            } else {
+                                elem.classList.remove('active-color')
+                            }
+                        })
+                    }
+                    break
+                case 'canvas':
+                    const colorElements = this.querySelectorAll('[data-rgb]');
+                    if(colorElements) {
+                        colorElements.forEach(elem => {
+                            if(elem.dataset.rgb === newVal) {
+                                elem.classList.add('active-color')
+                            } else {
+                                elem.classList.remove('active-color')
+                            }
+                        })
+                    }
+                    break;
             }
         }
     }
-
-    connectedCallback() {
-        this.render();
-        const sizeSelect = this.querySelector('#sizeSelect');
-        const colorElements = this.querySelectorAll('[data-rgb]');
-        const frameElements = this.querySelectorAll('[data-frame]');
-        
-        //Update Size on Click
-        sizeSelect.addEventListener('change', e =>{
-            this.size = e.target.value;
-            const event = new CustomEvent('updateSize', {
-                detail: {
-                    size: e.target.value
-                },
-                bubbles: true,
-                composed: true,
-                cancelable: true
-            });
-            e.target.dispatchEvent(event);
-            localStorage.setItem("size", e.target.value);
-        });
-
-        colorElements.forEach( (elem,i) => {
-            elem.addEventListener('click', event => {
-                colorElements.forEach(item => {
-                    item.classList.remove('active-color');
-                })
-                //Set Active Color
-                this.activeColor = colorElements[i].dataset.element;
-                //Update class
-                if(this.activeColor === colorElements[i].dataset.element) {
-                    colorElements[i].classList.add('active-color');
-                }
-
-                this.setAttribute('color', event.target.dataset.rgb)
-                //send event to update canvas and svg
-                this.updateColor(event)
-            })
-        })
-
-        frameElements.forEach(elem => {
-            elem.addEventListener('click', event => {
-                this.setAttribute('frame', event.target.dataset.rgb)
-                //send event to update canvas and svg
-                this.updateFrame(event)
-            })
-        })
-    }
-    
-    //Methods
-    updateSize(e) {
-        const event = new CustomEvent('updateSize', {
-            detail: {
-                size: e.target.value
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
-        });
-        e.target.dispatchEvent(event);
-    }
-
-    updateColor(e) {
-        const event = new CustomEvent('updateColor', {
-            detail: {
-                color: e.target.dataset.rgb
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
-        });
-        e.target.dispatchEvent(event);
-    }
-
-    updateFrame(e) {
-        const event = new CustomEvent('updateFrame', {
-            detail: {
-                color: e.target.dataset.framergb
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
-        });
-        e.target.dispatchEvent(event);
-    }
-    
-    resetCanvas(e) {
-        //Reset color picker
-        this.querySelector('color-picker').resetPicker();
-        //Send Event Up
-        const event = new CustomEvent('resetCanvas', {
-            bubbles: true,
-            composed: true,
-            cancelable: true
-        });
-        e.target.dispatchEvent(event);
-    }
-
 }
 
 customElements.define('step-one', StepOne);

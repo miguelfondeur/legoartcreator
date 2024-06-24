@@ -15,14 +15,6 @@ export default class StepThree extends HTMLElement {
         this.drawMode = true; //default
         this.paintMode = false;
     }
-
-    static get observedAttributes() {
-        return ['count', 'color', 'name', 'avatar', 'unique'];       
-    }
-
-    //getters
-    
-    //setters
     
     render() {
         this.innerHTML = /*html*/ `

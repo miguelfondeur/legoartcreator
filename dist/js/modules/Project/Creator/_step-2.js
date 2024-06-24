@@ -7,23 +7,8 @@ export default class StepTwo extends HTMLElement {
         this.image = new Image();
         this.imageUrl = '';
         this.imageLocked = false;
+        this.imageFlipped = false;
     }
-
-    static get observedAttributes() {
-        return ['count', 'color', 'name', 'avatar', 'file', 'size'];       
-    }
-    
-    //Getters and Setters
-    get size() {
-        return this.getAttribute("size");
-    }
-    set size(val) {
-        this.setAttribute('size', val)
-    }
-
-    //getters
-    
-    //setters
     
     render() {
         this.innerHTML = /*html*/ `
@@ -118,15 +103,6 @@ export default class StepTwo extends HTMLElement {
             </div>`;
     }
 
-    //Life Cycle Hooks
-    attributeChangedCallback(prop, oldVal, newVal) {
-        if (prop === 'size') {
-            const imageWidget = this.querySelector('image-widget');
-            
-            if(imageWidget)  imageWidget.setAttribute('size', this.size );  
-        }
-    }
-
     connectedCallback() {
         //render
         this.render();
@@ -137,15 +113,11 @@ export default class StepTwo extends HTMLElement {
         convertButton.addEventListener('click', e => this.handleConvert(e) )
         
         //Add Event Listeners
-        this.querySelector('#saturation-slider').addEventListener('input', (e) => this.handleSaturation(e));
-        this.querySelector('#brightness-slider').addEventListener('input', (e) => this.handleBrightness(e));
-        this.querySelector('#contrast-slider').addEventListener('input', (e) => this.handleContrast(e));
-        this.querySelector('#zoomIn').addEventListener('click', () => this.handleZoom(event, 1.01));
-        this.querySelector('#zoomOut').addEventListener('click', () => this.handleZoom(event, 0.99));
-        this.querySelector('#rotateL').addEventListener('click', () => this.handleRotate(event, -10 ));
-        this.querySelector('#rotateR').addEventListener('click', () => this.handleRotate(event, 10 ));
-        this.querySelector('#delete').addEventListener('click', () => this.handleResetImage(event));
-        this.querySelector('#flip').addEventListener('click', () => this.handleFlipImage(event));
+        this.querySelector('#rotateL').addEventListener('click', this.handleRotate.bind(this, -10));
+        this.querySelector('#rotateR').addEventListener('click', this.handleRotate.bind(this, 10));
+        this.querySelector('#flip').addEventListener('click', this.handleFlip.bind(this));
+        this.querySelector('#zoomIn').addEventListener('click', this.handleZoom.bind(this, 1.01));
+        this.querySelector('#zoomOut').addEventListener('click', this.handleZoom.bind(this, 0.99));
         
         this.querySelector('#colorButton').addEventListener('click', e => {
             this.querySelector('#colorButton').classList.toggle('!bg-black')
@@ -153,6 +125,10 @@ export default class StepTwo extends HTMLElement {
             this.querySelector('#colorButton').classList.toggle('!text-white')
             this.querySelector('#color-settings').classList.toggle('hidden');
         })
+        this.querySelector('#saturation-slider').addEventListener('input', (e) => this.handleSaturation(e));
+        this.querySelector('#brightness-slider').addEventListener('input', (e) => this.handleBrightness(e));
+        this.querySelector('#contrast-slider').addEventListener('input', (e) => this.handleContrast(e));
+        this.querySelector('#delete').addEventListener('click', () => this.handleResetImage(event));
         
         //Handle Lock
         this.querySelector('#lock').addEventListener('click', e => {
@@ -173,53 +149,44 @@ export default class StepTwo extends HTMLElement {
                     this.querySelector('#color-settings').classList.add('hidden');
                 }
             })
-            const event = new CustomEvent('lockImage', {
-                detail: {
-                    locked: this.imageLocked, 
-                },
-                bubbles: true,
-                composed: true,
-                cancelable: true
-            });
-            e.target.dispatchEvent(event);
+            this.lockImage(this.imageLocked);
         })
 
-        //Upload
+        // Upload
         this.fileButton.addEventListener('change', (e) => {
             const file = e.target.files[0];
-            // Check if a file was selected
             if (file) {
-                // Define the file size limit in bytes (15 MB)
-                const fileSizeLimit = 15 * 1024 * 1024;
-                // Check if the file size exceeds the limit
+                const fileSizeLimit = 15 * 1024 * 1024;  // 15 MB limit
                 if (file.size > fileSizeLimit) {
-                    alert('File size exceeds the 5 MB limit. Please choose a smaller file.');
-                    // Reset the input to clear the selected file
+                    alert('File size exceeds the 15 MB limit. Please choose a smaller file.');
                     e.target.value = '';
-                    return; // Exit early to prevent further processing
+                    return;
                 }
-                // Existing file reading logic...
                 const reader = new FileReader();
                 reader.onload = (event) => {
-                    this.image.src = event.target.result;
-                }
-                this.image.onload = () => {
-                    if(this.imageSettings) {
-                        this.imageSettings.classList.remove('text-zinc-300', 'pointer-events-none');
-                    }
-                    const event = new CustomEvent('updateImage', {
-                        detail: {
-                            image: this.image,
-                        },
-                        bubbles: true,
-                        composed: true,
-                        cancelable: true
+                    // Immediately send the image data URL to the worker
+                    projectWorker.postMessage({
+                        command: 'updateImage',
+                        image: event.target.result  // Send the data URL directly
                     });
-                    e.target.dispatchEvent(event);
+                    // Optionally update any related state or UI, such as displaying the image or enabling image settings
+                    this.imageUrl = event.target.result; // Update local state or trigger re-render if necessary
+                    this.toggleImageSettings(true); // Example function to enable image settings if they are dependent on having an image loaded
                 };
                 reader.readAsDataURL(file);
             }
         });
+        
+    }
+
+    initializeWithSettings(settings) {
+        // Initialize component based on settings
+        this.applySettings(settings);
+    }
+
+    applySettings(settings) {
+        // Directly use settings to adjust component's functionality
+        // Example: this.shadowRoot.querySelector('.some-element').style.transform = `scale(${settings.zoomLevel})`;
     }
 
     toggleImageSettings(settingsEnabled) {
@@ -235,49 +202,38 @@ export default class StepTwo extends HTMLElement {
         this.querySelector('#colorButton').classList.remove('!border-black')
         this.querySelector('#colorButton').classList.remove('!text-white')
         this.querySelector('#color-settings').classList.add('hidden');
-        // e.preventDefault(); //Just in case
-        const event = new CustomEvent('handleConvert', {
-            bubbles: true,
-            composed: true,
-            cancelable: true
+
+        // Send a message to the worker to start the conversion process
+        projectWorker.postMessage({
+            command: 'readyToConvert', //handleConvert
         });
-        e.target.dispatchEvent(event);
     }
 
     handleSaturation(e) {
-        const event = new CustomEvent('handleSaturation', {
-            detail: {
-                value: e.target.value,
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
+        projectWorker.postMessage({
+            command: 'updateSettings',
+            settings: {
+                saturation: e.target.value,
+            }
         });
-        e.target.dispatchEvent(event);
     }
 
     handleBrightness(e) {
-        const event = new CustomEvent('handleBrightness', {
-            detail: {
-                value: e.target.value,
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
+        projectWorker.postMessage({
+            command: 'updateSettings',
+            settings: {
+                brightness: e.target.value,
+            }
         });
-        e.target.dispatchEvent(event);
     }
 
     handleContrast(e) {
-        const event = new CustomEvent('handleContrast', {
-            detail: {
-                value: e.target.value,
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
+        projectWorker.postMessage({
+            command: 'updateSettings',
+            settings: {
+                contrast: e.target.value,
+            }
         });
-        e.target.dispatchEvent(event);
     }
 
     handleResetImage(e) {
@@ -287,61 +243,49 @@ export default class StepTwo extends HTMLElement {
         this.querySelector('#colorButton').classList.remove('!text-white')
         this.querySelector('#color-settings').classList.add('hidden');
 
-        //Send Event
-        const event = new CustomEvent('handleResetImage', {
-            bubbles: true,
-            composed: true,
-            cancelable: true
-        });
-        e.target.dispatchEvent(event);
+        this.resetImage();
     }
 
-    handleZoom(e, factor) {
-        //Send Event
-        const event = new CustomEvent('handleZoom', {
-            detail: {
-                factor: factor,
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
+    handleRotate(degrees) {
+        projectWorker.postMessage({
+            command: 'updateSettings',
+            settings: {
+                rotation: degrees // Ensure this is a relative change, not absolute
+            }
         });
-        e.target.dispatchEvent(event);
-    } 
-
-    handleRotate(e, factor) {
-        //Send Event
-        const event = new CustomEvent('handleRotate', {
-            detail: {
-                factor: factor,
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
-        });
-        e.target.dispatchEvent(event);
-    } 
-
-    handleFlipImage(e) {
-        //Send Event
-        const event = new CustomEvent('handleFlip', {
-            bubbles: true,
-            composed: true,
-            cancelable: true
-        });
-        e.target.dispatchEvent(event);
     }
 
-    updateImage(e) {
-        const event = new CustomEvent('updateImage', {
-            detail: {
-                image: this.image,
-            },
-            bubbles: true,
-            composed: true,
-            cancelable: true
+    handleFlip() {
+        projectWorker.postMessage({
+            command: 'updateSettings',
+            settings: {
+                flippedHorizontal: !this.imageFlipped
+            }
         });
-        e.target.dispatchEvent(event);
+    }
+
+    handleZoom(factor, event) {
+        projectWorker.postMessage({
+            command: 'updateSettings',
+            settings: {
+                zoom: factor
+            }
+        });
+    }
+
+    resetImage() {
+        projectWorker.postMessage({
+            command: 'resetImage'
+        });
+    }
+
+    lockImage(val) {
+        projectWorker.postMessage({
+            command: 'updateSettings',
+            settings: {
+                locked: val
+            }
+        });
     }
 }
 
