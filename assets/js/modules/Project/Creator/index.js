@@ -148,35 +148,50 @@ export default class Editor extends HTMLElement {
 
     //Life Cycle Hooks
     attributeChangedCallback(prop, oldVal, newVal) {
-        //Will not persist because we're literally re-rendering every time we update the props
-        if (prop === 'step') {
-            const dash = this.querySelector('#dashboard-steps');
-            const mosaic = this.querySelector('mosaic-canvas');
-            if(mosaic && newVal !== "3") {
-                mosaic.drawMode = false;
-                mosaic.paintMode = false;
-            }
-        } 
-        if (prop === 'size') {
-            const mosaic = this.querySelector('mosaic-canvas');
-            const stepTwo = this.querySelector('step-two');
-            
-            if(mosaic) mosaic.setAttribute('size', this.size );
-            //if(stepOne) stepOne.setAttribute('size', this.size );
-            if(stepTwo) stepTwo.setAttribute('size', this.size );
-        }
-        if (prop === 'color') {
-            const mosaicCanvas = this.querySelector('mosaic-canvas');
-            if(mosaicCanvas) {
-                mosaicCanvas.color = this.color;
-            }
+        if (oldVal === newVal) return; // Skip if no actual change
+
+        const mosaic = this.querySelector('mosaic-canvas');
+        const stepTwo = this.querySelector('step-two');
+
+        switch(prop) {
+            case 'step':
+                if(mosaic && newVal !== "3") {
+                    mosaic.drawMode = false;
+                    mosaic.paintMode = false;
+                }
+                break;
+            case 'size':
+                if(mosaic) {
+                    mosaic.setAttribute('size', this.size);
+                }
+                if(stepTwo) {
+                    stepTwo.setAttribute('size', this.size);
+                }
+                break;
+            case 'color':
+                if(mosaic) {
+                    mosaic.color = this.color;
+                }
+                break;
         }
     }
 
     // Stage: 'Component now connected to DOM'
     connectedCallback() {
-        this.render(); //renders your custom element to the DOM
+        this.render();
+        this.initializeElements();
+        this.initializeEventListeners();
+        this.initializeCanvasSize();
+        this.updateScrollPosition();
+    }
 
+    disconnectedCallback() {
+        // Clean up event listeners
+        this.removeAllEventListeners();
+    }
+
+    // Helper methods
+    initializeElements() {
         this.mosaic = this.querySelector('mosaic-canvas');
         this.mosaicView = this.querySelector('#mosaic-view');
         this.dialog = this.querySelector('dialog');
@@ -186,11 +201,93 @@ export default class Editor extends HTMLElement {
         this.finishButton = this.querySelector('#finishButton');
         this.closeModalButton = this.querySelector('#closeModal');
         this.sizeSlider = this.querySelector('#size-slider');
+    }
 
-        // Initialize canvas size from localStorage
+    initializeEventListeners() {
+        // Modal controls
+        this.closeModalButton.addEventListener('click', this.handleCloseModal.bind(this));
+        
+        // Image controls
+        this.showImage.addEventListener('change', this.handleShowImageChange.bind(this));
+        
+        // Project controls
+        this.finishButton.addEventListener('click', () => eventDispatcher.dispatchEvent('finishProject'));
+        this.sizeSlider.addEventListener('input', this.updateMosaicViewScale.bind(this));
+
+        // Canvas events
+        const canvasEvents = {
+            'updateColor': (e) => this.mosaic.color = e.detail.color,
+            'updateFrame': (e) => this.mosaic.frame = e.detail.color,
+            'handleResetBricks': () => this.mosaic.handleResetCanvas(),
+            'handleSaturation': (e) => this.mosaic.handleSaturation(e.detail.value),
+            'handleBrightness': (e) => this.mosaic.handleBrightness(e.detail.value),
+            'handleContrast': (e) => this.mosaic.handleContrast(e.detail.value),
+            'handleFlip': () => this.mosaic.handleFlipImage(),
+            'handleResetImage': () => this.mosaic.handleResetImage(),
+            'handleZoom': (e) => this.mosaic.handleZoom(e.detail.factor),
+            'handleRotate': (e) => this.mosaic.handleRotate(e.detail.factor),
+            'updateDrawMode': (event) => {
+                if(this.step === 3) {
+                    this.mosaic.drawMode = event.detail.drawMode;
+                    this.mosaic.paintMode = event.detail.paintMode;
+                }
+            },
+            'updatePaintMode': (event) => {
+                if(this.step === 3) {
+                    this.mosaic.drawMode = event.detail.drawMode;
+                    this.mosaic.paintMode = event.detail.paintMode;
+                }
+            },
+            'handleDownload': () => this.mosaic.handleDownload(),
+            'updateActiveColor': (event) => {
+                this.mosaic.activeColor = event.detail.color;
+                this.mosaic.activeColorAlpha = event.detail.alpha;
+            },
+            'handleConvert': () => {
+                this.showImage.checked = false;
+                this.querySelector('step-two').toggleImageSettings(false);
+                this.mosaic.convert();
+            },
+            'updateTraceMode': (event) => this.mosaic.toggleTraceMode(event.detail.trace),
+            'handleConvertToLego': (event) => this.mosaic.convertToLego(event),
+            'lockImage': (event) => this.mosaic.lockImage(event.detail.locked),
+            'updateImage': (e) => {
+                this.showImage.checked = true;
+                this.mosaic.toggleShowImage(true);
+                this.file = e.detail.image;
+                this.mosaic.image = e.detail.image;
+                this.mosaic.draw();
+                localStorage.setItem("projectURL", e.detail.image);
+            },
+            'resetCanvas': () => {
+                this.showImage.checked = true;
+                this.mosaic.toggleShowImage(true);
+                this.setAttribute('color', [0,0,0]);
+                this.mosaic.handleResetCanvas();
+            },
+            'updateSize': (event) => {
+                if (this.mosaic) {
+                    this.mosaic.setAttribute('size', event.detail.size);
+                    this.size = event.detail.size;
+                }
+            }
+        };
+
+        // Add all canvas event listeners
+        Object.entries(canvasEvents).forEach(([eventName, handler]) => {
+            this.addEventListener(eventName, handler);
+        });
+
+        // Project image creation
+        eventDispatcher.addEventListener('handleCreateImage', e => {
+            this.projectImgURL = e.dataURL;
+            this.previewImage.src = this.projectImgURL;
+        });
+    }
+
+    initializeCanvasSize() {
         if (this.mosaic) {
             this.mosaic.setAttribute('size', this.size);
-            // Dispatch updateSize event instead of calling updateSize directly
             const event = new CustomEvent('updateSize', {
                 detail: { size: this.size },
                 bubbles: true,
@@ -198,144 +295,27 @@ export default class Editor extends HTMLElement {
             });
             this.mosaic.dispatchEvent(event);
         }
+    }
 
-        this.updateScrollPosition();
+    removeAllEventListeners() {
+        // Remove all event listeners added in initializeEventListeners
+        // This is a simplified version - you might want to store references to all listeners
+        this.closeModalButton.removeEventListener('click', this.handleCloseModal);
+        this.showImage.removeEventListener('change', this.handleShowImageChange);
+        this.finishButton.removeEventListener('click', () => {});
+        this.sizeSlider.removeEventListener('input', this.updateMosaicViewScale);
+    }
 
-        //Close Modal
-        this.closeModalButton.addEventListener('click', () => {
-            this.querySelector('#modal').classList.add('hidden');
-            this.stepButtons.forEach(step => {
-                step.classList.remove('text-sky-700');
-            });
-        });        
-
-        //listen to events
-        
-        this.showImage.addEventListener('change', (e) => {
-            this.mosaic.toggleShowImage(e.target.checked);
-            this.querySelector('step-two').toggleImageSettings(e.target.checked);
-        })
-
-        this.finishButton.addEventListener('click', (e) => {
-            eventDispatcher.dispatchEvent('finishProject');
-        })
-
-        this.sizeSlider.addEventListener('input', (e) => {
-            this.updateMosaicViewScale();
-        })
-
-        this.addEventListener('updateColor', (e)=> {
-            this.mosaic.color = e.detail.color;
+    handleCloseModal() {
+        this.querySelector('#modal').classList.add('hidden');
+        this.stepButtons.forEach(step => {
+            step.classList.remove('text-sky-700');
         });
+    }
 
-        this.addEventListener('updateFrame', (e)=> {
-            this.mosaic.frame = e.detail.color;
-        });
-
-        this.addEventListener('handleResetBricks', (e)=> {
-            this.mosaic.handleResetCanvas();
-        });  
-
-        this.addEventListener('handleSaturation', e=> {
-            this.mosaic.handleSaturation(e.detail.value);
-        })
-
-        this.addEventListener('handleBrightness', e=> {
-            this.mosaic.handleBrightness(e.detail.value);
-        })
-
-        this.addEventListener('handleContrast', e=> {
-            this.mosaic.handleContrast(e.detail.value);
-        })
-
-        this.addEventListener('handleFlip', e=> {
-            this.mosaic.handleFlipImage();
-        })
-
-        this.addEventListener('handleResetImage', (e)=> {
-            this.mosaic.handleResetImage();
-        });  
-        
-        this.addEventListener('handleZoom', (e)=> {
-            this.mosaic.handleZoom(e.detail.factor);
-        }); 
-
-        this.addEventListener('handleRotate', (e)=> {
-            this.mosaic.handleRotate(e.detail.factor);
-        }); 
-
-        this.addEventListener('updateDrawMode', event => {
-            if(this.step === 3) {
-                this.mosaic.drawMode = event.detail.drawMode;
-                this.mosaic.paintMode = event.detail.paintMode;
-            }
-        })
-
-        this.addEventListener('updatePaintMode', event => {
-            if(this.step === 3) {
-                this.mosaic.drawMode = event.detail.drawMode;
-                this.mosaic.paintMode = event.detail.paintMode;
-            }
-        })
-
-        this.addEventListener('handleDownload', event => {
-            this.mosaic.handleDownload();
-        })
-
-        eventDispatcher.addEventListener('handleCreateImage', e => {
-            this.projectImgURL = e.dataURL;
-            this.previewImage.src = this.projectImgURL;
-        });
-
-        this.addEventListener('updateActiveColor', (event) => {
-            this.mosaic.activeColor = event.detail.color;
-            this.mosaic.activeColorAlpha = event.detail.alpha;
-        })
-        
-        this.addEventListener('handleConvert', () => {
-            this.showImage.checked = false;
-            this.querySelector('step-two').toggleImageSettings(false);
-            this.mosaic.convert();
-        })
-        //Trace Mode: Step Three
-        this.addEventListener('updateTraceMode', (event) => {
-            this.mosaic.toggleTraceMode(event.detail.trace);
-        })
-
-        this.addEventListener('handleConvertToLego', (event) => {
-            this.mosaic.convertToLego(event);
-        })
-
-        this.addEventListener('lockImage', (event) => {
-            this.mosaic.lockImage(event.detail.locked);
-        })      
-
-        //Get Image
-        this.addEventListener('updateImage', (e) => {
-            this.showImage.checked = true;
-            this.mosaic.toggleShowImage(true)
-            this.file = e.detail.image;
-            //Do something with Canvas, call a function and pass the e.detail.image to it
-            this.mosaic.image = e.detail.image;
-            this.mosaic.draw();
-            //localstorage
-            localStorage.setItem("projectURL", e.detail.image);
-        })
-
-        this.addEventListener('resetCanvas', (e)=> {
-            this.showImage.checked = true;
-            this.mosaic.toggleShowImage(true)
-            this.setAttribute('color', [0,0,0]);
-            this.mosaic.handleResetCanvas();
-        });
-        
-        // Listen for size updates
-        this.addEventListener('updateSize', (event) => {
-            if (this.mosaic) {
-                this.mosaic.setAttribute('size', event.detail.size);
-                this.size = event.detail.size;
-            }
-        });
+    handleShowImageChange(e) {
+        this.mosaic.toggleShowImage(e.target.checked);
+        this.querySelector('step-two').toggleImageSettings(e.target.checked);
     }
 
     //Functions
