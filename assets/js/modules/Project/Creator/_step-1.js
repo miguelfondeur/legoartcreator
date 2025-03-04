@@ -108,14 +108,22 @@ export default class StepOne extends HTMLElement {
     }
 
     connectedCallback() {
+        // Initialize size from localStorage or default to 480
+        const savedSize = localStorage.getItem("size") || "480";
+        this.size = savedSize;
+        
         this.render();
         const sizeSelect = this.querySelector('#sizeSelect');
         const colorElements = this.querySelectorAll('[data-rgb]');
         const frameElements = this.querySelectorAll('[data-frame]');
         
         //Update Size on Click
-        sizeSelect.addEventListener('change', e =>{
+        sizeSelect.addEventListener('change', e => {
             this.size = e.target.value;
+            // Save to localStorage
+            localStorage.setItem("size", e.target.value);
+            
+            // Dispatch event to update canvas
             const event = new CustomEvent('updateSize', {
                 detail: {
                     size: e.target.value
@@ -124,8 +132,7 @@ export default class StepOne extends HTMLElement {
                 composed: true,
                 cancelable: true
             });
-            e.target.dispatchEvent(event);
-            localStorage.setItem("size", e.tartget.value);
+            this.dispatchEvent(event);
         });
 
         colorElements.forEach( (elem,i) => {

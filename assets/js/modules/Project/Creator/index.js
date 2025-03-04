@@ -138,8 +138,10 @@ export default class Editor extends HTMLElement {
         super(); //this is needed to inherit HTMLElement properties and is standard JS
         //Initial Data
         this.step = 1;
-        this.size = 480;
+        // Get size from localStorage or default to 480
+        this.size = localStorage.getItem("size") || "480";
         this.color = [0,0,0];
+        this.mosaic = null;
         //Get from local storage?
         window.updateStep = this.updateStep.bind(this);
     }
@@ -185,6 +187,18 @@ export default class Editor extends HTMLElement {
         this.closeModalButton = this.querySelector('#closeModal');
         this.sizeSlider = this.querySelector('#size-slider');
 
+        // Initialize canvas size from localStorage
+        if (this.mosaic) {
+            this.mosaic.setAttribute('size', this.size);
+            // Dispatch updateSize event instead of calling updateSize directly
+            const event = new CustomEvent('updateSize', {
+                detail: { size: this.size },
+                bubbles: true,
+                composed: true
+            });
+            this.mosaic.dispatchEvent(event);
+        }
+
         this.updateScrollPosition();
 
         //Close Modal
@@ -210,10 +224,6 @@ export default class Editor extends HTMLElement {
             this.updateMosaicViewScale();
         })
 
-        this.addEventListener('updateSize', (e)=> {
-            this.mosaic.size = e.detail.size 
-        });
-        
         this.addEventListener('updateColor', (e)=> {
             this.mosaic.color = e.detail.color;
         });
@@ -317,6 +327,14 @@ export default class Editor extends HTMLElement {
             this.mosaic.toggleShowImage(true)
             this.setAttribute('color', [0,0,0]);
             this.mosaic.handleResetCanvas();
+        });
+        
+        // Listen for size updates
+        this.addEventListener('updateSize', (event) => {
+            if (this.mosaic) {
+                this.mosaic.setAttribute('size', event.detail.size);
+                this.size = event.detail.size;
+            }
         });
     }
 
