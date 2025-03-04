@@ -100,7 +100,8 @@ export default class ProjectHeader extends HTMLElement {
         //Get Active Page
 
         //Get Local Storage Values
-        if(localStorage.getItem('brickData')) { 
+        const projectData = JSON.parse(localStorage.getItem("projectData"));
+        if(projectData && projectData.image && projectData.isConverted) { 
             this.querySelector('#instructionBtn').removeAttribute("disabled");
             this.querySelector('#partsBtn').removeAttribute("disabled");
         } else {

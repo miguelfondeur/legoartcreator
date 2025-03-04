@@ -109,7 +109,7 @@ export default class Editor extends HTMLElement {
                     <div class="flex items-center h-full px-4 text-black text-sm">
                         <label class=" cursor-pointer flex items-center" for="showImage">
                             Image
-                            <input class="ml-2" type="checkbox" checked id="showImage">
+                            <input class="ml-2" type="checkbox" id="showImage">
                         </label>
                     </div>
                     <!-- Undo/Redo -->
@@ -142,6 +142,7 @@ export default class Editor extends HTMLElement {
         this.size = localStorage.getItem("size") || "480";
         this.color = [0,0,0];
         this.mosaic = null;
+        this.file = null;
         //Get from local storage?
         window.updateStep = this.updateStep.bind(this);
     }
@@ -183,6 +184,9 @@ export default class Editor extends HTMLElement {
         this.initializeEventListeners();
         this.initializeCanvasSize();
         this.updateScrollPosition();
+        setTimeout(() => {
+            this.restoreProjectData();
+        }, 100);
     }
 
     disconnectedCallback() {
@@ -247,17 +251,39 @@ export default class Editor extends HTMLElement {
                 this.showImage.checked = false;
                 this.querySelector('step-two').toggleImageSettings(false);
                 this.mosaic.convert();
+                this.saveProjectData();
             },
             'updateTraceMode': (event) => this.mosaic.toggleTraceMode(event.detail.trace),
-            'handleConvertToLego': (event) => this.mosaic.convertToLego(event),
+            'handleConvertToLego': async (event) => {
+                console.log('Convert to Lego event received:', event);
+                await this.mosaic.convertToLego(event);
+                // Save both image and bricks data
+                const imageDataURL = await this.imageToDataURL(this.mosaic.image);
+                this.showImage.checked = false;
+                this.mosaic.toggleShowImage(false);
+                this.saveProjectData(imageDataURL);
+            },
             'lockImage': (event) => this.mosaic.lockImage(event.detail.locked),
-            'updateImage': (e) => {
+            'updateImage': async (e) => {
+                console.log('Image update event received:', e.detail);
                 this.showImage.checked = true;
                 this.mosaic.toggleShowImage(true);
                 this.file = e.detail.image;
                 this.mosaic.image = e.detail.image;
-                this.mosaic.draw();
-                localStorage.setItem("projectURL", e.detail.image);
+                await this.mosaic.draw();
+                
+                // Save the image data directly if it's already a data URL
+                if (typeof e.detail.image === 'string' && e.detail.image.startsWith('data:')) {
+                    this.saveProjectData(e.detail.image);
+                } else {
+                    // If it's a File/Blob, convert it to data URL
+                    try {
+                        const imageDataURL = await this.imageToDataURL(e.detail.image);
+                        this.saveProjectData(imageDataURL);
+                    } catch (error) {
+                        console.error('Error saving image:', error);
+                    }
+                }
             },
             'resetCanvas': () => {
                 this.showImage.checked = true;
@@ -282,6 +308,8 @@ export default class Editor extends HTMLElement {
         eventDispatcher.addEventListener('handleCreateImage', e => {
             this.projectImgURL = e.dataURL;
             this.previewImage.src = this.projectImgURL;
+            // Save the final state
+            this.saveProjectData();
         });
     }
 
@@ -362,6 +390,122 @@ export default class Editor extends HTMLElement {
         const scaleValue = this.sizeSlider.value;
         // Apply the scale transformation
         this.mosaic.style.transform = `scale(${scaleValue})`;
+    }
+
+    // Update imageToDataURL method to handle more cases
+    async imageToDataURL(image) {
+        return new Promise((resolve, reject) => {
+            // If it's already a data URL, return it
+            if (typeof image === 'string' && image.startsWith('data:')) {
+                resolve(image);
+                return;
+            }
+
+            // If it's an Image object, create a canvas to get the data URL
+            if (image instanceof Image) {
+                const canvas = document.createElement('canvas');
+                canvas.width = image.width;
+                canvas.height = image.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(image, 0, 0);
+                resolve(canvas.toDataURL());
+                return;
+            }
+
+            // If it's a File or Blob, use FileReader
+            if (image instanceof File || image instanceof Blob) {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(image);
+                return;
+            }
+
+            reject(new Error('Unsupported image type'));
+        });
+    }
+
+    // Update saveProjectData to handle the image data properly
+    async saveProjectData(imageDataURL = null) {
+        try {
+            const projectData = {
+                image: imageDataURL || (this.mosaic.image ? await this.imageToDataURL(this.mosaic.image) : null),
+                bricks: this.mosaic.circles,
+                settings: {
+                    zoom: this.sizeSlider.value,
+                },
+                isConverted: this.mosaic.circles && this.mosaic.circles.length > 0 && !this.showImage.checked
+            };
+            console.log('Saving project data:', projectData);
+            localStorage.setItem("projectData", JSON.stringify(projectData));
+        } catch (error) {
+            console.error('Error saving project data:', error);
+        }
+    }
+
+    // Update restoreProjectData to handle image restoration more robustly
+    async restoreProjectData() {
+        try {
+            const projectData = JSON.parse(localStorage.getItem("projectData"));
+            console.log('Restoring project data:', projectData);
+            
+            if (!projectData) {
+                console.log('No project data found in localStorage');
+                return;
+            }
+
+            // Set initial checkbox state based on whether there's an image
+            if (projectData.image) {
+                this.showImage.checked = true;
+                this.mosaic.toggleShowImage(true);
+                // If there's an image but it hasn't been converted, set to step 2 and enable image settings
+                if (!projectData.isConverted) {
+                    this.updateStep(2);
+                    this.querySelector('step-two').toggleImageSettings(true);
+                }
+            } else {
+                this.showImage.checked = false;
+                this.mosaic.toggleShowImage(false);
+            }
+
+            // If the project was converted, set up the initial state
+            if (projectData.isConverted && projectData.bricks) {
+                console.log('Project was converted, setting up initial state');
+                this.mosaic.circles = projectData.bricks;
+                // Draw the bricks immediately
+                await this.mosaic.drawCircles();
+            }
+
+            // Restore image if it exists
+            if (projectData.image) {
+                console.log('Restoring image from data URL');
+                try {
+                    // Create a new Image object
+                    const img = new Image();
+                    img.onload = async () => {
+                        this.file = img;
+                        this.mosaic.image = img;
+                        await this.mosaic.draw();
+                    };
+                    img.onerror = (error) => {
+                        console.error('Error loading image:', error);
+                    };
+                    img.src = projectData.image;
+                } catch (error) {
+                    console.error('Error restoring image:', error);
+                }
+            }
+
+            // Restore any other relevant project data
+            if (projectData.settings) {
+                if (projectData.settings.zoom) {
+                    this.sizeSlider.value = projectData.settings.zoom;
+                    this.updateMosaicViewScale();
+                }
+            }
+        } catch (error) {
+            console.error('Error restoring project data:', error);
+        }
     }
 }
 
