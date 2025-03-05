@@ -4,6 +4,71 @@ import './_step-1.js';
 import './_step-2.js';
 import './_step-3.js';
 
+class ProjectDataManager {
+    static STORAGE_KEY = 'projectData';
+
+    static async save(imageDataURL, mosaic, showImage, sizeSlider) {
+        try {
+            // Load existing project data to preserve isFinished flag
+            const existingData = this.load();
+            const projectData = {
+                image: imageDataURL || (mosaic.image ? await this.imageToDataURL(mosaic.image) : null),
+                bricks: mosaic.circles,
+                settings: {
+                    zoom: sizeSlider.value,
+                },
+                isConverted: mosaic.circles && mosaic.circles.length > 0 && !showImage.checked,
+                isFinished: existingData ? existingData.isFinished : false
+            };
+            console.log('Saving project data:', projectData);
+            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(projectData));
+            return projectData;
+        } catch (error) {
+            console.error('Error saving project data:', error);
+            throw error;
+        }
+    }
+
+    static load() {
+        try {
+            const data = localStorage.getItem(this.STORAGE_KEY);
+            return data ? JSON.parse(data) : null;
+        } catch (error) {
+            console.error('Error loading project data:', error);
+            return null;
+        }
+    }
+
+    static async imageToDataURL(image) {
+        return new Promise((resolve, reject) => {
+            if (typeof image === 'string' && image.startsWith('data:')) {
+                resolve(image);
+                return;
+            }
+
+            if (image instanceof Image) {
+                const canvas = document.createElement('canvas');
+                canvas.width = image.width;
+                canvas.height = image.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(image, 0, 0);
+                resolve(canvas.toDataURL());
+                return;
+            }
+
+            if (image instanceof File || image instanceof Blob) {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(image);
+                return;
+            }
+
+            reject(new Error('Unsupported image type'));
+        });
+    }
+}
+
 export default class Editor extends HTMLElement {
     //Teamplte
     render() {
@@ -207,6 +272,18 @@ export default class Editor extends HTMLElement {
         this.sizeSlider = this.querySelector('#size-slider');
     }
 
+    initializeCanvasSize() {
+        // Set initial size from localStorage or default
+        const savedSize = localStorage.getItem("size");
+        if (savedSize) {
+            this.size = savedSize;
+            this.setAttribute('size', savedSize);
+            if (this.mosaic) {
+                this.mosaic.setAttribute('size', savedSize);
+            }
+        }
+    }
+
     initializeEventListeners() {
         // Modal controls
         this.closeModalButton.addEventListener('click', this.handleCloseModal.bind(this));
@@ -215,14 +292,30 @@ export default class Editor extends HTMLElement {
         this.showImage.addEventListener('change', this.handleShowImageChange.bind(this));
         
         // Project controls
-        this.finishButton.addEventListener('click', () => eventDispatcher.dispatchEvent('finishProject'));
+        this.finishButton.addEventListener('click', this.handleFinishProject.bind(this));
         this.sizeSlider.addEventListener('input', this.updateMosaicViewScale.bind(this));
 
         // Canvas events
+        this.initializeCanvasEventListeners();
+
+        // Project image creation
+        eventDispatcher.addEventListener('handleCreateImage', this.handleProjectImageCreation.bind(this));
+    }
+
+    initializeCanvasEventListeners() {
         const canvasEvents = {
-            'updateColor': (e) => this.mosaic.color = e.detail.color,
-            'updateFrame': (e) => this.mosaic.frame = e.detail.color,
-            'handleResetBricks': () => this.mosaic.handleResetCanvas(),
+            // Image manipulation events
+            'updateImage': this.handleImageUpdate.bind(this),
+            'handleConvertToLego': this.handleConvertToLego.bind(this),
+            'handleConvert': this.handleConvert.bind(this),
+            'handleResetCanvas': this.handleResetCanvas.bind(this),
+            
+            // Drawing mode events
+            'updateDrawMode': this.handleDrawModeUpdate.bind(this),
+            'updatePaintMode': this.handlePaintModeUpdate.bind(this),
+            'updateActiveColor': this.handleActiveColorUpdate.bind(this),
+            
+            // Image adjustment events
             'handleSaturation': (e) => this.mosaic.handleSaturation(e.detail.value),
             'handleBrightness': (e) => this.mosaic.handleBrightness(e.detail.value),
             'handleContrast': (e) => this.mosaic.handleContrast(e.detail.value),
@@ -230,108 +323,111 @@ export default class Editor extends HTMLElement {
             'handleResetImage': () => this.mosaic.handleResetImage(),
             'handleZoom': (e) => this.mosaic.handleZoom(e.detail.factor),
             'handleRotate': (e) => this.mosaic.handleRotate(e.detail.factor),
-            'updateDrawMode': (event) => {
-                if(this.step === 3) {
-                    this.mosaic.drawMode = event.detail.drawMode;
-                    this.mosaic.paintMode = event.detail.paintMode;
-                }
-            },
-            'updatePaintMode': (event) => {
-                if(this.step === 3) {
-                    this.mosaic.drawMode = event.detail.drawMode;
-                    this.mosaic.paintMode = event.detail.paintMode;
-                }
-            },
+            
+            // Other events
+            'updateColor': (e) => this.mosaic.color = e.detail.color,
+            'updateFrame': (e) => this.mosaic.frame = e.detail.color,
             'handleDownload': () => this.mosaic.handleDownload(),
-            'updateActiveColor': (event) => {
-                this.mosaic.activeColor = event.detail.color;
-                this.mosaic.activeColorAlpha = event.detail.alpha;
-            },
-            'handleConvert': () => {
-                this.showImage.checked = false;
-                this.querySelector('step-two').toggleImageSettings(false);
-                this.mosaic.convert();
-                this.saveProjectData();
-            },
-            'updateTraceMode': (event) => this.mosaic.toggleTraceMode(event.detail.trace),
-            'handleConvertToLego': async (event) => {
-                console.log('Convert to Lego event received:', event);
-                await this.mosaic.convertToLego(event);
-                // Save both image and bricks data
-                const imageDataURL = await this.imageToDataURL(this.mosaic.image);
-                this.showImage.checked = false;
-                this.mosaic.toggleShowImage(false);
-                this.saveProjectData(imageDataURL);
-            },
-            'lockImage': (event) => this.mosaic.lockImage(event.detail.locked),
-            'updateImage': async (e) => {
-                console.log('Image update event received:', e.detail);
-                this.showImage.checked = true;
-                this.mosaic.toggleShowImage(true);
-                this.file = e.detail.image;
-                this.mosaic.image = e.detail.image;
-                await this.mosaic.draw();
-                
-                // Save the image data directly if it's already a data URL
-                if (typeof e.detail.image === 'string' && e.detail.image.startsWith('data:')) {
-                    this.saveProjectData(e.detail.image);
-                } else {
-                    // If it's a File/Blob, convert it to data URL
-                    try {
-                        const imageDataURL = await this.imageToDataURL(e.detail.image);
-                        this.saveProjectData(imageDataURL);
-                    } catch (error) {
-                        console.error('Error saving image:', error);
-                    }
-                }
-            },
-            'resetCanvas': () => {
-                this.showImage.checked = true;
-                this.mosaic.toggleShowImage(true);
-                this.setAttribute('color', [0,0,0]);
-                this.mosaic.handleResetCanvas();
-            },
-            'updateSize': (event) => {
-                if (this.mosaic) {
-                    this.mosaic.setAttribute('size', event.detail.size);
-                    this.size = event.detail.size;
-                }
-            }
+            'updateTraceMode': (e) => this.mosaic.toggleTraceMode(e.detail.trace),
+            'lockImage': (e) => this.mosaic.lockImage(e.detail.locked),
+            'updateSize': this.handleSizeUpdate.bind(this)
         };
 
         // Add all canvas event listeners
         Object.entries(canvasEvents).forEach(([eventName, handler]) => {
             this.addEventListener(eventName, handler);
         });
-
-        // Project image creation
-        eventDispatcher.addEventListener('handleCreateImage', e => {
-            this.projectImgURL = e.dataURL;
-            this.previewImage.src = this.projectImgURL;
-            // Save the final state
-            this.saveProjectData();
-        });
     }
 
-    initializeCanvasSize() {
-        if (this.mosaic) {
-            this.mosaic.setAttribute('size', this.size);
-            const event = new CustomEvent('updateSize', {
-                detail: { size: this.size },
-                bubbles: true,
-                composed: true
-            });
-            this.mosaic.dispatchEvent(event);
+    // Event Handlers
+    async handleImageUpdate(e) {
+        console.log('Image update event received:', e.detail);
+        this.showImage.checked = true;
+        this.mosaic.toggleShowImage(true);
+        this.file = e.detail.image;
+        this.mosaic.image = e.detail.image;
+        await this.mosaic.draw();
+        
+        try {
+            const imageDataURL = typeof e.detail.image === 'string' && e.detail.image.startsWith('data:') 
+                ? e.detail.image 
+                : await this.imageToDataURL(e.detail.image);
+            this.saveProjectData(imageDataURL);
+        } catch (error) {
+            console.error('Error saving image:', error);
         }
     }
 
-    removeAllEventListeners() {
-        // Remove all event listeners added in initializeEventListeners
-        // This is a simplified version - you might want to store references to all listeners
-        this.closeModalButton.removeEventListener('click', this.handleCloseModal);
-        this.showImage.removeEventListener('change', this.handleShowImageChange);
-        this.finishButton.removeEventListener('click', () => {});
-        this.sizeSlider.removeEventListener('input', this.updateMosaicViewScale);
+    async handleConvertToLego(event) {
+        console.log('Convert to Lego event received:', event);
+        await this.mosaic.convertToLego(event);
+        const imageDataURL = await this.imageToDataURL(this.mosaic.image);
+        this.showImage.checked = false;
+        this.mosaic.toggleShowImage(false);
+        this.saveProjectData(imageDataURL);
+        
+        // Trigger the lock button click instead of dispatching a lock event
+        const lockButton = this.querySelector('step-two').querySelector('#lock');
+        if (lockButton) {
+            lockButton.click();
+        }
+
+        // Only dispatch projectComplete event if the project is finished
+        const projectData = ProjectDataManager.load();
+        if (projectData && projectData.isFinished) {
+            const projectCompleteEvent = new CustomEvent('projectComplete', {
+                bubbles: true,
+                composed: true,
+                cancelable: true
+            });
+            this.dispatchEvent(projectCompleteEvent);
+        }
+    }
+
+    handleConvert() {
+        this.showImage.checked = false;
+        this.querySelector('step-two').toggleImageSettings(false);
+        this.mosaic.convert();
+        this.saveProjectData();
+    }
+
+    handleResetCanvas() {
+        this.showImage.checked = true;
+        this.mosaic.toggleShowImage(true);
+        this.setAttribute('color', [0,0,0]);
+        this.mosaic.handleResetCanvas();
+    }
+
+    handleDrawModeUpdate(event) {
+        if(this.step === 3) {
+            this.mosaic.drawMode = event.detail.drawMode;
+            this.mosaic.paintMode = event.detail.paintMode;
+        }
+    }
+
+    handlePaintModeUpdate(event) {
+        if(this.step === 3) {
+            this.mosaic.drawMode = event.detail.drawMode;
+            this.mosaic.paintMode = event.detail.paintMode;
+        }
+    }
+
+    handleActiveColorUpdate(event) {
+        this.mosaic.activeColor = event.detail.color;
+        this.mosaic.activeColorAlpha = event.detail.alpha;
+    }
+
+    handleSizeUpdate(event) {
+        if (this.mosaic) {
+            this.mosaic.setAttribute('size', event.detail.size);
+            this.size = event.detail.size;
+        }
+    }
+
+    handleProjectImageCreation(e) {
+        this.projectImgURL = e.dataURL;
+        this.previewImage.src = this.projectImgURL;
+        this.saveProjectData();
     }
 
     handleCloseModal() {
@@ -362,6 +458,15 @@ export default class Editor extends HTMLElement {
             this.mosaic.toggleShowImage(false);
         };
         if(step === 4) {
+            // Check if project is finished before allowing step 4
+            const projectData = ProjectDataManager.load();
+            if (!projectData || !projectData.isConverted) {
+                alert('Please convert your image to Lego bricks before proceeding to the finish step.');
+                this.step = 3;
+                this.dialog.setAttribute("step", 3);
+                this.querySelector(`[data-step="3"]`).classList.add('text-sky-700');
+                return;
+            }
             this.mosaic.createImage();
             this.querySelector('#canvas-view').classList.add('!hidden');
             this.querySelector('#footer-controls').classList.add('!hidden');
@@ -425,28 +530,15 @@ export default class Editor extends HTMLElement {
         });
     }
 
-    // Update saveProjectData to handle the image data properly
+    // Update saveProjectData to use ProjectDataManager
     async saveProjectData(imageDataURL = null) {
-        try {
-            const projectData = {
-                image: imageDataURL || (this.mosaic.image ? await this.imageToDataURL(this.mosaic.image) : null),
-                bricks: this.mosaic.circles,
-                settings: {
-                    zoom: this.sizeSlider.value,
-                },
-                isConverted: this.mosaic.circles && this.mosaic.circles.length > 0 && !this.showImage.checked
-            };
-            console.log('Saving project data:', projectData);
-            localStorage.setItem("projectData", JSON.stringify(projectData));
-        } catch (error) {
-            console.error('Error saving project data:', error);
-        }
+        return ProjectDataManager.save(imageDataURL, this.mosaic, this.showImage, this.sizeSlider);
     }
 
-    // Update restoreProjectData to handle image restoration more robustly
+    // Update restoreProjectData to use ProjectDataManager
     async restoreProjectData() {
         try {
-            const projectData = JSON.parse(localStorage.getItem("projectData"));
+            const projectData = ProjectDataManager.load();
             console.log('Restoring project data:', projectData);
             
             if (!projectData) {
@@ -461,7 +553,21 @@ export default class Editor extends HTMLElement {
                 // If there's an image but it hasn't been converted, set to step 2 and enable image settings
                 if (!projectData.isConverted) {
                     this.updateStep(2);
-                    this.querySelector('step-two').toggleImageSettings(true);
+                    const stepTwo = this.querySelector('step-two');
+                    if (stepTwo) {
+                        // Remove the disabled classes from the parent element
+                        const imageSettings = stepTwo.querySelector('#image-settings');
+                        if (imageSettings) {
+                            imageSettings.classList.remove('text-zinc-300', 'pointer-events-none');
+                        }
+                        // Enable all buttons except the lock button
+                        const buttons = imageSettings.querySelectorAll('button');
+                        buttons.forEach(button => {
+                            if (button.id !== 'lock') {
+                                button.classList.remove('text-zinc-300', 'pointer-events-none');
+                            }
+                        });
+                    }
                 }
             } else {
                 this.showImage.checked = false;
@@ -474,13 +580,34 @@ export default class Editor extends HTMLElement {
                 this.mosaic.circles = projectData.bricks;
                 // Draw the bricks immediately
                 await this.mosaic.drawCircles();
+                
+                // Trigger the lock button click instead of dispatching a lock event
+                const lockButton = this.querySelector('step-two').querySelector('#lock');
+                if (lockButton) {
+                    lockButton.click();
+                }
+
+                // If the project is finished, enable the Buy Parts and Instructions buttons
+                if (projectData.isFinished) {
+                    const projectCompleteEvent = new CustomEvent('projectComplete', {
+                        bubbles: true,
+                        composed: true,
+                        cancelable: true
+                    });
+                    this.dispatchEvent(projectCompleteEvent);
+                } else {
+                    // If converted but not finished, set to step 3
+                    this.updateStep(3);
+                    this.mosaic.drawMode = true;
+                    this.showImage.checked = false;
+                    this.mosaic.toggleShowImage(false);
+                }
             }
 
             // Restore image if it exists
             if (projectData.image) {
                 console.log('Restoring image from data URL');
                 try {
-                    // Create a new Image object
                     const img = new Image();
                     img.onload = async () => {
                         this.file = img;
@@ -506,6 +633,26 @@ export default class Editor extends HTMLElement {
         } catch (error) {
             console.error('Error restoring project data:', error);
         }
+    }
+
+    // Add new method to handle project finish
+    async handleFinishProject() {
+        const projectData = ProjectDataManager.load();
+        if (projectData) {
+            projectData.isFinished = true;
+            localStorage.setItem('isFinished', 'true');
+            await ProjectDataManager.save(projectData.image, this.mosaic, this.showImage, this.sizeSlider);
+            eventDispatcher.dispatchEvent('finishProject');
+        }
+    }
+
+    removeAllEventListeners() {
+        // Remove all event listeners added in initializeEventListeners
+        // This is a simplified version - you might want to store references to all listeners
+        this.closeModalButton.removeEventListener('click', this.handleCloseModal);
+        this.showImage.removeEventListener('change', this.handleShowImageChange);
+        this.finishButton.removeEventListener('click', () => {});
+        this.sizeSlider.removeEventListener('input', this.updateMosaicViewScale);
     }
 }
 

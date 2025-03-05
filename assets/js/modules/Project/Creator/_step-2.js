@@ -155,32 +155,36 @@ export default class StepTwo extends HTMLElement {
         //Handle Lock
         this.querySelector('#lock').addEventListener('click', e => {
             this.imageLocked = !this.imageLocked;
-            this.querySelector('#lock').classList.toggle('!bg-black')
-            this.querySelector('#lock').classList.toggle('!text-white')
-            this.querySelectorAll('#image-settings > button').forEach(button => {
-                if(button.id === 'lock') {
-                    button.classList.toggle('!border-black');
-                } else {
+            const lockButton = this.querySelector('#lock');
+            lockButton.classList.toggle('!bg-black');
+            lockButton.classList.toggle('!text-white');
+            lockButton.classList.toggle('!border-black');
+
+            // Toggle state of all other buttons
+            const buttons = this.imageSettings.querySelectorAll('button');
+            buttons.forEach(button => {
+                if (button.id !== 'lock') {
                     button.classList.toggle('text-zinc-300');
                     button.classList.toggle('pointer-events-none');
                 }
-                if(button.id === 'colorButton') {
-                    this.querySelector('#colorButton').classList.remove('!bg-black')
-                    this.querySelector('#colorButton').classList.remove('!border-black')
-                    this.querySelector('#colorButton').classList.remove('!text-white')
-                    this.querySelector('#color-settings').classList.add('hidden');
-                }
-            })
+            });
+
+            // Reset color settings if they're open
+            if (this.imageLocked) {
+                this.querySelector('#colorButton').classList.remove('!bg-black', '!border-black', '!text-white');
+                this.querySelector('#color-settings').classList.add('hidden');
+            }
+
             const event = new CustomEvent('lockImage', {
                 detail: {
-                    locked: this.imageLocked, 
+                    locked: this.imageLocked,
                 },
                 bubbles: true,
                 composed: true,
                 cancelable: true
             });
             e.target.dispatchEvent(event);
-        })
+        });
 
         //Upload
         this.fileButton.addEventListener('change', (e) => {
@@ -221,11 +225,18 @@ export default class StepTwo extends HTMLElement {
     }
 
     toggleImageSettings(settingsEnabled) {
-        if(settingsEnabled) {
-            this.imageSettings.classList.remove('text-zinc-300', 'pointer-events-none');
-        } else {
-            this.imageSettings.classList.add('text-zinc-300', 'pointer-events-none');
-        }
+        const buttons = this.imageSettings.querySelectorAll('button');
+        buttons.forEach(button => {
+            if (button.id === 'lock') {
+                // Don't modify the lock button's state
+                return;
+            }
+            if (settingsEnabled) {
+                button.classList.remove('text-zinc-300', 'pointer-events-none');
+            } else {
+                button.classList.add('text-zinc-300', 'pointer-events-none');
+            }
+        });
     }
 
     handleConvert(e) {

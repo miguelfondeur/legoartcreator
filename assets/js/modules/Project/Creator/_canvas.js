@@ -181,12 +181,18 @@ export default class MosaicCanvas extends HTMLElement {
         this.grid.addEventListener('mousemove', e => this.handleImageMouseMove(e), { passive: true });
         this.grid.addEventListener('mouseup', () => this.handleImageMouseUp());
 
-        //Draw Grid initially
-        if(localStorage.getItem('brickData') && localStorage.getItem('imgURL')) {
-            this.image.src = localStorage.getItem('imgURL');
-            this.draw(this.image)
-            this.circles = JSON.parse(localStorage.getItem("brickData"));
-            this.drawCircles();
+        // Restore project data if it exists
+        const projectData = localStorage.getItem('projectData');
+        if (projectData) {
+            const data = JSON.parse(projectData);
+            if (data.image) {
+                this.image.src = data.image;
+                this.draw(this.image);
+            }
+            if (data.circles) {
+                this.circles = data.circles;
+                this.drawCircles();
+            }
         } else {
             this.drawGrid(this.size);
         }
@@ -738,6 +744,8 @@ export default class MosaicCanvas extends HTMLElement {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height); 
         //draw circles
         this.drawCircles();
+        // Save project data
+        this.saveProject();
     }
 
     changeColorGroup(r,col) {
@@ -756,6 +764,8 @@ export default class MosaicCanvas extends HTMLElement {
             this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             //draw circles
             this.drawCircles();
+            // Save project data
+            this.saveProject();
         }
     }
 
@@ -790,10 +800,23 @@ export default class MosaicCanvas extends HTMLElement {
     }
 
     saveProject() {
-        //Save to Local Storage
+        // Get current project data
+        const projectData = {
+            circles: this.circles,
+            image: this.image.src || localStorage.getItem('imgURL') || '',
+            isConverted: this.circles.length > 0 && this.circles[0].fill !== this.initialColor,
+            isFinished: localStorage.getItem('isFinished') === 'true'
+        };
+
+        // Save to Local Storage
         localStorage.setItem("brickData", JSON.stringify(this.circles));
-        //Dispatch Save event with data for other components
-        eventDispatcher.dispatchEvent('saveProject', { data: JSON.stringify(this.circles) });
+        localStorage.setItem("projectData", JSON.stringify(projectData));
+        localStorage.setItem("isFinished", projectData.isFinished);
+        
+        //Dispatch Save event with circles data as JSON string
+        eventDispatcher.dispatchEvent('saveProject', { 
+            data: JSON.stringify(this.circles)
+        });
     }
     
 }
