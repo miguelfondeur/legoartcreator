@@ -1,4 +1,5 @@
 import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
+import { readStoredJSON } from '../storage.js';
 
 export default class MosaicInstructions extends HTMLElement {
         
@@ -76,11 +77,12 @@ export default class MosaicInstructions extends HTMLElement {
         this.originalImg = this.querySelector('#originalImg');
 
         //Initial Load with Local Storage
-        if(localStorage.getItem('projectURL') && localStorage.getItem('imgURL') && localStorage.getItem('brickData')) {
+        const savedBrickData = readStoredJSON('brickData');
+        if(localStorage.getItem('projectURL') && localStorage.getItem('imgURL') && savedBrickData) {
             this.projectImg.src = localStorage.getItem('projectURL');
             this.projectFinale.src = localStorage.getItem('projectURL');
             this.originalImg.style.backgroundImage = `url('${localStorage.getItem('imgURL')}')`;
-            this.brickData = JSON.parse(localStorage.getItem('brickData'));   
+            this.brickData = savedBrickData;
 
             this.initializeBrickData();
         }

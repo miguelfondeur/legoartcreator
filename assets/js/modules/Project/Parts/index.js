@@ -1,6 +1,7 @@
 import { allBrickColors } from '../../../data/allBrickColors.js';
 import { frameParts } from '../../../data/frameData.js';
 import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
+import { readStoredJSON } from '../storage.js';
 
 export default class MosaicParts extends HTMLElement {
         
@@ -15,10 +16,10 @@ export default class MosaicParts extends HTMLElement {
                         <p>Total Costs on Lego: $<span id="lego_price"></span></p>
                         <p>Total Costs on Webrick: $<span id="wb_price"></span></p>
                         <hr class="my-4">
-                        <button id="partsDownloadBtn" class="bg-sky-600 text-white mt-auto text-sm text-center rounded-xl w-full p-3 cursor-pointer mb-2">
+                        <button type="button" id="partsDownloadBtn" class="bg-sky-600 text-white mt-auto text-sm text-center rounded-xl w-full p-3 cursor-pointer mb-2">
                             Download Parts Data
                         </button>
-                        <a href="https://www.webrick.com/toolkit#aid=2046" target="blank" class="w-full hover:bg-gray-100 px-2 md:px-4 py-2 rounded-full inline-flex items-center justify-center text-sky-700 transition-all shadow hover:shadow-md border-transparent">
+                        <a href="https://www.webrick.com/toolkit#aid=2046" target="_blank" rel="noopener noreferrer" class="w-full hover:bg-gray-100 px-2 md:px-4 py-2 rounded-full inline-flex items-center justify-center text-sky-700 transition-all shadow hover:shadow-md border-transparent">
                             Upload Parts Data to Webrick
                         </a>
                     </section>
@@ -39,8 +40,9 @@ export default class MosaicParts extends HTMLElement {
         this.totalParts = 0;
 
         //Get Initial Brick Data
-        if(localStorage.getItem('brickData')) { 
-            this.brickData = JSON.parse(localStorage.getItem('brickData'));
+        const savedBrickData = readStoredJSON('brickData');
+        if (savedBrickData) {
+            this.brickData = savedBrickData;
             this.getParts();
         }
         this.size = localStorage.getItem('size') || '';
@@ -191,7 +193,7 @@ export default class MosaicParts extends HTMLElement {
             this.partsWrapper.innerHTML = `
                 ${ this.parts.map((part, i) => ` 
                     <div class="p-4 bg-white border border-gray-200 w-full flex flex-col">
-                        <img class="w-1/2 mx-auto mb-2" src=${part.img} >
+                        <img class="w-1/2 mx-auto mb-2" src="${part.img}" alt="${part.name}">
                         <p class="uppercase leading-tight mb-1">${part.name}</p>
                         <p class="uppercase text-gray-500 mb-2 text-xs leading-none">${part.id.element}/${part.id.design}</p>
                         <!-- Price -->

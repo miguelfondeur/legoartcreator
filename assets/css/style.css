@@ -836,10 +836,6 @@ video {
   display: block;
 }
 
-.inline {
-  display: inline;
-}
-
 .flex {
   display: flex;
 }
@@ -1361,10 +1357,6 @@ video {
 .bg-\[\#f57d20\] {
   --tw-bg-opacity: 1;
   background-color: rgb(245 125 32 / var(--tw-bg-opacity));
-}
-
-.bg-\[rgb\(\$\{this\.color\}\)\] {
-  background-color: rgb(${this.color});
 }
 
 .bg-black {

@@ -290,19 +290,17 @@ export default class StepTwo extends HTMLElement {
     }
 
     handleResetImage(e) {
-        //Hide Settings
-        this.querySelector('#colorButton').classList.remove('!bg-black')
-        this.querySelector('#colorButton').classList.remove('!border-black')
-        this.querySelector('#colorButton').classList.remove('!text-white')
-        this.querySelector('#color-settings').classList.add('hidden');
-
-        //Send Event
         const event = new CustomEvent('handleResetImage', {
             bubbles: true,
             composed: true,
             cancelable: true
         });
-        e.target.dispatchEvent(event);
+
+        if (!e.target.dispatchEvent(event)) return;
+
+        this.fileButton.value = '';
+        this.querySelector('#colorButton').classList.remove('!bg-black', '!border-black', '!text-white');
+        this.querySelector('#color-settings').classList.add('hidden');
     }
 
     handleZoom(e, factor) {

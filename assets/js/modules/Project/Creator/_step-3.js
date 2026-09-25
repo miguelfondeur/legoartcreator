@@ -138,7 +138,7 @@ export default class StepThree extends HTMLElement {
                 composed: true,
                 cancelable: true
             });
-            e.target.dispatchEvent(event);      
+            e.target.dispatchEvent(event);
         });
 
         //Update Trace Mode

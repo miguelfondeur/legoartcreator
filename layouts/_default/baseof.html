@@ -32,7 +32,7 @@
         <!-- Libraries -->
         <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
         <!-- Styles -->
-        {{ $styles := resources.Get "css/style.css" | minify }}
+        {{ $styles := resources.Get "css/style.css" | minify | fingerprint }}
         <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">  
         {{ if eq .RelPermalink "/" }}
             <link rel="preconnect" href="https://fonts.googleapis.com">

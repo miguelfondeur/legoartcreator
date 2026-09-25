@@ -1,6 +1,7 @@
 import '../SVGGrids/_grid.js';
 import '../SVGGrids/_smallgrid.js';
 import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
+import { readStoredJSON } from '../storage.js';
 //import '../Grids/_squareGrid.js';
 //import '../Grids/_smallSqareGrid.js';
 import { brickColors } from '../../../data/brickColors.js';
@@ -44,7 +45,6 @@ export default class MosaicCanvas extends HTMLElement {
                             class="w-full z-10 absolute" 
                             width="${this.size === '160' ? '480' : this.size }" 
                             height="480"
-                            style="background-color: rgb(50,50,50);"
                     ></canvas>
                     <!-- SVG Prview Grid -->
                     <div id="grid-wrapper" class="absolute z-10 top-0 left-0 w-full h-full max-w-none" style="color: rgb(${this.color});">
@@ -55,9 +55,10 @@ export default class MosaicCanvas extends HTMLElement {
                     </div>
                     <!-- Canvas Element -->
                     <canvas id="artBoard" 
-                            class="w-full relative bg-[rgb(${this.color})] !bg-transparent" 
+                            class="w-full relative"
                             width="${this.size === '160' ? '480' : this.size }" 
                             height="480"
+                            style="background-color: rgb(${this.color});"
                     ></canvas>
                 </div>
             </div>` 
@@ -155,6 +156,18 @@ export default class MosaicCanvas extends HTMLElement {
         this.setAttribute('frame', val);
     }
 
+    toCssColor(color) {
+        return `rgba(${color})`;
+    }
+
+    getImageSource() {
+        return this.image.getAttribute('src') || '';
+    }
+
+    isStoredImage(source) {
+        return typeof source === 'string' && source.startsWith('data:image/');
+    }
+
     /******************
     LIFE CYCLES
     ******************/
@@ -182,16 +195,26 @@ export default class MosaicCanvas extends HTMLElement {
         this.grid.addEventListener('mouseup', () => this.handleImageMouseUp());
 
         // Restore project data if it exists
-        const projectData = localStorage.getItem('projectData');
-        if (projectData) {
-            const data = JSON.parse(projectData);
-            if (data.image) {
+        const data = readStoredJSON('projectData');
+        if (data) {
+            const hasStoredImage = this.isStoredImage(data.image);
+
+            if (data.image && !hasStoredImage) {
+                data.image = '';
+                localStorage.removeItem('imgURL');
+                localStorage.setItem('projectData', JSON.stringify(data));
+            }
+
+            if (hasStoredImage) {
                 this.image.src = data.image;
                 this.draw(this.image);
             }
-            if (data.circles) {
+            if (Array.isArray(data.circles) && data.circles.length) {
                 this.circles = data.circles;
                 this.drawCircles();
+                if (this.hasBrickArt()) this.toggleShowImage(false);
+            } else {
+                this.drawGrid(this.size);
             }
         } else {
             this.drawGrid(this.size);
@@ -218,6 +241,8 @@ export default class MosaicCanvas extends HTMLElement {
             if(this.wrapper) {
                 this.wrapper.setAttribute('size', newVal );
             }
+            this.querySelector('svg-grid')?.updateForSize(newVal);
+            this.querySelector('small-grid')?.updateForSize(newVal);
             if(this.canvas) {
                 if(newVal === '160')
                     this.canvas.setAttribute('width', '480' );
@@ -283,7 +308,7 @@ export default class MosaicCanvas extends HTMLElement {
         //Empty Circles
         this.circles = [];
         //Circle Styles for new draw (some timing issues)
-        this.context.fillStyle = `rgb( ${this.initialColor} )`;
+        this.context.fillStyle = this.toCssColor(this.initialColor);
         //this.context.lineWidth = this.gridSize.cols === 16 ? 2 : 1;
         //this.context.strokeStyle =  `rgb( ${this.initialStrokeColor} )`;
 
@@ -341,6 +366,9 @@ export default class MosaicCanvas extends HTMLElement {
     }
 
     draw() {
+        const imageSource = this.getImageSource();
+        if (!imageSource) return;
+
         this.clearCanvas();
         this.drawBackground('darkgray');  // Use a constant for 'darkgray' if it's not going to change
 
@@ -356,8 +384,8 @@ export default class MosaicCanvas extends HTMLElement {
 
         this.imgContext.restore();  // Ensure transformations and filters are reverted for future draws
 
-        localStorage.setItem("imgURL", this.image.src);
-        eventDispatcher.dispatchEvent('handleImgURL', { dataURL: this.image.src });
+        localStorage.setItem("imgURL", imageSource);
+        eventDispatcher.dispatchEvent('handleImgURL', { dataURL: imageSource });
         
         //Update Pointer Events
         this.grid.classList.remove('pointer-events-none');
@@ -511,10 +539,9 @@ export default class MosaicCanvas extends HTMLElement {
         this.imgContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Remove the image
-        this.image.src = '';
-        if (this.input) {
-            this.input.value = '';
-        }
+        this.image.removeAttribute('src');
+        localStorage.removeItem('imgURL');
+        localStorage.removeItem('projectURL');
       
         // Reset properties to their initial values, if needed
         this.zoomLevel = 1;
@@ -549,7 +576,7 @@ export default class MosaicCanvas extends HTMLElement {
     }
     
     handleImageMouseDown(e) {
-        if(!this.image.src) return;
+        if (!this.getImageSource()) return;
         this.draggingImage = true;
         const position = this.getCanvasPosition(e);
         this.startX = position.x;
@@ -594,7 +621,7 @@ export default class MosaicCanvas extends HTMLElement {
     drawCircles() {
         for(let i = 0; i < this.circles.length; i++){
             //Draw Circle
-            this.context.fillStyle = `rgb( ${ this.circles[i].fill } )`;
+            this.context.fillStyle = this.toCssColor(this.circles[i].fill);
             //this.context.lineWidth = this.gridSize.cols === 16 ? 2 : 1;
             //this.context.strokeStyle =  `rgb( ${ this.circles[i].fill } )`;
             this.context.save();
@@ -609,7 +636,7 @@ export default class MosaicCanvas extends HTMLElement {
     }
 
     convert() {
-        if (!this.image.src) return;
+        if (!this.getImageSource()) return;
 
         const results = [];
         this.raw = [];
@@ -825,8 +852,8 @@ export default class MosaicCanvas extends HTMLElement {
         // Get current project data
         const projectData = {
             circles: this.circles,
-            image: this.image.src || localStorage.getItem('imgURL') || '',
-            isConverted: this.circles.length > 0 && this.circles[0].fill !== this.initialColor,
+            image: this.getImageSource(),
+            isConverted: this.hasBrickArt(),
             isFinished: localStorage.getItem('isFinished') === 'true'
         };
 
@@ -839,6 +866,10 @@ export default class MosaicCanvas extends HTMLElement {
         eventDispatcher.dispatchEvent('saveProject', { 
             data: JSON.stringify(this.circles)
         });
+    }
+
+    hasBrickArt() {
+        return this.circles.some(circle => circle.fill !== this.initialColor);
     }
     
 }

@@ -1,4 +1,5 @@
 import eventDispatcher from '../../EventDispatcher/sharedEventDispatcher.js';
+import { readStoredJSON } from '../storage.js';
 import './_canvas.js';
 import './_step-1.js';
 import './_step-2.js';
@@ -12,12 +13,12 @@ class ProjectDataManager {
             // Load existing project data to preserve isFinished flag
             const existingData = this.load();
             const projectData = {
-                image: imageDataURL || (mosaic.image ? await this.imageToDataURL(mosaic.image) : null),
+                image: imageDataURL || (mosaic.getImageSource() ? await this.imageToDataURL(mosaic.image) : null),
                 circles: mosaic.circles,
                 settings: {
                     zoom: sizeSlider.value,
                 },
-                isConverted: mosaic.circles && mosaic.circles.length > 0 && !showImage.checked,
+                isConverted: mosaic.hasBrickArt(),
                 isFinished: existingData ? existingData.isFinished : false
             };
             console.log('Saving project data:', projectData);
@@ -30,13 +31,7 @@ class ProjectDataManager {
     }
 
     static load() {
-        try {
-            const data = localStorage.getItem(this.STORAGE_KEY);
-            return data ? JSON.parse(data) : null;
-        } catch (error) {
-            console.error('Error loading project data:', error);
-            return null;
-        }
+        return readStoredJSON(this.STORAGE_KEY);
     }
 
     static async imageToDataURL(image) {
@@ -309,6 +304,7 @@ export default class Editor extends HTMLElement {
             'handleConvertToLego': this.handleConvertToLego.bind(this),
             'handleConvert': this.handleConvert.bind(this),
             'handleResetCanvas': this.handleResetCanvas.bind(this),
+            'handleResetBricks': this.handleResetBricks.bind(this),
             
             // Drawing mode events
             'updateDrawMode': this.handleDrawModeUpdate.bind(this),
@@ -320,7 +316,7 @@ export default class Editor extends HTMLElement {
             'handleBrightness': (e) => this.mosaic.handleBrightness(e.detail.value),
             'handleContrast': (e) => this.mosaic.handleContrast(e.detail.value),
             'handleFlip': () => this.mosaic.handleFlipImage(),
-            'handleResetImage': () => this.mosaic.handleResetImage(),
+            'handleResetImage': this.handleResetImage.bind(this),
             'handleZoom': (e) => this.mosaic.handleZoom(e.detail.factor),
             'handleRotate': (e) => this.mosaic.handleRotate(e.detail.factor),
             
@@ -385,6 +381,11 @@ export default class Editor extends HTMLElement {
     }
 
     handleConvert() {
+        if (!this.mosaic.getImageSource()) {
+            alert('Upload an image before converting it to Lego bricks.');
+            return;
+        }
+
         this.showImage.checked = false;
         this.querySelector('step-two').toggleImageSettings(false);
         this.mosaic.convert();
@@ -396,6 +397,41 @@ export default class Editor extends HTMLElement {
         this.mosaic.toggleShowImage(true);
         this.setAttribute('color', [0,0,0]);
         this.mosaic.handleResetCanvas();
+    }
+
+    handleResetBricks(event) {
+        if (this.mosaic.hasBrickArt() && !window.confirm(
+            'Reset all bricks?\n\nThis removes your converted and painted brick art. Your source image will remain.'
+        )) {
+            event.preventDefault();
+            return;
+        }
+
+        this.handleResetCanvas();
+    }
+
+    handleResetImage(event) {
+        const hasBrickArt = this.mosaic.hasBrickArt();
+
+        if (hasBrickArt && !window.confirm(
+            'Delete this image and its brick art?\n\nThis will permanently remove the image and all converted bricks. This action cannot be undone.'
+        )) {
+            event.preventDefault();
+            return;
+        }
+
+        this.mosaic.handleResetImage();
+        this.showImage.checked = false;
+        this.mosaic.toggleShowImage(false);
+
+        if (hasBrickArt) {
+            this.setAttribute('color', [0, 0, 0]);
+            this.mosaic.handleResetCanvas();
+        } else {
+            this.mosaic.saveProject();
+        }
+
+        this.querySelector('step-two').toggleImageSettings(false);
     }
 
     handleDrawModeUpdate(event) {

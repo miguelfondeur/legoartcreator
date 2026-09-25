@@ -1,4 +1,5 @@
 import eventDispatcher from '../EventDispatcher/sharedEventDispatcher.js';
+import { readStoredJSON } from './storage.js';
 
 export default class ProjectHeader extends HTMLElement {
     //Teamplte
@@ -100,7 +101,7 @@ export default class ProjectHeader extends HTMLElement {
         //Get Active Page
 
         //Get Local Storage Values
-        const projectData = JSON.parse(localStorage.getItem("projectData"));
+        const projectData = readStoredJSON('projectData');
         if(projectData && projectData.image && projectData.isConverted && projectData.isFinished) { 
             this.querySelector('#instructionBtn').removeAttribute("disabled");
             this.querySelector('#partsBtn').removeAttribute("disabled");
