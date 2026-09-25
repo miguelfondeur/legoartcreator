@@ -138,12 +138,12 @@ export default class StepTwo extends HTMLElement {
         this.querySelector('#saturation-slider').addEventListener('input', (e) => this.handleSaturation(e));
         this.querySelector('#brightness-slider').addEventListener('input', (e) => this.handleBrightness(e));
         this.querySelector('#contrast-slider').addEventListener('input', (e) => this.handleContrast(e));
-        this.querySelector('#zoomIn').addEventListener('click', () => this.handleZoom(event, 1.01));
-        this.querySelector('#zoomOut').addEventListener('click', () => this.handleZoom(event, 0.99));
-        this.querySelector('#rotateL').addEventListener('click', () => this.handleRotate(event, -10 ));
-        this.querySelector('#rotateR').addEventListener('click', () => this.handleRotate(event, 10 ));
-        this.querySelector('#delete').addEventListener('click', () => this.handleResetImage(event));
-        this.querySelector('#flip').addEventListener('click', () => this.handleFlipImage(event));
+        this.querySelector('#zoomIn').addEventListener('click', (e) => this.handleZoom(e, 1.01));
+        this.querySelector('#zoomOut').addEventListener('click', (e) => this.handleZoom(e, 0.99));
+        this.querySelector('#rotateL').addEventListener('click', (e) => this.handleRotate(e, -10));
+        this.querySelector('#rotateR').addEventListener('click', (e) => this.handleRotate(e, 10));
+        this.querySelector('#delete').addEventListener('click', (e) => this.handleResetImage(e));
+        this.querySelector('#flip').addEventListener('click', (e) => this.handleFlipImage(e));
         
         this.querySelector('#colorButton').addEventListener('click', e => {
             this.querySelector('#colorButton').classList.toggle('!bg-black')
@@ -195,7 +195,7 @@ export default class StepTwo extends HTMLElement {
                 const fileSizeLimit = 15 * 1024 * 1024;
                 // Check if the file size exceeds the limit
                 if (file.size > fileSizeLimit) {
-                    alert('File size exceeds the 5 MB limit. Please choose a smaller file.');
+                    alert('File size exceeds the 15 MB limit. Please choose a smaller file.');
                     // Reset the input to clear the selected file
                     e.target.value = '';
                     return; // Exit early to prevent further processing

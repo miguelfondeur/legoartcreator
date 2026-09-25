@@ -36,13 +36,14 @@ export default class MosaicParts extends HTMLElement {
         this.brickData = [];
         this.parts = [];
         this.parts_xml = "";
+        this.totalParts = 0;
 
         //Get Initial Brick Data
         if(localStorage.getItem('brickData')) { 
             this.brickData = JSON.parse(localStorage.getItem('brickData'));
             this.getParts();
         }
-        this.size = JSON.parse(localStorage.getItem('size'));
+        this.size = localStorage.getItem('size') || '';
     }
 
 
@@ -81,8 +82,8 @@ export default class MosaicParts extends HTMLElement {
         eventDispatcher.addEventListener('saveProject', e => {
             this.brickData = JSON.parse(e.data);
             this.getParts();
-
             this.printParts();
+            this.updateSummary();
         })
         
         //Print If there was something saved
@@ -90,20 +91,12 @@ export default class MosaicParts extends HTMLElement {
             this.printParts();
         }
 
-        this.querySelector('#pieces').innerHTML = this.uniquePartsCount;
-
-        if(this.size) {
-            this.querySelector('#total_parts').innerHTML = this.size;
-        } else {
-            this.querySelector('#total_parts').innerHTML = "2500";
-        }
-
-        this.lego_price_el.innerHTML = this.lego_total;
-        this.wb_price_el.innerHTML = this.wb_total;
+        this.updateSummary();
     }
 
     //Methods
     getParts() {
+        this.uniqueCircles = [];
         // Initialize an empty object to store color counts
         const colorCounts = {};
 
@@ -139,7 +132,7 @@ export default class MosaicParts extends HTMLElement {
                         wb_price: matchingColor.wb_price,
                         img: matchingColor.img,
                         id: matchingColor.id,
-                        color: matchingColor.color_id,
+                        color: matchingColor.id.color_id,
                     };
                     this.uniqueCircles.push(circle);
                 }
@@ -163,12 +156,8 @@ export default class MosaicParts extends HTMLElement {
                 </ITEM>`).join('')}
             </INVENTORY>`;
 
-        //Get Unique Parts Quantity
-        if(this.size === "") {
-            this.uniquePartsCount = this.uniqueCircles.length + 16; 
-        } else {
-            this.uniquePartsCount = this.uniqueCircles.length + 16;
-        }
+        this.uniquePartsCount = this.parts.length;
+        this.totalParts = this.parts.reduce((sum, item) => sum + Number(item.quantity), 0);
 
         //Get Prices and print elements
         //LEGO
@@ -189,6 +178,13 @@ export default class MosaicParts extends HTMLElement {
         this.wb_total = roundedWBTotal;
     }
 
+    updateSummary() {
+        this.querySelector('#total_parts').textContent = this.totalParts;
+        this.querySelector('#pieces').textContent = this.uniquePartsCount || 0;
+        this.lego_price_el.textContent = this.lego_total ?? '0';
+        this.wb_price_el.textContent = this.wb_total ?? '0';
+    }
+
     printParts() {
         //Print Pages
         if(this.partsWrapper) {
@@ -207,23 +203,23 @@ export default class MosaicParts extends HTMLElement {
                             <span class="mr-1">Webrick Price: $${ Math.round( (parseFloat(part.wb_price) * parseFloat(part.quantity)) * 100) / 100 }</span>
                             <span class="text-gray-500 uppercase text-xs leading-none">( $${part.wb_price} x ${part.quantity} )</span>
                         </p>
-                        <a href="https://www.webrick.com/flat-tile-1x1-round-98138.html?color=${part.color}&quantity=76&brand=80/#aid=2046" 
-                            target="blank" 
+                        <a href="https://www.webrick.com/flat-tile-1x1-round-98138.html?color=${part.color}&quantity=${part.quantity}&brand=80/#aid=2046"
+                            target="_blank" rel="noopener noreferrer"
                             class="bg-[#f57d20] text-white text-sm mt-auto uppercase text-center rounded-xl w-full p-2 cursor-pointer"
                         >
                             Buy on Webrick
                         </a>
                         <div class="flex items-center justify-center gap-2 mt-2">
                             <!-- Bricklink -->
-                            <a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=98138&idColor=${part.id.color_id}#T=S&C=158&O={%22color%22:${part.id.color_id},%22iconly%22:0}" 
-                                target="blank" 
+                            <a href="https://www.bricklink.com/v2/catalog/catalogitem.page?P=${part.id.bricklink}&idColor=${part.id.color_id}#T=S&C=${part.id.color_id}&O={%22color%22:${part.id.color_id},%22iconly%22:0}"
+                            target="_blank" rel="noopener noreferrer"
                                 class="text-sky-600 bg-white shadow text-sm text-center rounded-xl w-full p-2 cursor-pointer"
                             >
                                 Bricklink
                             </a>
                             <!-- Lego -->
                             <a href="https://www.lego.com/en-us/pick-and-build/pick-a-brick?query=flat+1x1+round+tile&system=LEGO&category=3#pab-results-wrapper" 
-                                target="blank" 
+                            target="_blank" rel="noopener noreferrer"
                                 class="text-sky-600 bg-white shadow text-sm text-center rounded-xl w-full p-2 cursor-pointer"
                             >
                                 LEGO

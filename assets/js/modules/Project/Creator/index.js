@@ -13,7 +13,7 @@ class ProjectDataManager {
             const existingData = this.load();
             const projectData = {
                 image: imageDataURL || (mosaic.image ? await this.imageToDataURL(mosaic.image) : null),
-                bricks: mosaic.circles,
+                circles: mosaic.circles,
                 settings: {
                     zoom: sizeSlider.value,
                 },
@@ -575,9 +575,10 @@ export default class Editor extends HTMLElement {
             }
 
             // If the project was converted, set up the initial state
-            if (projectData.isConverted && projectData.bricks) {
+            const circles = projectData.circles || projectData.bricks;
+            if (projectData.isConverted && circles) {
                 console.log('Project was converted, setting up initial state');
-                this.mosaic.circles = projectData.bricks;
+                this.mosaic.circles = circles;
                 // Draw the bricks immediately
                 await this.mosaic.drawCircles();
                 

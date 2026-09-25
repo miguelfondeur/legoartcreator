@@ -322,8 +322,11 @@ export default class MosaicCanvas extends HTMLElement {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         //Draw Grid with initial data
         this.drawGrid(this.size) 
-        //localStorage
-        localStorage.setItem("brickData", []);
+        // A reset starts a new, unfinished mosaic. Keep the source image, but
+        // clear the generated preview and persisted brick state.
+        localStorage.removeItem('projectURL');
+        localStorage.setItem('isFinished', 'false');
+        this.saveProject();
     }
 
     /************************
@@ -548,16 +551,16 @@ export default class MosaicCanvas extends HTMLElement {
     handleImageMouseDown(e) {
         if(!this.image.src) return;
         this.draggingImage = true;
-        const rect = this.canvas.getBoundingClientRect();
-        this.startX = e.clientX - rect.left;
-        this.startY = e.clientY - rect.top;
+        const position = this.getCanvasPosition(e);
+        this.startX = position.x;
+        this.startY = position.y;
     }
     
     handleImageMouseMove(e) {
         if (!this.draggingImage) return;
-        const rect = this.canvas.getBoundingClientRect();
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
+        const position = this.getCanvasPosition(e);
+        const mouseX = position.x;
+        const mouseY = position.y;
     
         const dx = mouseX - this.startX;
         const dy = mouseY - this.startY;
@@ -575,6 +578,14 @@ export default class MosaicCanvas extends HTMLElement {
     
     handleImageMouseUp() {
         this.draggingImage = false;
+    }
+
+    getCanvasPosition(event) {
+        const rect = this.canvas.getBoundingClientRect();
+        return {
+            x: (event.clientX - rect.left) * (this.canvas.width / rect.width),
+            y: (event.clientY - rect.top) * (this.canvas.height / rect.height)
+        };
     }
 
     /*****************************
@@ -598,7 +609,10 @@ export default class MosaicCanvas extends HTMLElement {
     }
 
     convert() {
-        let results = [];
+        if (!this.image.src) return;
+
+        const results = [];
+        this.raw = [];
         this.uniqueColors = [];
         this.cols = Math.floor(this.imgCanvas.width / this.cellWidth);
 
@@ -608,9 +622,9 @@ export default class MosaicCanvas extends HTMLElement {
                 const x = (col * this.cellWidth + this.circleRadius);
                 const y = (row * this.cellHeight + this.circleRadius);
                 
-                // Do something with rgbCode if needed
-                this.raw.push(this.calculateResult(x, y));
-                results.push(this.calculateResult(x, y));
+                const sampledColor = this.calculateResult(x, y);
+                this.raw.push(sampledColor);
+                results.push(sampledColor);
             }
         }
         
@@ -622,9 +636,9 @@ export default class MosaicCanvas extends HTMLElement {
             
             this.circles[i].fill = newColor;
             this.circles[i].stroke = newStrokeColor;
-
-            // this.circles[i].fill = results[i];
         }
+
+        this.uniqueColors = [...new Set(this.circles.map(circle => circle.fill))];
 
         //reset
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -633,9 +647,10 @@ export default class MosaicCanvas extends HTMLElement {
         this.drawCircles();
         
         //Update Group Colors
-        this.handleUpdateColors(event);
+        this.handleUpdateColors();
         //Bring Drawing Canvas Forward
         this.toggleShowImage(false);
+        this.saveProject();
     }
 
     compareColors(color, colorList) {
@@ -661,22 +676,28 @@ export default class MosaicCanvas extends HTMLElement {
     }
 
     calculateResult = (x,y) => {
-        let store = {};
-        const imgData = this.imgContext.getImageData(x, y, this.circleRadius, this.circleRadius);
+        const radius = Math.max(1, Math.floor(this.circleRadius));
+        const sampleX = Math.max(0, Math.floor(x - radius));
+        const sampleY = Math.max(0, Math.floor(y - radius));
+        const sampleWidth = Math.min(radius * 2, this.imgCanvas.width - sampleX);
+        const sampleHeight = Math.min(radius * 2, this.imgCanvas.height - sampleY);
+        const imgData = this.imgContext.getImageData(sampleX, sampleY, sampleWidth, sampleHeight);
         const data = imgData.data;
-        const total_pixels = this.circleRadius * this.circleRadius;
-        const coverage = total_pixels / this.circleRadius;
-        const max_pixel_index = total_pixels - 1;
-        for (let i = 0; i < coverage; ++i) {
-            const x = this.getPixelIndex(Math.floor(Math.random() * max_pixel_index));
-            const key = `${data[x]},${data[x + 1]},${data[x + 2]}`;
-            const val = store[key];
-            store[key] = val ? val + 1 : 1;
+        let red = 0;
+        let green = 0;
+        let blue = 0;
+        let pixels = 0;
+
+        for (let index = 0; index < data.length; index += 4) {
+            if (data[index + 3] === 0) continue;
+            red += data[index];
+            green += data[index + 1];
+            blue += data[index + 2];
+            pixels++;
         }
-        const rgb_code = Object.keys(store).reduce((a, b) =>
-            store[a] > store[b] ? a : b
-        );
-        return rgb_code;
+
+        if (!pixels) return this.initialColor;
+        return `${Math.round(red / pixels)},${Math.round(green / pixels)},${Math.round(blue / pixels)}`;
     };
 
     getPixelIndex(numToRound) {
@@ -686,22 +707,22 @@ export default class MosaicCanvas extends HTMLElement {
         return numToRound + 4 - remainder;
     }
 
-    handleUpdateColors(e) {
+    handleUpdateColors() {
         const event = new CustomEvent('handleUpdateGroupColors', {
             bubbles: true,
             composed: true,
             cancelable: true,
             detail: this.uniqueColors
         }); 
-        e.target.dispatchEvent(event);
+        this.dispatchEvent(event);
     } 
 
     handleMouseDown(event) {
         this.dragging = true;
 
-        const rect = this.canvas.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
+        const position = this.getCanvasPosition(event);
+        const mouseX = position.x;
+        const mouseY = position.y;
     
         const clickedRow = Math.floor(mouseY / this.cellHeight);
         const clickedCol = Math.floor(mouseX / this.cellWidth);
@@ -716,9 +737,9 @@ export default class MosaicCanvas extends HTMLElement {
     handleMouseMove(event) {
         if (!this.dragging) return;
         // ... logic to update circle color
-        const rect = this.canvas.getBoundingClientRect();
-        const mouseX = event.clientX - rect.left;
-        const mouseY = event.clientY - rect.top;
+        const position = this.getCanvasPosition(event);
+        const mouseX = position.x;
+        const mouseY = position.y;
     
         const clickedRow = Math.floor(mouseY / this.cellHeight);
         const clickedCol = Math.floor(mouseX / this.cellWidth);
@@ -772,8 +793,8 @@ export default class MosaicCanvas extends HTMLElement {
     handleDownload() {
         // Create a download link and initiate download
         const link = document.createElement('a');
-        link.href = dataURL;
-        link.download = 'lego-mosaic';
+        link.href = this.createImage();
+        link.download = 'lego-mosaic.png';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -797,6 +818,7 @@ export default class MosaicCanvas extends HTMLElement {
         eventDispatcher.dispatchEvent('handleCreateImage', { dataURL: dataURL });
         //Store Image
         localStorage.setItem("projectURL", dataURL);
+        return dataURL;
     }
 
     saveProject() {
